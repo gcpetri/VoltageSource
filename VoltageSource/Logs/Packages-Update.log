@@ -44,3 +44,13 @@ The following packages were added:
   com.unity.textmeshpro@3.0.1
   com.unity.timeline@1.3.5
   com.unity.ugui@1.0.0
+
+=== Wed Sep  9 00:17:19 2020
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were added:
+  com.unity.2d.sprite@1.0.0
+  com.unity.2d.tilemap@1.0.0
+  com.unity.xr.legacyinputhelpers@2.1.4
