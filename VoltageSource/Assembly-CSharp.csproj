@@ -52,11 +52,12 @@
     <UnityVersion>2020.1.4f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\FP_camera_script.cs" />
     <Compile Include="Assets\Scripts\FP_movement.cs" />
     <Compile Include="Assets\Scripts\FP_gunScript.cs" />
+    <Compile Include="Assets\Scripts\FP_camera_script.cs" />
   </ItemGroup>
   <ItemGroup>
+     <None Include="Assets\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.4f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
