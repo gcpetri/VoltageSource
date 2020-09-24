@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using TMPro;
 using UnityEngine.Audio;
 
 public class FP_gunScript : MonoBehaviour
@@ -16,13 +15,17 @@ public class FP_gunScript : MonoBehaviour
     public Camera FP_cam;
     // shoot effect
     public ParticleSystem laserShot;
+    public GameObject gunLight;
     // reloading
     private int _currentAmmo = -1;
     private bool _isReloading = false;
     // bullets
     [SerializeField][InspectorName("Gun Animator")]private Animator _animator;
     public Transform barrelEnd;
-
+    // aim down sights
+    public Vector3 aimHipFire;
+    public Vector3 aimDownSights;
+    public float aimSpeed = 10f;
     [Header("Sound Clips")]
     // gun sound
     [SerializeField] private AudioClip gunSound;
@@ -31,17 +34,12 @@ public class FP_gunScript : MonoBehaviour
     [SerializeField] private AudioClip reloadSound;
 
     //********************// Use ID based animator changes because it more efficient 
-    // Animator ID's: 
-    private int _reloadingID;
-    private int _aimingID;
 
     private void Start()
     {
         if(_animator == null)
                 _animator = GetComponent<Animator>();
         
-        _reloadingID = Animator.StringToHash("Reloading");
-        _aimingID = Animator.StringToHash("Aiming");
 
         if (gunData == null)
             return;
@@ -69,12 +67,10 @@ public class FP_gunScript : MonoBehaviour
         }
         if (Input.GetButton("Fire2") && !_isReloading)
         {
-            _animator.SetBool(_aimingID, true);
-            transform.rotation = FP_cam.transform.rotation;
+            transform.localPosition = Vector3.Slerp(transform.localPosition, aimDownSights, aimSpeed * Time.deltaTime);
         } else
         {
-            _animator.SetBool(_aimingID, false);
-            
+            transform.localPosition = aimHipFire;
         }
         
         if (Input.GetButton("Fire1") && Time.time >= _nextTimetoFire)
@@ -88,24 +84,26 @@ public class FP_gunScript : MonoBehaviour
     {
         _currentAmmo--;
         laserShot.Play();
+        gunLight.SetActive(true);
         RaycastHit hit;
         if (Physics.Raycast(FP_cam.transform.position, FP_cam.transform.forward, out hit, gunData.range))
         {
             //Debug.Log(hit.transform.name);
         }
-        audioSource.PlayOneShot(gunSound);
+        audioSource.PlayOneShot(gunSound, 0.05f);
         var instantiateBullet = Instantiate(gunData.bulletPrefab, barrelEnd.position, barrelEnd.transform.rotation);
         instantiateBullet.GetComponent<Rigidbody>().velocity = instantiateBullet.transform.right * gunData.bulletSpeed;
         Destroy(instantiateBullet, 2f);
+        gunLight.SetActive(false);
     }
     private IEnumerator Reload()
     {
         _isReloading = true;
         //Debug.Log("reloading...");
-        _animator.SetBool(_reloadingID, true);
+        //_animator.SetBool(_reloadingID, true);
         audioSource.PlayOneShot(reloadSound);
         yield return new WaitForSeconds(gunData.reloadTime - .25f);
-        _animator.SetBool(_reloadingID, false);
+        //_animator.SetBool(_reloadingID, false);
         yield return new WaitForSeconds(.25f);
         _currentAmmo = gunData.maxAmmo;
         _isReloading = false;
