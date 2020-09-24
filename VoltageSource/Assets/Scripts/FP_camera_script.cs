@@ -8,22 +8,22 @@ public class FP_camera_script : MonoBehaviour
     public Transform PlayerBody;
 
 
-    float xRotation = 0f;
+    float _xRotation = 0f;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        float MouseX = Input.GetAxis("MouseX") * lookSensitivity * Time.deltaTime;
-        float MouseY = Input.GetAxis("MouseY") * lookSensitivity * Time.deltaTime;
-        xRotation -= MouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        float mouseX = Input.GetAxis("MouseX") * (lookSensitivity * Time.deltaTime);
+        float mouseY = Input.GetAxis("MouseY") * (lookSensitivity * Time.deltaTime);
+        _xRotation -= mouseY;
+        _xRotation = Mathf.Clamp(_xRotation, -90f, 90f);
 
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        PlayerBody.Rotate(Vector3.up * MouseX);
+        transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
+        PlayerBody.Rotate(Vector3.up * mouseX);
     }
 }
