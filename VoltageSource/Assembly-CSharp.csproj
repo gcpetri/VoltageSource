@@ -55,11 +55,17 @@
      <Compile Include="Assets\Scripts\CharacterMover.cs" />
      <Compile Include="Assets\Scripts\FP_camera_script.cs" />
      <None Include="Assets\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
+ <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+ <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Cinemachine">
  <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+ <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
  </Reference>
  <Reference Include="Unity.VSCode.Editor">
  <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
@@ -82,6 +88,12 @@
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+ <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Universal.Editor">
+ <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -91,8 +103,8 @@
  <Reference Include="Unity.Timeline">
  <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Postprocessing.Editor">
- <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+ <Reference Include="UnityEngine.XR.LegacyInputHelpers">
+ <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Rider.Editor">
  <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
@@ -100,11 +112,20 @@
  <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
  <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Postprocessing.Runtime">
- <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+ <Reference Include="Unity.2D.Sprite.Editor">
+ <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.2D.Tilemap.Editor">
+ <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.SpatialTracking">
+ <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
  </Reference>
  <Reference Include="com.unity.cinemachine.editor">
  <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.SpatialTracking">
+ <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
  </Reference>
  <Reference Include="Unity.VisualStudio.Editor">
  <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
@@ -120,6 +141,9 @@
  </Reference>
  <Reference Include="Unity.TextMeshPro">
  <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.XR.LegacyInputHelpers">
+ <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
