@@ -11,6 +11,7 @@ public class FP_gunScript : MonoBehaviour
     private float nextTimetoFire = 0f;
     // camera
     public Camera FP_cam;
+    // shoot effect
     public ParticleSystem laserShot;
     // reloading
     public int maxAmmo = 40;
@@ -27,6 +28,11 @@ public class FP_gunScript : MonoBehaviour
     public AudioSource audioSource;
     // reload sound
     public AudioClip reloadSound;
+    // aim down scope
+    public Vector3 aimDownSight;
+    public Vector3 hipfire;
+    public float aimSpeed = 10f;
+
 
     private void Start()
     {
@@ -47,11 +53,18 @@ public class FP_gunScript : MonoBehaviour
             StartCoroutine(Reload());
             return;
         }
+        if (Input.GetButton("Fire2") && !isReloading)
+        {
+            transform.localPosition = Vector3.Slerp(transform.localPosition, aimDownSight, aimSpeed * Time.deltaTime);
+        } else
+        {
+            transform.localPosition = Vector3.Slerp(transform.localPosition, hipfire, aimSpeed * Time.deltaTime);
+        }
         if (Input.GetButton("Fire1") && Time.time >= nextTimetoFire)
         {
             nextTimetoFire = Time.time + 1 / fireRate;
             Shoot();
-            Debug.Log("shot");
+            Debug.Log("fire");
         }
     }
     void Shoot()

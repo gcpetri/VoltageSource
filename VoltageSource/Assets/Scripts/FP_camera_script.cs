@@ -7,6 +7,7 @@ public class FP_camera_script : MonoBehaviour
     public float lookSensitivity = 100f;
     public Transform PlayerBody;
 
+
     float xRotation = 0f;
     // Start is called before the first frame update
     void Start()
