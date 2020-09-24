@@ -1,81 +1,90 @@
 ﻿using UnityEngine;
 using System.Collections;
+using TMPro;
 using UnityEngine.Audio;
 
 public class FP_gunScript : MonoBehaviour
 {
     // gun specs
+    [Header("Gunspecs")]
     public float damage = 10f;
     public float range = 100f;
     public float fireRate = 5f;
-    private float nextTimetoFire = 0f;
+    private float _nextTimetoFire = 0f;
     // camera
     public Camera FP_cam;
     // shoot effect
     public ParticleSystem laserShot;
     // reloading
     public int maxAmmo = 40;
-    private int currentAmmo = -1;
+    private int _currentAmmo = -1;
     public float reloadTime = 1f;
-    private bool isReloading = false;
+    private bool _isReloading = false;
     // bullets
-    public Animator animator;
+    [SerializeField][InspectorName("Gun Animator")]private Animator _animator;
     public float bulletSpeed = 100f;
     public Transform barrelEnd;
     public GameObject bullet;
+    
+    [Header("Sound Clips")]
     // gun sound
-    public AudioClip gunSound;
-    public AudioSource audioSource;
+    [SerializeField] private AudioClip gunSound;
+    [SerializeField] private AudioSource audioSource;
     // reload sound
-    public AudioClip reloadSound;
-    // aim down scope
-    public Vector3 aimDownSight;
-    public Vector3 hipfire;
-    public float aimSpeed = 10f;
+    [SerializeField] private AudioClip reloadSound;
 
+    //********************// Use ID based animator changes because it more efficient 
+    // Animator ID's: 
+    private int _reloadingID;
+    private int _aimingID;
 
     private void Start()
     {
-        bullet.SetActive(false);
-        if (currentAmmo == -1) 
-            currentAmmo = maxAmmo;
+        if (_currentAmmo == -1) 
+            _currentAmmo = maxAmmo;
+        // Using .GetComponent during start / awake isn't all that bad. But using it during update/fixed update/late update isn't good for performance
+        if(_animator == null)
+            _animator = GetComponent<Animator>();
+
+        _reloadingID = Animator.StringToHash("Reloading");
+        _aimingID = Animator.StringToHash("Aiming");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isReloading)
+        if (_isReloading)
         {
             return;
         }
-        if (currentAmmo <= 0)
+        if (_currentAmmo <= 0)
         {
             StartCoroutine(Reload());
             return;
         }
-        if (Input.GetButton("Fire2") && !isReloading)
+        if (Input.GetButton("Fire2") && !_isReloading)
         {
-            animator.SetBool("Aiming", true);
+            _animator.SetBool(_aimingID, true);
         } else
         {
-            animator.SetBool("Aiming", false);
+            _animator.SetBool(_aimingID, false);
         }
         
-        if (Input.GetButton("Fire1") && Time.time >= nextTimetoFire)
+        if (Input.GetButton("Fire1") && Time.time >= _nextTimetoFire)
         {
-            nextTimetoFire = Time.time + 1 / fireRate;
+            _nextTimetoFire = Time.time + 1 / fireRate;
             Shoot();
-            Debug.Log("fire");
+            //Debug.Log("fire");
         }
     }
-    void Shoot()
+    private void Shoot()
     {
-        currentAmmo--;
+        _currentAmmo--;
         laserShot.Play();
         RaycastHit hit;
         if (Physics.Raycast(FP_cam.transform.position, FP_cam.transform.forward, out hit, range))
         {
-            Debug.Log(hit.transform.name);
+            //Debug.Log(hit.transform.name);
         }
         audioSource.PlayOneShot(gunSound);
         bullet.SetActive(true);
@@ -83,16 +92,16 @@ public class FP_gunScript : MonoBehaviour
         instantiateBullet.GetComponent<Rigidbody>().velocity = instantiateBullet.transform.right * bulletSpeed;
         Destroy(instantiateBullet, 2f);
     }
-    IEnumerator Reload()
+    private IEnumerator Reload()
     {
-        isReloading = true;
-        Debug.Log("reloading...");
-        animator.SetBool("Reloading", true);
+        _isReloading = true;
+        //Debug.Log("reloading...");
+        _animator.SetBool(_reloadingID, true);
         audioSource.PlayOneShot(reloadSound);
         yield return new WaitForSeconds(reloadTime - .25f);
-        animator.SetBool("Reloading", false);
+        _animator.SetBool(_reloadingID, false);
         yield return new WaitForSeconds(.25f);
-        currentAmmo = maxAmmo;
-        isReloading = false;
+        _currentAmmo = maxAmmo;
+        _isReloading = false;
     }
 }

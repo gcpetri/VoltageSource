@@ -13,8 +13,8 @@ public class FP_movement : MonoBehaviour
     public float groundDistance = 0.3f;
     public LayerMask groundMask;
 
-    Vector3 velocity;
-    bool isGrounded;
+    private Vector3 velocity;
+    private bool isGrounded;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,12 +29,12 @@ public class FP_movement : MonoBehaviour
         {
             velocity.y = -2f;
         }
-        float X = Input.GetAxis("Horizontal");
-        float Z = Input.GetAxis("Vertical");
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * X + transform.forward * Z;
+        Vector3 move = (transform.right * x) + (transform.forward * z);
 
-        controller.Move(move * speed * Time.deltaTime);
+        controller.Move(move * (speed * Time.deltaTime));
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {

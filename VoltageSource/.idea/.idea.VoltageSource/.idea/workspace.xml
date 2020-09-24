@@ -32,6 +32,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/CharacterMover.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/FP_camera_script.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/FP_movement.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FP_gunScript.cs" />
       </list>
     </option>
@@ -80,6 +82,7 @@
       <workItem from="1600966778034" duration="802000" />
       <workItem from="1600967651319" duration="1161000" />
       <workItem from="1600970051280" duration="1000" />
+      <workItem from="1600971866235" duration="1841000" />
     </task>
     <servers />
   </component>
