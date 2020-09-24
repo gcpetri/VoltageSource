@@ -28,12 +28,17 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/BulletScript.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Assets/CharacterMover.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/FP_camera_script.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FP_movement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/FP_camera_script.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GunsScriptable.cs" />
+        <option value="$PROJECT_DIR$/Assets/BulletScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FP_gunScript.cs" />
       </list>
     </option>
@@ -82,7 +87,7 @@
       <workItem from="1600966778034" duration="802000" />
       <workItem from="1600967651319" duration="1161000" />
       <workItem from="1600970051280" duration="1000" />
-      <workItem from="1600971866235" duration="1841000" />
+      <workItem from="1600971866235" duration="9884000" />
     </task>
     <servers />
   </component>
