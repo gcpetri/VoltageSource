@@ -55,11 +55,12 @@ public class FP_gunScript : MonoBehaviour
         }
         if (Input.GetButton("Fire2") && !isReloading)
         {
-            transform.localPosition = Vector3.Slerp(transform.localPosition, aimDownSight, aimSpeed * Time.deltaTime);
+            animator.SetBool("Aiming", true);
         } else
         {
-            transform.localPosition = Vector3.Slerp(transform.localPosition, hipfire, aimSpeed * Time.deltaTime);
+            animator.SetBool("Aiming", false);
         }
+        
         if (Input.GetButton("Fire1") && Time.time >= nextTimetoFire)
         {
             nextTimetoFire = Time.time + 1 / fireRate;

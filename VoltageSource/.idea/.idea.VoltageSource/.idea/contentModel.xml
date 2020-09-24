@@ -6,7 +6,21 @@
     <e p="D:\Users\Erik\Documents\VoltageSource\VoltageSource\VoltageSource" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="CharacterMover.cs" t="Include" />
+        <e p="Samples" t="Include">
+          <e p="Terrain Tools" t="Include">
+            <e p="0.1.0-preview" t="Include">
+              <e p="Terrain Assets" t="Include">
+                <e p="ThirdPartyNotices.txt" t="Include" />
+              </e>
+            </e>
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="CharacterMover.cs" t="Include" />
+          <e p="FP_camera_script.cs" t="Include" />
+          <e p="FP_gunScript.cs" t="Include" />
+          <e p="FP_movement.cs" t="Include" />
+        </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
