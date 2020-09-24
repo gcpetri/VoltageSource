@@ -70,7 +70,6 @@ public class FP_gunScript : MonoBehaviour
         if (Input.GetButton("Fire2") && !_isReloading)
         {
             _animator.SetBool(_aimingID, true);
-            transform.rotation = FP_cam.transform.rotation;
         } else
         {
             _animator.SetBool(_aimingID, false);
@@ -88,15 +87,10 @@ public class FP_gunScript : MonoBehaviour
     {
         _currentAmmo--;
         laserShot.Play();
-        RaycastHit hit;
-        if (Physics.Raycast(FP_cam.transform.position, FP_cam.transform.forward, out hit, gunData.range))
-        {
-            //Debug.Log(hit.transform.name);
-        }
         audioSource.PlayOneShot(gunSound);
         var instantiateBullet = Instantiate(gunData.bulletPrefab, barrelEnd.position, barrelEnd.transform.rotation);
         instantiateBullet.GetComponent<Rigidbody>().velocity = instantiateBullet.transform.right * gunData.bulletSpeed;
-        Destroy(instantiateBullet, 2f);
+        Destroy(instantiateBullet, Mathf.Clamp(gunData.range / (gunData.bulletSpeed), 0f, 10f));
     }
     private IEnumerator Reload()
     {
