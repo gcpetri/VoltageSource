@@ -51,9 +51,11 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\GunsScriptable.cs" />
+     <Compile Include="Assets\Scripts\Pickupable.cs" />
+     <Compile Include="Assets\Scripts\PickupChecker.cs" />
      <Compile Include="Assets\Scripts\FP_movement.cs" />
      <Compile Include="Assets\Scripts\FP_gunScript.cs" />
-     <Compile Include="Assets\BulletScript.cs" />
+     <Compile Include="Assets\Scripts\BulletScript.cs" />
      <Compile Include="Assets\Scripts\CharacterMover.cs" />
      <Compile Include="Assets\Scripts\FP_camera_script.cs" />
      <None Include="Assets\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
