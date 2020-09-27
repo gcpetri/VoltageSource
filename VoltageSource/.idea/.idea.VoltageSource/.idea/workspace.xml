@@ -36,10 +36,12 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/FP_camera_script.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GunsScriptable.cs" />
         <option value="$PROJECT_DIR$/Assets/BulletScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/FP_gunScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Pickup.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PickupChecker.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Pickupable.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/FP_gunScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/PlayerScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BulletScript.cs" />
       </list>
     </option>
   </component>
@@ -89,6 +91,7 @@
       <workItem from="1600967651319" duration="1161000" />
       <workItem from="1600970051280" duration="1000" />
       <workItem from="1600971866235" duration="16057000" />
+      <workItem from="1601164223869" duration="4123000" />
     </task>
     <servers />
   </component>

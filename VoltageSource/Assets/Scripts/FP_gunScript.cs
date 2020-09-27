@@ -89,6 +89,7 @@ public class FP_gunScript : MonoBehaviour
         laserShot.Play();
         audioSource.PlayOneShot(gunSound);
         var instantiateBullet = Instantiate(gunData.bulletPrefab, barrelEnd.position, barrelEnd.transform.rotation);
+        instantiateBullet.GetComponent<BulletScript>().damage = gunData.damage;
         instantiateBullet.GetComponent<Rigidbody>().velocity = instantiateBullet.transform.right * gunData.bulletSpeed;
         Destroy(instantiateBullet, Mathf.Clamp(gunData.range / (gunData.bulletSpeed), 0f, 10f));
     }

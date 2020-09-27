@@ -31,6 +31,7 @@ sysinfo.txt
 /*.svd
  
 # ============ #
+# OS generated #
 # ============ #
 .DS_Store*
 ._*

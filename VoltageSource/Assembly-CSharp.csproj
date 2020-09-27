@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\BulletScript.cs" />
      <Compile Include="Assets\Scripts\CharacterMover.cs" />
      <Compile Include="Assets\Scripts\FP_camera_script.cs" />
+     <Compile Include="Assets\PlayerScript.cs" />
      <None Include="Assets\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
  <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
  <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
