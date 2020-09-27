@@ -13,6 +13,4 @@ public class GunsScriptable : ScriptableObject
     public float bulletSpeed;
     public float reloadTime;
     public GameObject bulletPrefab;
-    public MeshRenderer mesh;
-    public MeshFilter meshFilter;
 }

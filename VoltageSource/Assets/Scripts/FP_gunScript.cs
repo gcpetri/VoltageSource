@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Photon.Pun;
 using TMPro;
 using UnityEngine.Audio;
 
-public class FP_gunScript : MonoBehaviour
+public class FP_gunScript : MonoBehaviourPunCallbacks, IPunObservable
 {
     // gun specs
     [Header("Gunspecs")] 
@@ -51,13 +52,17 @@ public class FP_gunScript : MonoBehaviour
         // Using .GetComponent during start / awake isn't all that bad. But using it during update/fixed update/late update isn't good for performance
         _meshRender = GetComponent<MeshRenderer>();
         _meshFilter = GetComponent<MeshFilter>();
-        _meshRender = gunData.mesh;
-        _meshFilter = gunData.meshFilter;
+        //_meshRender = gunData.mesh;
+        //_meshFilter = gunData.meshFilter;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         if (_isReloading)
         {
             return;
@@ -110,5 +115,17 @@ public class FP_gunScript : MonoBehaviour
     {
         //change _gunData to the appropriate data for the gun that was changed
         // 
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(_isReloading);
+        }
+        else
+        {
+            _isReloading = (bool) stream.ReceiveNext();
+        }
     }
 }

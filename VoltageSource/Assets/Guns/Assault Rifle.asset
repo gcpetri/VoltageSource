@@ -19,5 +19,5 @@ MonoBehaviour:
   bulletSpeed: 100
   reloadTime: 1
   bulletPrefab: {fileID: 8598642155750595174, guid: e4aef1f7a01205646a354bbbdf71dfab, type: 3}
-  mesh: {fileID: -7511558181221131132, guid: 99a6a1872bd2ee54fa9c6a006a3fbaa9, type: 3}
-  meshFilter: {fileID: 0}
+  gunPrefab: {fileID: 2026342823576858691, guid: bcd6cc6f740a84144aecff43b9af5fcf, type: 3}
+  gunAnimator: {fileID: 2026342823576858693, guid: bcd6cc6f740a84144aecff43b9af5fcf, type: 3}

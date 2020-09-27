@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class FP_movement : MonoBehaviour
@@ -15,20 +16,29 @@ public class FP_movement : MonoBehaviour
 
     private Vector3 velocity;
     private bool isGrounded;
+
+    [SerializeField] private PhotonView photonView;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
+        if (photonView == null)
+        {
+            Debug.LogError("Photon view reference in movement is missing");
+            return;
+        }
+        if (photonView.IsMine == false && PhotonNetwork.IsConnected)
+        {
+            return;
+        }
+        
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
         }
+
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 

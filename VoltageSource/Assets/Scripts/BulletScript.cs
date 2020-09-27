@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class BulletScript : MonoBehaviour
@@ -28,7 +29,7 @@ public class BulletScript : MonoBehaviour
         {
             if (hit.collider.CompareTag("Player"))
             {
-                hit.collider.GetComponent<PlayerScript>().Health = hit.collider.GetComponent<PlayerScript>().Health - damage; 
+                hit.collider.GetComponent<FP_Controller>().Health = hit.collider.GetComponent<FP_Controller>().Health - damage; 
             }
             else
             {

@@ -11,7 +11,7 @@ public class PickupChecker : MonoBehaviour
 
     private void Start()
     {
-        _camera = GetComponent<Camera>();
+        _camera = Camera.main;
     }
 
     private void LateUpdate()
