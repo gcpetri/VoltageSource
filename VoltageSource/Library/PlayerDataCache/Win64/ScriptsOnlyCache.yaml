@@ -7,12 +7,15 @@ ScriptsOnlyBuild:
     - FP_movement
     - GunScript
     - GunsScriptable
+    - PhotonCreateRoomScript
+    - PhotonJoinRoomScript
     - PhotonPlayerNameInputScript
     - PickupChecker
     - Pickupable
     - PlayerScript
     - VoltageSource.GameManager
     - VoltageSource.PhotonLauncher
+    - VoltageSource.PhotonPlayerUI
     PhotonUnityNetworking.Demos.dll:
     - Photon.Pun.Demo.Asteroids.Asteroid
     - Photon.Pun.Demo.Asteroids.Bullet
@@ -24,6 +27,9 @@ ScriptsOnlyBuild:
     - Photon.Pun.Demo.SlotRacer.PlayerControl
     - Photon.Pun.Demo.SlotRacer.Utils.SplineWalker
     PhotonUnityNetworking.Editor.dll:
+    - Photon.Pun.PhotonRigidbodyViewEditor
+    - Photon.Pun.PhotonTransformViewEditor
+    - Photon.Pun.PhotonViewInspector
     - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.dll:
     - Photon.Pun.PhotonAnimatorView
@@ -154,15 +160,25 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 11970}
+    - Class: 114
+      Script: {instanceID: 11972}
+    - Class: 114
+      Script: {instanceID: 11978}
+    - Class: 114
       Script: {instanceID: 12104}
     - Class: 114
       Script: {instanceID: 12436}
     - Class: 114
       Script: {instanceID: 12438}
     - Class: 114
+      Script: {instanceID: 12620}
+    - Class: 114
       Script: {instanceID: 12664}
     - Class: 114
       Script: {instanceID: 13350}
+    - Class: 114
+      Script: {instanceID: 13664}
     - Class: 114
       Script: {instanceID: 14398}
     - Class: 114
@@ -176,16 +192,26 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 14922}
     - Class: 114
+      Script: {instanceID: 15412}
+    - Class: 114
       Script: {instanceID: 15718}
     - Class: 114
       Script: {instanceID: 15734}
+    - Class: 114
+      Script: {instanceID: 15974}
     - Class: 114
       Script: {instanceID: 16016}
     - Class: 114
       Script: {instanceID: 16494}
     - Class: 114
       Script: {instanceID: 16988}
+    - Class: 114
+      Script: {instanceID: 17170}
+    - Class: 114
+      Script: {instanceID: 38650}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 143
       Script: {instanceID: 0}
@@ -200,6 +226,14 @@ ScriptsOnlyBuild:
     - Class: 212
       Script: {instanceID: 0}
     - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    - Class: 225
       Script: {instanceID: 0}
     Assets/Scenes/MainMenu.unity:
     - Class: 1
@@ -406,6 +440,12 @@ ScriptsOnlyBuild:
       Script: {instanceID: 17378}
     - Class: 114
       Script: {instanceID: 17386}
+    - Class: 114
+      Script: {instanceID: 29142}
+    - Class: 114
+      Script: {instanceID: 29150}
+    - Class: 114
+      Script: {instanceID: 38650}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -486,6 +526,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11964}
     - Class: 114
+      Script: {instanceID: 11970}
+    - Class: 114
       Script: {instanceID: 11972}
     - Class: 114
       Script: {instanceID: 11978}
@@ -535,6 +577,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 16988}
     - Class: 114
       Script: {instanceID: 17170}
+    - Class: 114
+      Script: {instanceID: 38650}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -560,6 +604,8 @@ ScriptsOnlyBuild:
     - Class: 223
       Script: {instanceID: 0}
     - Class: 224
+      Script: {instanceID: 0}
+    - Class: 225
       Script: {instanceID: 0}
     - Class: 238
       Script: {instanceID: 0}
@@ -738,7 +784,7 @@ ScriptsOnlyBuild:
     className: ChatGui
   - hash:
       serializedVersion: 2
-      Hash: 0982807d60fb3884d51d4baa9fdc156c
+      Hash: de6e1a2d51b7a4869ca4aa8ce7541248
     assemblyName: Assembly-CSharp.dll
     namespaceName: VoltageSource
     className: PhotonLauncher
@@ -1572,7 +1618,7 @@ ScriptsOnlyBuild:
     className: CurrentRoomPropertiesListedInLobbyProperty
   - hash:
       serializedVersion: 2
-      Hash: bda030368c6b7bd3570b91a1719dbf63
+      Hash: 085754296d3b9f90413eeaa948764126
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: FP_Controller
@@ -2692,6 +2738,24 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PhotonCreateRoomScript
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PhotonJoinRoomScript
+  - hash:
+      serializedVersion: 2
+      Hash: 19247910acde4e00d9777014f93a008a
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: VoltageSource
+    className: PhotonPlayerUI
   platform: 19
   scenePathNames:
   - Assets/Scenes/MainMenu.unity

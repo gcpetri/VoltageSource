@@ -9,7 +9,9 @@ namespace VoltageSource
 {
     public class PhotonLauncher : MonoBehaviourPunCallbacks
     {
-        private string gameVersion = "1";
+        public string gameVersion = "1";
+        public static PhotonLauncher Instance;
+        
 
         #region Private Serializable Fields
 
@@ -26,31 +28,56 @@ namespace VoltageSource
         private void Awake()
         {
             PhotonNetwork.AutomaticallySyncScene = true;
+            Connect();
         }
 
         private void Start()
         {
             progressLabel.SetActive(false);
             controlPanel.SetActive(true);
+            Instance = this;
+            Connect();
         }
 
         public void Connect()
         {
             Debug.LogFormat("Trying to Join room with nickname: {0}", PhotonNetwork.NickName.ToString());
-            progressLabel.SetActive(true);
-            controlPanel.SetActive(false);
-            if (PhotonNetwork.IsConnected)
+            if (!PhotonNetwork.IsConnected)
             {
-                PhotonNetwork.JoinRandomRoom();
-            }
-            else
-            {
-                
                 _isConnecting = PhotonNetwork.ConnectUsingSettings();
                 PhotonNetwork.GameVersion = gameVersion;
             }
         }
 
+        public void CreateRoom(string value)
+        {
+            
+            if (PhotonNetwork.IsConnected)
+                PhotonNetwork.CreateRoom(value, new RoomOptions {MaxPlayers = maxPlayersPerRoom});
+            else
+                Connect();
+        }
+
+        /// <summary>
+        /// Called JoinRRoom for JoinRandomRoom to avoid naming conflicts
+        /// </summary>
+        public void JoinRRoom()
+        {
+            if (PhotonNetwork.IsConnected)
+                PhotonNetwork.JoinRandomRoom();
+            else
+                Connect();
+        }
+
+        public void JoinRoom(string value)
+        {
+            if (PhotonNetwork.IsConnected)
+                PhotonNetwork.JoinRoom(value);
+            else
+                Connect();
+            
+        }
+        
         #region MonoBehaviourPunCallBacks CallBacks
 
         public override void OnConnectedToMaster()
@@ -58,10 +85,8 @@ namespace VoltageSource
             if (_isConnecting)
             {
                 Debug.Log("PUN Basics Tutorial/Launcher: OnConnectedToMaster() was called by PUN");
-                PhotonNetwork.JoinRandomRoom();
                 _isConnecting = false;
             }
-            
         }
 
         public override void OnDisconnected(DisconnectCause cause)
@@ -80,16 +105,28 @@ namespace VoltageSource
 
         public override void OnJoinedRoom()
         {
-            if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
-            {
-                Debug.Log("We load the level 1");
-                PhotonNetwork.LoadLevel(1);
-            }
+            Debug.Log("We load the level 1");
+            PhotonNetwork.LoadLevel(1);
+            //if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+            //{
+                //Debug.Log("We load the level 1");
+                //PhotonNetwork.LoadLevel(1);
+            //}
             //Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
             //PhotonNetwork.LoadLevel(1);
         }
 
-        
+        public override void OnCreateRoomFailed(short returnCode, string message)
+        {
+            Debug.LogError("Failed to create room");
+        }
+
+
+        public override void OnJoinRoomFailed(short returnCode, string message)
+        {
+            Debug.LogErrorFormat("Failed to join room: Error Code: {0}", returnCode.ToString());
+        }
+
         #endregion
         
     }

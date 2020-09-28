@@ -369,6 +369,7 @@
             </e>
           </e>
         </e>
+        <e p="PhotonPlayerUI.cs" t="Include" />
         <e p="Samples" t="Include">
           <e p="Terrain Tools" t="Include">
             <e p="0.1.0-preview" t="Include">
@@ -388,6 +389,8 @@
           <e p="GunScript.cs" t="Include" />
           <e p="GunsScriptable.cs" t="Include" />
           <e p="Networking Scripts" t="Include">
+            <e p="PhotonCreateRoomScript.cs" t="Include" />
+            <e p="PhotonJoinRoomScript.cs" t="Include" />
             <e p="PhotonLauncher.cs" t="Include" />
             <e p="PhotonPlayerNameInputScript.cs" t="Include" />
           </e>

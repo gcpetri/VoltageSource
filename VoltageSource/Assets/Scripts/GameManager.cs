@@ -48,6 +48,11 @@ namespace VoltageSource
             PhotonNetwork.LeaveRoom();
         }
 
+        public int GetPing()
+        {
+            return PhotonNetwork.GetPing();
+        }
+        
         #endregion
 
         #region Private Methods

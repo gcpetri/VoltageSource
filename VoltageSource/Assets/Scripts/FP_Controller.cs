@@ -22,6 +22,7 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
     #region Networking Variables
 
     private PhotonView _photonView;
+    [SerializeField] private AudioListener localAudioListener;
 
     #endregion
     
@@ -90,6 +91,13 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
     #region Animator Variables
 
     #endregion
+
+    #region UI Variables
+
+    [SerializeField] private GameObject uiPrefab;
+    
+
+    #endregion
     
     // Start is called before the first frame update
     void Start()
@@ -101,7 +109,19 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
         if (photonView.IsMine)
         {
             fpsCamera.enabled = true;
+            localAudioListener.enabled = true;
         }
+
+        if (uiPrefab != null)
+        {
+            GameObject _uiGo = Instantiate(uiPrefab);
+            _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+        }
+        else
+        {
+            Debug.LogWarning("Missing uiPrefab reference on player prefab");
+        }
+        
     }
     
     private void Awake()
@@ -121,7 +141,13 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
         {
             return;
         }
-        
+
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            // Preform unconnect actions
+            Cursor.lockState = CursorLockMode.Confined;
+            GameManager.Instance.LeaveRoom();
+        }
 
 
         if (Input.GetButton("Fire2"))
@@ -207,7 +233,10 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-            this.health = (float) stream.ReceiveNext();
+            this.Health = (float) stream.ReceiveNext();
         }
     }
+    
+    
+    
 }
