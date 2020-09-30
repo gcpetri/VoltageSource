@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
+using VoltageSource;
 
 [RequireComponent(typeof(Animator))]
 public class GunScript : MonoBehaviour
@@ -41,7 +43,8 @@ public class GunScript : MonoBehaviour
         _currentAmmo = gunData.maxAmmo;
     }
     
-    public void Shoot()
+    [PunRPC]
+    public void Shoot(int owner)
     {
         if ((_currentAmmo <= 0 || _nextTimeToFire >= Time.time) || _isReloading) 
         {
@@ -53,6 +56,8 @@ public class GunScript : MonoBehaviour
         var instantiateBullet = Instantiate(gunData.bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.transform.rotation);
         instantiateBullet.GetComponent<BulletScript>().damage = gunData.damage;
         instantiateBullet.GetComponent<Rigidbody>().velocity = instantiateBullet.transform.right * gunData.bulletSpeed;
+        instantiateBullet.GetComponent<BulletScript>().Owner = owner;
+        //GameManager.Instance.SendProjectileRPC(gunData.bulletPrefab, bulletSpawnPoint, instantiateBullet.transform.right * gunData.bulletSpeed, Mathf.Clamp(gunData.range / (gunData.bulletSpeed), 0f, 10f));
         Destroy(instantiateBullet, Mathf.Clamp(gunData.range / (gunData.bulletSpeed), 0f, 10f));
         if (_currentAmmo <= 0)
         {

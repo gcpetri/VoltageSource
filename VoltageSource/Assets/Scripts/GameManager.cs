@@ -52,6 +52,14 @@ namespace VoltageSource
         {
             return PhotonNetwork.GetPing();
         }
+
+        public void SendProjectileRPC(GameObject prefab,Transform initialPos, Vector3 velocity, float lifeTime)
+        {
+            GameObject reference =
+                PhotonNetwork.Instantiate(prefab.name, initialPos.position, initialPos.rotation, 0);
+            reference.GetComponent<Rigidbody>().velocity = velocity;
+            Destroy(reference, lifeTime);
+        }
         
         #endregion
 

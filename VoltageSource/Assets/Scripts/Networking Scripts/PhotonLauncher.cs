@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UIElements;
+using Toggle = UnityEngine.UI.Toggle;
 
 namespace VoltageSource
 {
@@ -21,20 +23,19 @@ namespace VoltageSource
 
         [SerializeField] private GameObject controlPanel;
         [SerializeField] private GameObject progressLabel;
+        [SerializeField] private Toggle _privateToggle;
 
         #endregion
         
         private bool _isConnecting;
+        private bool _isPrivate = true; // changes based on the toggle
         private void Awake()
         {
             PhotonNetwork.AutomaticallySyncScene = true;
-            Connect();
         }
 
         private void Start()
         {
-            progressLabel.SetActive(false);
-            controlPanel.SetActive(true);
             Instance = this;
             Connect();
         }
@@ -53,7 +54,7 @@ namespace VoltageSource
         {
             
             if (PhotonNetwork.IsConnected)
-                PhotonNetwork.CreateRoom(value, new RoomOptions {MaxPlayers = maxPlayersPerRoom});
+                PhotonNetwork.CreateRoom(value, new RoomOptions {MaxPlayers = maxPlayersPerRoom, IsVisible = !_isPrivate});
             else
                 Connect();
         }
@@ -77,6 +78,12 @@ namespace VoltageSource
                 Connect();
             
         }
+
+        public void PrivateStatus()
+        {
+            _isPrivate = _privateToggle.isOn;
+            Debug.Log(_isPrivate);
+        }
         
         #region MonoBehaviourPunCallBacks CallBacks
 
@@ -91,8 +98,6 @@ namespace VoltageSource
 
         public override void OnDisconnected(DisconnectCause cause)
         {
-            progressLabel.SetActive(false);
-            controlPanel.SetActive(true);
             Debug.LogWarningFormat("PUN Basics Tutorial/Launcher: OnDisconnected() was called by PUN with reason {0}", cause.ToString());
            
         }

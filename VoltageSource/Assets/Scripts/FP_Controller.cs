@@ -54,14 +54,10 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
             get => health;
             set
             {
-                if (!photonView.IsMine)
-                {
-                    return;
-                }
+                Debug.LogErrorFormat("PhotonView {0} took damage, current health is {1}", photonView.ViewID, health);
                 if (health <= 0)
                 {
                     Debug.Log("Died");
-                    GameManager.Instance.LeaveRoom();
                     // If player dies then all function to handle their death
                 }
                 health = value;
@@ -154,9 +150,9 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
             _currentGunInfo.isAiming = true;
         else
             _currentGunInfo.isAiming = false;
-        
+
         if (Input.GetButton("Fire1"))
-            _currentGunInfo.Shoot();
+            photonView.RPC("ShootRPC", RpcTarget.All, null);
         
         GroundCheck();
         InputProcess();
@@ -223,8 +219,13 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
         }
 
     #endregion
-    
 
+    [PunRPC]
+    private void ShootRPC()
+    {
+        _currentGunInfo.Shoot(photonView.ViewID);
+    }
+    
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)

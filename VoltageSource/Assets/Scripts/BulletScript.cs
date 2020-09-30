@@ -11,6 +11,7 @@ public class BulletScript : MonoBehaviour
     private Rigidbody _rb;
     private Vector3 _lastPosition;
     [SerializeField] private LayerMask layermask;
+    [HideInInspector] public int Owner;
 
     private void Start()
     {
@@ -27,8 +28,13 @@ public class BulletScript : MonoBehaviour
         Debug.DrawRay(_lastPosition, direction, Color.green);
         if (Physics.Raycast(_lastPosition, direction, out hit, 100f, layermask))
         {
+            
             if (hit.collider.CompareTag("Player"))
             {
+                var val = hit.collider.GetComponent<PhotonView>().ViewID;
+                if (val == Owner)
+                    return;
+                            
                 hit.collider.GetComponent<FP_Controller>().Health = hit.collider.GetComponent<FP_Controller>().Health - damage; 
             }
             else
@@ -45,4 +51,5 @@ public class BulletScript : MonoBehaviour
 
         _lastPosition = transform.position;
     }
+    
 }
