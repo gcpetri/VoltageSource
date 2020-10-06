@@ -6,12 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+    path: Assets/Scenes/Game Scenes/MainMenu.unity
     guid: 3f19f1eca56669d4282cf3e07c6edd00
   - enabled: 1
-    path: Assets/Scenes/FlatPlane.unity
+    path: Assets/Scenes/Game Scenes/TeamSelectScene.unity
+    guid: e6fa4d25a024f454e81791f093b652a8
+  - enabled: 1
+    path: Assets/Scenes/Game Scenes/FlatPlane.unity
     guid: 9e5928196819105438cb7e7a2854bc52
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/Other Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

@@ -12,6 +12,7 @@ public class BulletScript : MonoBehaviour
     private Vector3 _lastPosition;
     [SerializeField] private LayerMask layermask;
     [HideInInspector] public int Owner;
+    private RaycastHit _hit;
 
     private void Start()
     {
@@ -24,24 +25,23 @@ public class BulletScript : MonoBehaviour
         // Implement raycast each frame. 
         Vector3 currentPosition = transform.position;
         Vector3 direction = currentPosition - _lastPosition;
-        RaycastHit hit;
         Debug.DrawRay(_lastPosition, direction, Color.green);
-        if (Physics.Raycast(_lastPosition, direction, out hit, 100f, layermask))
+        if (Physics.Raycast(_lastPosition, direction, out _hit, 100f, layermask))
         {
             
-            if (hit.collider.CompareTag("Player"))
+            if (_hit.collider.CompareTag("Player"))
             {
-                var val = hit.collider.GetComponent<PhotonView>().ViewID;
+                var val = _hit.collider.GetComponent<PhotonView>().ViewID;
                 if (val == Owner)
                     return;
                             
-                hit.collider.GetComponent<FP_Controller>().Health = hit.collider.GetComponent<FP_Controller>().Health - damage; 
+                _hit.collider.GetComponent<FP_Controller>().Health = _hit.collider.GetComponent<FP_Controller>().Health - damage; 
             }
             else
             {
                 GameObject impact = GameObject.Instantiate(_decal, transform.position, Quaternion.identity);
-                impact.transform.position = hit.point + (hit.normal * 0.01f);
-                impact.transform.rotation = Quaternion.FromToRotation(-Vector3.forward, hit.normal);
+                impact.transform.position = _hit.point + (_hit.normal * 0.01f);
+                impact.transform.rotation = Quaternion.FromToRotation(-Vector3.forward, _hit.normal);
                 Destroy(impact, 5f);
             }
             gameObject.SetActive(false);
@@ -50,6 +50,6 @@ public class BulletScript : MonoBehaviour
         }
 
         _lastPosition = transform.position;
+        
     }
-    
 }

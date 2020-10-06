@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine.UIElements;
-using Toggle = UnityEngine.UI.Toggle;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace VoltageSource
 {
@@ -25,6 +25,10 @@ namespace VoltageSource
         [SerializeField] private GameObject progressLabel;
         [SerializeField] private Toggle _privateToggle;
 
+        [SerializeField] private int MainMenuIndex;
+        [SerializeField] private int TeamSelectIndex;
+        [SerializeField] private int GameSceneIndex;
+        
         #endregion
         
         private bool _isConnecting;
@@ -36,7 +40,16 @@ namespace VoltageSource
 
         private void Start()
         {
-            Instance = this;
+            // Singleton pattern
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(this);
+            }else if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+            }
+            
             Connect();
         }
 
@@ -84,6 +97,51 @@ namespace VoltageSource
             _isPrivate = _privateToggle.isOn;
             Debug.Log(_isPrivate);
         }
+
+        public string GetHostName()
+        {
+            return PhotonNetwork.MasterClient.NickName;
+        }
+
+        public string GetOtherPlayerName()
+        {
+            string otherPlayer = "Player Two";
+            foreach (Player obj in PhotonNetwork.PlayerList)
+            {
+                if(!obj.IsMasterClient)
+                {
+                    otherPlayer = obj.NickName;
+                }
+            }
+
+            return otherPlayer;
+        }
+
+        public string GetRoomCode()
+        {
+            return PhotonNetwork.CurrentRoom.Name;
+        }
+        
+        /// <summary>
+        /// This is only to be used for leaving the team select scene
+        /// </summary>
+        public void LeaveRoom()
+        {
+            if (!PhotonNetwork.IsConnected)
+                return;
+            Debug.Log("LeaveRoom() was called");
+            PhotonNetwork.LeaveRoom();
+        }
+
+        public void LoadTeamSelect()
+        {
+            PhotonNetwork.LoadLevel(TeamSelectIndex);
+        }
+
+        public void LoadGameScene()
+        {
+            PhotonNetwork.LoadLevel(GameSceneIndex);
+        }
         
         #region MonoBehaviourPunCallBacks CallBacks
 
@@ -105,20 +163,20 @@ namespace VoltageSource
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
             Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
-            PhotonNetwork.CreateRoom(null, new RoomOptions{MaxPlayers =  maxPlayersPerRoom});
+            // Generate random room name which is a 5 digit code
+            System.Random generator = new System.Random();
+            String nameCode = generator.Next(0, 99999).ToString("D5");
+            while(PhotonNetwork.CreateRoom(nameCode, new RoomOptions{MaxPlayers =  maxPlayersPerRoom}))
+            {
+                nameCode = generator.Next(0, 99999).ToString("D5");
+            }
+            
         }
 
         public override void OnJoinedRoom()
         {
-            Debug.Log("We load the level 1");
-            PhotonNetwork.LoadLevel(1);
-            //if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
-            //{
-                //Debug.Log("We load the level 1");
-                //PhotonNetwork.LoadLevel(1);
-            //}
-            //Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
-            //PhotonNetwork.LoadLevel(1);
+            Debug.LogFormat("OnJoinedRoom called loading level {0}", TeamSelectIndex);
+            PhotonNetwork.LoadLevel(TeamSelectIndex);
         }
 
         public override void OnCreateRoomFailed(short returnCode, string message)
@@ -130,6 +188,12 @@ namespace VoltageSource
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
             Debug.LogErrorFormat("Failed to join room: Error Code: {0}", returnCode.ToString());
+        }
+
+        public override void OnLeftRoom()
+        {
+            SceneManager.LoadScene(MainMenuIndex);
+            base.OnLeftRoom();
         }
 
         #endregion

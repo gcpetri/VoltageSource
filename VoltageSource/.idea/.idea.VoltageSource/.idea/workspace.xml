@@ -29,11 +29,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/MainMenuScript.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonCreateRoomScript.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonPlayerNameInputScript.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/PhotonPlayerUI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/FP_Controller.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GunScript.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -58,11 +56,15 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonJoinRoomScript.cs" />
         <option value="$PROJECT_DIR$/Assets/PhotonPlayerUI.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/FP_Controller.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/BulletScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GunScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/FP_Controller.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
+        <option value="$PROJECT_DIR$/Assets/TeamSelectPhotoViews.cs" />
         <option value="$PROJECT_DIR$/Assets/MainMenuScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NamePlateScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/TeamManagerScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/NamePlateScript.cs" />
       </list>
     </option>
   </component>
@@ -127,6 +129,9 @@
       <workItem from="1601241920927" duration="13502000" />
       <workItem from="1601269450132" duration="1939000" />
       <workItem from="1601446307717" duration="5193000" />
+      <workItem from="1601491599107" duration="8755000" />
+      <workItem from="1601614820440" duration="6587000" />
+      <workItem from="1601663374054" duration="2737000" />
     </task>
     <servers />
   </component>
@@ -175,24 +180,5 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1601451216731" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs</url>
-          <line>92</line>
-          <properties documentPath="D:\Users\Erik\Documents\VoltageSource\VoltageSource\VoltageSource\Assets\Scripts\Networking Scripts\PhotonLauncher.cs" initialLine="92">
-            <startOffsets>
-              <option value="2546" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2547" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

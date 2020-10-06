@@ -57,7 +57,6 @@ public class GunScript : MonoBehaviour
         instantiateBullet.GetComponent<BulletScript>().damage = gunData.damage;
         instantiateBullet.GetComponent<Rigidbody>().velocity = instantiateBullet.transform.right * gunData.bulletSpeed;
         instantiateBullet.GetComponent<BulletScript>().Owner = owner;
-        //GameManager.Instance.SendProjectileRPC(gunData.bulletPrefab, bulletSpawnPoint, instantiateBullet.transform.right * gunData.bulletSpeed, Mathf.Clamp(gunData.range / (gunData.bulletSpeed), 0f, 10f));
         Destroy(instantiateBullet, Mathf.Clamp(gunData.range / (gunData.bulletSpeed), 0f, 10f));
         if (_currentAmmo <= 0)
         {
