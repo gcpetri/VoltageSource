@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae264f022a2156b49b744a3af1adc0a4, type: 3}
+  m_Name: Moon
+  m_EditorClassIdentifier: 
+  damage: 1000
+  range: 200
+  firerate: 10
+  maxAmmo: 1
+  bulletSpeed: 50
+  reloadTime: 1
+  bulletPrefab: {fileID: 4913934068263715102, guid: 1d945e566f942e440aae3c28a728fe2d, type: 3}
+  mesh: {fileID: -7511558181221131132, guid: e71a0f45a71f8604593eb006e9b418fa, type: 3}
+  meshFilter: {fileID: -5754084199372789682, guid: e71a0f45a71f8604593eb006e9b418fa, type: 3}
