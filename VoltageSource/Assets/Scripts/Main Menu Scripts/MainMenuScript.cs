@@ -107,7 +107,11 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable
     public void StartMatch()
     {
         // Get info regarding who is on what team then start the game based on that and update teammanager
-        PhotonLauncher.Instance.LoadGameScene();
+        if (!PhotonLauncher.Instance.LoadGameScene())
+        {
+            // do stuff that tells the person that there are not enough people in the match
+            // or have an button for the option to just go ahead and do single player. 
+        }
     }
 
 

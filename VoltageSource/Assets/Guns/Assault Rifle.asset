@@ -16,8 +16,6 @@ MonoBehaviour:
   range: 100
   firerate: 5
   maxAmmo: 20
-  bulletSpeed: 100
+  bulletSpeed: 200
   reloadTime: 1
   bulletPrefab: {fileID: 8598642155750595174, guid: e4aef1f7a01205646a354bbbdf71dfab, type: 3}
-  gunPrefab: {fileID: 2026342823576858691, guid: bcd6cc6f740a84144aecff43b9af5fcf, type: 3}
-  gunAnimator: {fileID: 2026342823576858693, guid: bcd6cc6f740a84144aecff43b9af5fcf, type: 3}

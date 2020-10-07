@@ -50,24 +50,24 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\PunClasses.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Views\PhotonAnimatorView.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\PhotonHandler.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\PhotonNetwork.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\PhotonNetworkPart.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\CustomTypes.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\PhotonStreamQueue.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Views\PhotonRigidbody2DView.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Views\PhotonRigidbodyView.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Views\PhotonTransformView.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\ServerSettings.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Interfaces\IPhotonViewCallbacks.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Utilities\NestedComponentUtilities.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Views\PhotonTransformViewClassic.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Enums.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\Interfaces\IPunCallbacks.cs" />
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\Code\PhotonView.cs" />
-     <None Include="Assets\Photon\PhotonUnityNetworking\Code\PhotonUnityNetworking.asmdef" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\PunClasses.cs" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\Views\PhotonAnimatorView.cs" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\PhotonHandler.cs" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\PhotonNetwork.cs" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\PhotonNetworkPart.cs" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\CustomTypes.cs" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\PhotonStreamQueue.cs" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\Views\PhotonRigidbody2DView.cs" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\Views\PhotonRigidbodyView.cs" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\Views\PhotonTransformView.cs" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\ServerSettings.cs" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\Interfaces\IPhotonViewCallbacks.cs" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\Utilities\NestedComponentUtilities.cs" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\Views\PhotonTransformViewClassic.cs" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\Enums.cs" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\Interfaces\IPunCallbacks.cs" />
+     <Compile Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\PhotonView.cs" />
+     <None Include="Assets\Scenes\Photon\PhotonUnityNetworking\Code\PhotonUnityNetworking.asmdef" />
  <Reference Include="UnityEditor.UI">
  <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
@@ -270,10 +270,10 @@
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.4f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="Photon3Unity3D">
- <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Assets/Photon/PhotonLibs/Photon3Unity3D.dll</HintPath>
+ <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Assets/Scenes/Photon/PhotonLibs/Photon3Unity3D.dll</HintPath>
  </Reference>
  <Reference Include="websocket-sharp">
- <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
+ <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Assets/Scenes/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
  </Reference>
  <Reference Include="ICSharpCode.NRefactory">
  <HintPath>D:/Users/Erik/Documents/VoltageSource/VoltageSource/VoltageSource/Library/PackageCache/com.unity.render-pipelines.core@8.2.0/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>

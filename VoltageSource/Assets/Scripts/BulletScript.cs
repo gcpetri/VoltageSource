@@ -42,6 +42,7 @@ public class BulletScript : MonoBehaviour
                 GameObject impact = GameObject.Instantiate(_decal, transform.position, Quaternion.identity);
                 impact.transform.position = _hit.point + (_hit.normal * 0.01f);
                 impact.transform.rotation = Quaternion.FromToRotation(-Vector3.forward, _hit.normal);
+                impact.transform.localScale = impact.transform.lossyScale * 0.25f;
                 Destroy(impact, 5f);
             }
             gameObject.SetActive(false);

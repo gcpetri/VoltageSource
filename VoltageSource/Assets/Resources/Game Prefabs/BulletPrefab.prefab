@@ -117,6 +117,7 @@ MonoBehaviour:
   layermask:
     serializedVersion: 2
     m_Bits: 768
+  Owner: 0
 --- !u!96 &293351998642826724
 TrailRenderer:
   serializedVersion: 2
@@ -125,7 +126,7 @@ TrailRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8598642155750595174}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

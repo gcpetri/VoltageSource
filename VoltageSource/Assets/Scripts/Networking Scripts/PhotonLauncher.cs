@@ -138,9 +138,15 @@ namespace VoltageSource
             PhotonNetwork.LoadLevel(TeamSelectIndex);
         }
 
-        public void LoadGameScene()
+        public bool LoadGameScene()
         {
+            if (PhotonNetwork.CountOfPlayers < 2)
+            {
+                Debug.LogError("Not enough players in the game");
+                return false;
+            }
             PhotonNetwork.LoadLevel(GameSceneIndex);
+            return true;
         }
         
         #region MonoBehaviourPunCallBacks CallBacks
