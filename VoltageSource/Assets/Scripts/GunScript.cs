@@ -66,6 +66,7 @@ public class GunScript : MonoBehaviour
             StartReloading();
         }
         _nextTimeToFire = Time.time + (1 / gunData.firerate);
+        gunAnimator.SetBool(_shootingID, false);
     }
     
     private IEnumerator Reload()
