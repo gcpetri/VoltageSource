@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using VoltageSource;
@@ -154,15 +155,18 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
             GameManager.Instance.LeaveRoom();
         }
 
-
+        
         if (Input.GetButton("Fire2"))
             _currentGunInfo.isAiming = true;
         else
             _currentGunInfo.isAiming = false;
 
+
         if (Input.GetButton("Fire1"))
+        {
             photonView.RPC("ShootRPC", RpcTarget.All, null);
-        
+        }
+
         GroundCheck();
         InputProcess();
 

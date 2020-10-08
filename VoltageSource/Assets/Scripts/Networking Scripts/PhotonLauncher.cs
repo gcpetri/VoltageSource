@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -138,14 +139,42 @@ namespace VoltageSource
             PhotonNetwork.LoadLevel(TeamSelectIndex);
         }
 
-        public bool LoadGameScene()
+        public void LoadGameScene()
+        {
+            PhotonNetwork.LoadLevel(GameSceneIndex);
+        }
+
+        public bool LaunchGameMatch(string playerOneTeam, string playerTwoTeam)
         {
             if (PhotonNetwork.CountOfPlayers < 2)
             {
                 Debug.LogError("Not enough players in the game");
-                return false;
             }
-            PhotonNetwork.LoadLevel(GameSceneIndex);
+            // Add to teamroster 
+            foreach (Player obj in PhotonNetwork.PlayerList)
+            {
+                PhotonTeam team;
+                if(!obj.IsMasterClient)
+                {
+                    if (!PhotonTeamsManager.Instance.TryGetTeamByName(playerOneTeam, out team))
+                    {
+                        Debug.LogError("Couldn't find team with that name");
+                        return false;
+                    }
+                    obj.JoinTeam(team.Name);
+                }
+                else
+                {
+                    if (!PhotonTeamsManager.Instance.TryGetTeamByName(playerTwoTeam, out team))
+                    {
+                        Debug.LogError("Couldn't find team with that name");
+                        return false;
+                    }
+                    obj.JoinTeam(team.Name);
+                }
+            }
+            
+            LoadGameScene();
             return true;
         }
         

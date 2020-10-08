@@ -25,6 +25,7 @@ public class GunScript : MonoBehaviour
 
     private int _reloadingID;
     private int _aimingID;
+    private int _shootingID;
 
     private bool _isAiming = false;
     public bool isAiming
@@ -38,6 +39,7 @@ public class GunScript : MonoBehaviour
         gunAnimator = GetComponent<Animator>();
         _reloadingID = Animator.StringToHash("Reloading");
         _aimingID = Animator.StringToHash("Aiming");
+        _shootingID = Animator.StringToHash("Shooting");
         
         // Gun start with max ammo by default
         _currentAmmo = gunData.maxAmmo;
@@ -50,6 +52,7 @@ public class GunScript : MonoBehaviour
         {
             return;
         }
+        gunAnimator.SetBool(_shootingID, true);
         _currentAmmo--;
         _gunParticleSystem.Play(); // tells data, but doens't have location
         audioSource.PlayOneShot(firingSound);
