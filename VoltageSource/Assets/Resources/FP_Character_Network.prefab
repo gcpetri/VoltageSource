@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1937219071217702346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709575649736761273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: isRunning
+  - Type: 4
+    SynchronizeType: 1
+    Name: isDancing
+  - Type: 9
+    SynchronizeType: 1
+    Name: isPickingUp
+  - Type: 9
+    SynchronizeType: 1
+    Name: jumped
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &1573437678617282578
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,6 +393,7 @@ MonoBehaviour:
   - {fileID: 5865276145855797958}
   - {fileID: 1573437676982476989}
   - {fileID: 5166323483910779359}
+  - {fileID: 1937219071217702346}
   - {fileID: 9141752237026633941}
   viewIdField: 0
   InstantiationId: 0
@@ -406,6 +437,7 @@ MonoBehaviour:
   lookSensitivity: 300
   fpsCamera: {fileID: 1791268987700070073}
   currentGun: {fileID: 705654695580670622}
+  anim: {fileID: 6085233029857288057}
   uiPrefab: {fileID: 5469184491831271201, guid: 861fdaf6aba6bc54d86f91e8b5e94589, type: 3}
 --- !u!114 &5166323483910779359
 MonoBehaviour:
@@ -522,11 +554,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -79.30499
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 4017ac13e010b2f40ac2023d68cbad84, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 4017ac13e010b2f40ac2023d68cbad84, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a70ee7d888f9a7447a539c1c46befdf0, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4017ac13e010b2f40ac2023d68cbad84, type: 3}
+--- !u!1 &709575649736761273 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4017ac13e010b2f40ac2023d68cbad84, type: 3}
+  m_PrefabInstance: {fileID: 367468446232781544}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &185557875750585603 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4017ac13e010b2f40ac2023d68cbad84, type: 3}
+  m_PrefabInstance: {fileID: 367468446232781544}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6085233029857288057 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 4017ac13e010b2f40ac2023d68cbad84, type: 3}
   m_PrefabInstance: {fileID: 367468446232781544}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1573437677042789085

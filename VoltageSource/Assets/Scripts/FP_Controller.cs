@@ -86,6 +86,11 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
 
     #region Animator Variables
 
+    [Header("Animator variables")] [SerializeField]
+    private Animator anim;
+
+    private AnimatorControllerParameter[] _animParams;
+
     #endregion
 
     #region UI Variables
@@ -117,7 +122,11 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
         {
             Debug.LogWarning("Missing uiPrefab reference on player prefab");
         }
-        
+
+        if (anim != null)
+        {
+            _animParams = anim.parameters;
+        }
     }
     
     private void Awake()
@@ -176,10 +185,20 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
 
         MovePlayer(xAxis, zAxis); // Moves the player
         MoveCamera(mouseX, mouseY); // Moves the camera
+
+        if (xAxis != 0 || zAxis != 0)
+        {
+            anim.SetBool(_animParams[0].name, true);
+        }
+        else
+        {
+            anim.SetBool(_animParams[0].name, false);
+        }
         
         if (Input.GetButtonDown("Jump") && _isGrounded) // Checks if jumps and runs appropriate code
         {
             _velocity.y = Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
+            anim.SetTrigger(_animParams[3].name);
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
