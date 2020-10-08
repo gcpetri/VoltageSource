@@ -405,7 +405,7 @@ MonoBehaviour:
   health: 100
   lookSensitivity: 300
   fpsCamera: {fileID: 1791268987700070073}
-  currentGun: {fileID: 705654695580670622}
+  currentGun: {fileID: 919132149155446097, guid: 8e21583cb030cb449a9a4038ed8221ad, type: 3}
   uiPrefab: {fileID: 5469184491831271201, guid: 861fdaf6aba6bc54d86f91e8b5e94589, type: 3}
 --- !u!114 &5166323483910779359
 MonoBehaviour:
@@ -586,11 +586,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bcd6cc6f740a84144aecff43b9af5fcf, type: 3}
---- !u!1 &705654695580670622 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2026342823576858691, guid: bcd6cc6f740a84144aecff43b9af5fcf, type: 3}
-  m_PrefabInstance: {fileID: 1573437677042789085}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &180475592584216612 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1681202359520570105, guid: bcd6cc6f740a84144aecff43b9af5fcf, type: 3}
@@ -601,7 +596,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7713538072968888840, guid: bcd6cc6f740a84144aecff43b9af5fcf, type: 3}
   m_PrefabInstance: {fileID: 1573437677042789085}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 705654695580670622}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}

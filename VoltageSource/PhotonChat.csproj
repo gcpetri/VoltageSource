@@ -52,23 +52,23 @@
     <UnityVersion>2020.1.4f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Photon\PhotonChat\Code\ChatParameterCode.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Code\ChatOperationCode.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Code\ChatDisconnectCause.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Code\ChatPeer.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Code\IChatClientListener.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Code\ChatChannel.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Code\ChatEventCode.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Code\ChatAppSettings.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Code\ChatState.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Code\ChannelCreationOptions.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Code\ChatClient.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Code\ChatUserStatus.cs" />
-    <Compile Include="Assets\Photon\PhotonChat\Code\ChannelWellKnownProperties.cs" />
+    <Compile Include="Assets\Scenes\Photon\PhotonChat\Code\ChatParameterCode.cs" />
+    <Compile Include="Assets\Scenes\Photon\PhotonChat\Code\ChatOperationCode.cs" />
+    <Compile Include="Assets\Scenes\Photon\PhotonChat\Code\ChatDisconnectCause.cs" />
+    <Compile Include="Assets\Scenes\Photon\PhotonChat\Code\ChatPeer.cs" />
+    <Compile Include="Assets\Scenes\Photon\PhotonChat\Code\IChatClientListener.cs" />
+    <Compile Include="Assets\Scenes\Photon\PhotonChat\Code\ChatChannel.cs" />
+    <Compile Include="Assets\Scenes\Photon\PhotonChat\Code\ChatEventCode.cs" />
+    <Compile Include="Assets\Scenes\Photon\PhotonChat\Code\ChatAppSettings.cs" />
+    <Compile Include="Assets\Scenes\Photon\PhotonChat\Code\ChatState.cs" />
+    <Compile Include="Assets\Scenes\Photon\PhotonChat\Code\ChannelCreationOptions.cs" />
+    <Compile Include="Assets\Scenes\Photon\PhotonChat\Code\ChatClient.cs" />
+    <Compile Include="Assets\Scenes\Photon\PhotonChat\Code\ChatUserStatus.cs" />
+    <Compile Include="Assets\Scenes\Photon\PhotonChat\Code\ChannelWellKnownProperties.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\Photon\PhotonChat\Code\changes-chat.txt" />
-     <None Include="Assets\Photon\PhotonChat\Code\PhotonChat.asmdef" />
+     <None Include="Assets\Scenes\Photon\PhotonChat\Code\changes-chat.txt" />
+     <None Include="Assets\Scenes\Photon\PhotonChat\Code\PhotonChat.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.4f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -268,10 +268,10 @@
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\15.0\Editor\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Photon3Unity3D">
-      <HintPath>Assets\Photon\PhotonLibs\Photon3Unity3D.dll</HintPath>
+      <HintPath>Assets\Scenes\Photon\PhotonLibs\Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="websocket-sharp">
-      <HintPath>Assets\Photon\PhotonLibs\WebSocket\websocket-sharp.dll</HintPath>
+      <HintPath>Assets\Scenes\Photon\PhotonLibs\WebSocket\websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.NRefactory">
       <HintPath>Library\PackageCache\com.unity.render-pipelines.core@8.2.0\Editor\ShaderGenerator\ICSharpCode.NRefactory.dll</HintPath>
