@@ -52,7 +52,7 @@ public class GunScript : MonoBehaviour
         {
             return;
         }
-        gunAnimator.SetBool(_shootingID, true);
+        //gunAnimator.SetBool(_shootingID, true);
         _currentAmmo--;
         _gunParticleSystem.Play(); // tells data, but doens't have location
         audioSource.PlayOneShot(firingSound);

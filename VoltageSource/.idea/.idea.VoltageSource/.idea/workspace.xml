@@ -62,7 +62,6 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonJoinRoomScript.cs" />
         <option value="$PROJECT_DIR$/Assets/PhotonPlayerUI.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GunScript.cs" />
         <option value="$PROJECT_DIR$/Assets/TeamSelectPhotoViews.cs" />
         <option value="$PROJECT_DIR$/Assets/MainMenuScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/NamePlateScript.cs" />
@@ -74,6 +73,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FP_Controller.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GunScript.cs" />
       </list>
     </option>
   </component>
@@ -146,6 +146,7 @@
       <workItem from="1602097258975" duration="5382000" />
       <workItem from="1602123036903" duration="4307000" />
       <workItem from="1602187948510" duration="1055000" />
+      <workItem from="1602189372110" duration="330000" />
     </task>
     <servers />
   </component>

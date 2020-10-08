@@ -136,8 +136,6 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
         {
             LocalPlayerInstance = this.gameObject;
         }
-
-        DontDestroyOnLoad(this.gameObject);
     }
     // Update is called once per frame
     void Update()
