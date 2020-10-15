@@ -46,7 +46,6 @@ namespace VoltageSource
         void Start()
         {
             _maxHealth = _target.Health;
-            DontDestroyOnLoad(this);
         }
 
         private void Awake()

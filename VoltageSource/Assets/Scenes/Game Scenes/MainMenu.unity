@@ -334,7 +334,6 @@ GameObject:
   - component: {fileID: 53917918}
   - component: {fileID: 53917917}
   - component: {fileID: 53917916}
-  - component: {fileID: 53917919}
   m_Layer: 5
   m_Name: 'Join Room Name Input '
   m_TagString: Untagged
@@ -441,9 +440,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 53917919}
-        m_TargetAssemblyTypeName: PhotonJoinRoomScript, Assembly-CSharp
-        m_MethodName: SetRoomName
+      - m_Target: {fileID: 399856319}
+        m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
+        m_MethodName: SetJoinRoomName
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -509,18 +508,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53917914}
   m_CullTransparentMesh: 0
---- !u!114 &53917919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 53917914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c6219683b281a9468f7a6b1935d8255, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &85885309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1520,8 +1507,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 53917919}
-        m_TargetAssemblyTypeName: PhotonJoinRoomScript, Assembly-CSharp
+      - m_Target: {fileID: 399856319}
+        m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
         m_MethodName: JoinRoom
         m_Mode: 1
         m_Arguments:
@@ -1798,7 +1785,7 @@ RectTransform:
   - {fileID: 1266935847}
   - {fileID: 783837584}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1819,9 +1806,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   matchMakingPanel: {fileID: 1266935846}
   mainMenuPanel: {fileID: 930287347}
+  connecting: {fileID: 783837583}
   playerOne: {fileID: 0}
   playerTwo: {fileID: 0}
   roomCodeText: {fileID: 0}
+  startMatchButton: {fileID: 0}
+  _playerOneTeamChoice: 0
+  _playerTwoTeamChoice: 0
 --- !u!1 &589339767
 GameObject:
   m_ObjectHideFlags: 0
@@ -2618,17 +2609,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 783837583}
   m_CullTransparentMesh: 0
---- !u!114 &793965781 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6348093057527454781, guid: a1f40aca35bf85a45b2c63c83e7d7862, type: 3}
-  m_PrefabInstance: {fileID: 6348093057818093800}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc5dedd072b79b14fa1d2636919c273f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &797442464
 GameObject:
   m_ObjectHideFlags: 0
@@ -2788,9 +2768,9 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 793965781}
-        m_TargetAssemblyTypeName: VoltageSource.PhotonLauncher, Assembly-CSharp
-        m_MethodName: PrivateStatus
+      - m_Target: {fileID: 399856319}
+        m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
+        m_MethodName: CreateRoom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2865,7 +2845,6 @@ GameObject:
   - component: {fileID: 903433757}
   - component: {fileID: 903433756}
   - component: {fileID: 903433755}
-  - component: {fileID: 903433758}
   m_Layer: 5
   m_Name: Create Room Name Input
   m_TagString: Untagged
@@ -2972,9 +2951,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 903433758}
-        m_TargetAssemblyTypeName: PhotonCreateRoomScript, Assembly-CSharp
-        m_MethodName: SetRoomName
+      - m_Target: {fileID: 399856319}
+        m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
+        m_MethodName: SetCreateRoomName
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3040,18 +3019,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 903433753}
   m_CullTransparentMesh: 0
---- !u!114 &903433758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903433753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97019291824c0234eba8d225ad9ca358, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &930287347
 GameObject:
   m_ObjectHideFlags: 0
@@ -3768,8 +3735,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 903433758}
-        m_TargetAssemblyTypeName: PhotonCreateRoomScript, Assembly-CSharp
+      - m_Target: {fileID: 399856319}
+        m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
         m_MethodName: CreateRoom
         m_Mode: 1
         m_Arguments:
@@ -3882,7 +3849,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1518015716
 GameObject:
@@ -4898,8 +4865,8 @@ Camera:
   m_GameObject: {fileID: 1788534838}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -5054,15 +5021,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6997774016285386809, guid: 35359e4ed8a195446b1f55a0187f1c8d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6997774016285386809, guid: 35359e4ed8a195446b1f55a0187f1c8d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6997774016285386809, guid: 35359e4ed8a195446b1f55a0187f1c8d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6997774016285386809, guid: 35359e4ed8a195446b1f55a0187f1c8d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5123,15 +5090,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6348093057527454782, guid: a1f40aca35bf85a45b2c63c83e7d7862, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6348093057527454782, guid: a1f40aca35bf85a45b2c63c83e7d7862, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6348093057527454782, guid: a1f40aca35bf85a45b2c63c83e7d7862, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6348093057527454782, guid: a1f40aca35bf85a45b2c63c83e7d7862, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5139,7 +5106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6348093057527454782, guid: a1f40aca35bf85a45b2c63c83e7d7862, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6348093057527454782, guid: a1f40aca35bf85a45b2c63c83e7d7862, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

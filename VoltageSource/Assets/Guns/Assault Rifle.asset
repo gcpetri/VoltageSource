@@ -19,3 +19,4 @@ MonoBehaviour:
   bulletSpeed: 200
   reloadTime: 1
   bulletPrefab: {fileID: 8598642155750595174, guid: e4aef1f7a01205646a354bbbdf71dfab, type: 3}
+  spreadAngle: 1

@@ -5,13 +5,32 @@ using UnityEngine;
 
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 
-[RequireComponent(typeof(PhotonTeamsManager))]
+
 public class TeamManagerScript : MonoBehaviour
 {
    public static TeamManagerScript Instance;
-   private PhotonTeamsManager ptm;
-   
+
+   // Assume player one is always the master client (which should be the case)
+   [SerializeField]private int _playerOneTeam = 0;
+   [SerializeField]private int _playerTwoTeam = 1;
+   public int PlayerOneTeam
+   {
+      get => _playerOneTeam;
+      set
+      {
+         _playerOneTeam = value;
+      }
+   }
+   public int PlayerTwoTeam
+   {
+      get => _playerTwoTeam;
+      set
+      {
+         _playerTwoTeam = value;
+      }
+   }
    
    private void Awake()
    {
@@ -24,7 +43,6 @@ public class TeamManagerScript : MonoBehaviour
          Destroy(this);
       }
       DontDestroyOnLoad(this);
-      ptm = GetComponent<PhotonTeamsManager>();
    }
    
 }

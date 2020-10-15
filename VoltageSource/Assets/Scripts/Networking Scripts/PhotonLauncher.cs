@@ -144,38 +144,20 @@ namespace VoltageSource
             PhotonNetwork.LoadLevel(GameSceneIndex);
         }
 
-        public bool LaunchGameMatch(string playerOneTeam, string playerTwoTeam)
+        public bool LaunchGameMatch()
         {
             if (PhotonNetwork.CountOfPlayers < 2)
             {
                 Debug.LogError("Not enough players in the game");
             }
-            // Add to teamroster 
-            foreach (Player obj in PhotonNetwork.PlayerList)
-            {
-                PhotonTeam team;
-                if(!obj.IsMasterClient)
-                {
-                    if (!PhotonTeamsManager.Instance.TryGetTeamByName(playerOneTeam, out team))
-                    {
-                        Debug.LogError("Couldn't find team with that name");
-                        return false;
-                    }
-                    obj.JoinTeam(team.Name);
-                }
-                else
-                {
-                    if (!PhotonTeamsManager.Instance.TryGetTeamByName(playerTwoTeam, out team))
-                    {
-                        Debug.LogError("Couldn't find team with that name");
-                        return false;
-                    }
-                    obj.JoinTeam(team.Name);
-                }
-            }
             
             LoadGameScene();
             return true;
+        }
+
+        public void TestRPCCall(string rpcCallName)
+        {
+            photonView.RPC(rpcCallName, RpcTarget.All);
         }
         
         #region MonoBehaviourPunCallBacks CallBacks

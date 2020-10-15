@@ -391,8 +391,6 @@
             <e p="NamePlateScript.cs" t="Include" />
           </e>
           <e p="Networking Scripts" t="Include">
-            <e p="PhotonCreateRoomScript.cs" t="Include" />
-            <e p="PhotonJoinRoomScript.cs" t="Include" />
             <e p="PhotonLauncher.cs" t="Include" />
             <e p="PhotonPlayerNameInputScript.cs" t="Include" />
             <e p="TeamManagerScript.cs" t="Include" />
@@ -406,8 +404,8 @@
           <e p="Pickupable.cs" t="Include" />
           <e p="PickupChecker.cs" t="Include" />
           <e p="PlayerScript.cs" t="Include" />
+          <e p="SpawnPointEditorHelp.cs" t="Include" />
         </e>
-        <e p="SpawnPointEditorHelp.cs" t="Include" />
         <e p="TextMesh Pro" t="Include">
           <e p="Fonts" t="Include">
             <e p="LiberationSans - OFL.txt" t="Include" />

@@ -43,6 +43,9 @@ MonoBehaviour:
   - Impact
   - TeamSelectP1
   - TeamSelectP2
+  - StartMatch
+  - TeamSelectP1D
+  - TeamSelectP2D
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1
   DevRegionSetOnce: 1

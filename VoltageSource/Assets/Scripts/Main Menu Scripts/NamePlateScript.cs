@@ -1,62 +1,82 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine;
 using TMPro;
-using VoltageSource;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using VoltageSource;
 
-public class NamePlateScript : MonoBehaviourPunCallbacks, IPunObservable
+namespace Main_Menu_Scripts
 {
-    [SerializeField] private TMP_Text playerOnePlate;
-    [SerializeField] private TMP_Text playerTwoPlate;
-    
-
-    private void Start()
+    public class NamePlateScript : MonoBehaviourPunCallbacks, IOnEventCallback
     {
-        if (playerOnePlate == null || playerTwoPlate == null)
-            return;
+        [SerializeField] private TMP_Text playerOnePlate;
+        [SerializeField] private TMP_Text playerTwoPlate;
 
-        if(PhotonLauncher.Instance == null)
-            Debug.LogErrorFormat("Photon Launcher is missing from scene index: {0}", SceneManager.GetActiveScene().buildIndex);
-        playerOnePlate.text = PhotonLauncher.Instance.GetHostName();
-    }
+        private byte UPDATENAMEPLATE = 2;
 
-
-    #region PunCallbacks
-    
-
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        
-        playerOnePlate.text = PhotonLauncher.Instance.GetHostName();
-        playerTwoPlate.text = PhotonLauncher.Instance.GetOtherPlayerName();
-        Debug.Log(PhotonLauncher.Instance.GetOtherPlayerName());
-    }
-
-    public override void OnPlayerLeftRoom(Player otherPlayer)
-    {
-        //playerOnePlate.text = "Player One";
-        //playerTwoPlate.text = "Player Two";
-        playerOnePlate.text = " ";
-        playerTwoPlate.text = " ";
-    }
-
-    #endregion
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
+        private void Start()
         {
-            stream.SendNext(playerOnePlate.text);
-            stream.SendNext(playerTwoPlate.text);
+            if (playerOnePlate == null || playerTwoPlate == null)
+                return;
+
+            if(PhotonLauncher.Instance == null)
+                Debug.LogErrorFormat("Photon Launcher is missing from scene index: {0}", SceneManager.GetActiveScene().buildIndex);
+            playerOnePlate.text = PhotonLauncher.Instance.GetHostName();
+            PhotonNetwork.AddCallbackTarget(this);
         }
-        else
+
+        private void OnDestroy()
         {
-            playerOnePlate.text = (string)stream.ReceiveNext();
-            playerTwoPlate.text = (string)stream.ReceiveNext();
+            PhotonNetwork.RemoveCallbackTarget(this);
+        }
+
+        #region PunCallbacks
+    
+
+        public override void OnPlayerEnteredRoom(Player newPlayer)
+        {
+            string playerOneName = PhotonLauncher.Instance.GetHostName();
+            string playerTwoName = PhotonLauncher.Instance.GetOtherPlayerName();
+            object[] content = new object[] {playerOneName, playerTwoName}; // Array contains the target position and the IDs of the selected units
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+            PhotonNetwork.RaiseEvent(UPDATENAMEPLATE, content, raiseEventOptions, SendOptions.SendReliable);
+        
+        }
+
+        public override void OnPlayerLeftRoom(Player otherPlayer)
+        {
+        
+            string playerOneName = PhotonLauncher.Instance.GetHostName();
+            string playerTwoName = PhotonLauncher.Instance.GetOtherPlayerName();
+            object[] content;
+            if (otherPlayer.NickName == playerOneName)
+            {
+                content = new object[] {"Player One", playerTwoName};
+            }
+            else
+            {
+                content = new object[] {playerOneName, "Player Two"};
+            }
+        
+            // Array contains the target position and the IDs of the selected units
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+            PhotonNetwork.RaiseEvent(UPDATENAMEPLATE, content, raiseEventOptions, SendOptions.SendReliable);
+        }
+
+        #endregion
+    
+        public void UpdateNamePlate(EventData photonEvent)
+        {
+            byte eventcode = photonEvent.Code;
+
+            if (eventcode == UPDATENAMEPLATE)
+            {
+                object[] data = (object[]) photonEvent.CustomData;
+                playerOnePlate.text = (string) data[0];
+                playerTwoPlate.text = (string) data[1];
+            }
         }
     }
 }

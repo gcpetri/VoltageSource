@@ -2708,8 +2708,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1176542642}
-  - component: {fileID: 1176542641}
-  - component: {fileID: 1176542643}
   m_Layer: 0
   m_Name: LoadEmptyPhotonViews
   m_TagString: Untagged
@@ -2717,19 +2715,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1176542641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176542640}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 047e913a63418654eb3e2d05c7daf483, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  emptyPlayerPrefab: {fileID: 3897040374910429245, guid: 7b28059f1cf6d4f49b29d3d89f236e64, type: 3}
 --- !u!4 &1176542642
 Transform:
   m_ObjectHideFlags: 0
@@ -2738,7 +2723,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1176542640}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 968.1343, y: 233.64804, z: -313.44974}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1380535457}
@@ -2746,30 +2731,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1176542643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176542640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  observableSearch: 0
-  Synchronization: 3
-  OwnershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 1380535456}
-  - {fileID: 2074732391}
-  viewIdField: 1
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &1186067401
 GameObject:
   m_ObjectHideFlags: 0
@@ -3055,12 +3016,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2074732391}
         m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
-        m_MethodName: TeamSelectP2
+        m_MethodName: TeamSelectionChangeP2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: -1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3612,12 +3573,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2074732391}
         m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
-        m_MethodName: TeamSelectP1
+        m_MethodName: TeamSelectionChangeP1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: -1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -4189,9 +4150,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   matchMakingPanel: {fileID: 0}
   mainMenuPanel: {fileID: 0}
+  connecting: {fileID: 0}
   playerOne: {fileID: 1783028400}
   playerTwo: {fileID: 1499181431}
   roomCodeText: {fileID: 1123395347}
+  startMatchButton: {fileID: 0}
+  _playerOneTeamChoice: 0
+  _playerTwoTeamChoice: 0
 --- !u!114 &2074732392
 MonoBehaviour:
   m_ObjectHideFlags: 0

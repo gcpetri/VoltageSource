@@ -29,12 +29,11 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonCreateRoomScript.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonPlayerNameInputScript.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/SpawnPointEditorHelp.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@8.2.0/Editor/UniversalRenderPipelineCameraEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/NamePlateScript.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BulletScript.cs" root0="FORCE_HIGHLIGHTING" />
@@ -55,25 +54,27 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FP_movement.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FP_gunScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GunsScriptable.cs" />
         <option value="$PROJECT_DIR$/Assets/GunScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonPlayerNameInputScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonCreateRoomScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonJoinRoomScript.cs" />
         <option value="$PROJECT_DIR$/Assets/PhotonPlayerUI.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/TeamSelectPhotoViews.cs" />
         <option value="$PROJECT_DIR$/Assets/MainMenuScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/NamePlateScript.cs" />
         <option value="$PROJECT_DIR$/Assets/TeamManagerScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/NamePlateScript.cs" />
         <option value="$PROJECT_DIR$/Assets/SpawnPointEditorHelp.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/BulletScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/TeamManagerScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/FP_Controller.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GunsScriptable.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GunScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/FP_Controller.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/TeamManagerScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonCreateRoomScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
+        <option value="$PROJECT_DIR$/Assets/EmptyPhotonSpawner.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/NamePlateScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
       </list>
     </option>
   </component>
@@ -146,7 +147,13 @@
       <workItem from="1602097258975" duration="5382000" />
       <workItem from="1602123036903" duration="4307000" />
       <workItem from="1602187948510" duration="1055000" />
-      <workItem from="1602189372110" duration="330000" />
+      <workItem from="1602189372110" duration="4449000" />
+      <workItem from="1602194448788" duration="1659000" />
+      <workItem from="1602258738958" duration="13417000" />
+      <workItem from="1602289039888" duration="5462000" />
+      <workItem from="1602626771088" duration="17704000" />
+      <workItem from="1602650226139" duration="2446000" />
+      <workItem from="1602736565766" duration="4651000" />
     </task>
     <servers />
   </component>
@@ -191,9 +198,13 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="-6" y="0" width="781" height="830" key="dock-window-4/0.0.1536.824@0.0.1536.824" timestamp="1601195026483" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1601451216731">
+    <state x="425" y="187" key="run.anything.popup" timestamp="1602653809400">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1601451216731" />
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1602653809400" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1602629043840">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1602629043840" />
   </component>
 </project>

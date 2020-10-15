@@ -54,7 +54,6 @@
      <Compile Include="Assets\Scenes\Photon\PhotonChat\Demos\DemoChat\ChatGui.cs" />
      <Compile Include="Assets\Scripts\Networking Scripts\PhotonLauncher.cs" />
      <Compile Include="Assets\Scenes\Photon\PhotonChat\Demos\Common\TextToggleIsOnTransition.cs" />
-     <Compile Include="Assets\Scripts\Networking Scripts\PhotonCreateRoomScript.cs" />
      <Compile Include="Assets\Scripts\GunsScriptable.cs" />
      <Compile Include="Assets\Scenes\Photon\PhotonRealtime\Demos\DemoLoadBalancing\ConnectAndJoinRandomLb.cs" />
      <Compile Include="Assets\Scripts\Pickupable.cs" />
@@ -68,7 +67,6 @@
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\FP_Controller.cs" />
      <Compile Include="Assets\Scenes\Photon\PhotonChat\Demos\DemoChat\AppSettingsExtensions.cs" />
-     <Compile Include="Assets\Scripts\Networking Scripts\PhotonJoinRoomScript.cs" />
      <Compile Include="Assets\Scripts\GunScript.cs" />
      <Compile Include="Assets\Scripts\Main Menu Scripts\NamePlateScript.cs" />
      <Compile Include="Assets\Scenes\Photon\PhotonChat\Demos\Common\TextButtonTransition.cs" />
@@ -80,7 +78,7 @@
      <Compile Include="Assets\Scripts\Outdated Scripts\FP_gunScript.cs" />
      <Compile Include="Assets\Scenes\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
      <Compile Include="Assets\Scripts\BulletScript.cs" />
-     <Compile Include="Assets\SpawnPointEditorHelp.cs" />
+     <Compile Include="Assets\Scripts\SpawnPointEditorHelp.cs" />
      <Compile Include="Assets\Scripts\Outdated Scripts\FP_camera_script.cs" />
      <None Include="Assets\Scenes\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

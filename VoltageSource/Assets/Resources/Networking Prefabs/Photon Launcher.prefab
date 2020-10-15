@@ -51,3 +51,4 @@ MonoBehaviour:
   MainMenuIndex: 0
   TeamSelectIndex: 1
   GameSceneIndex: 2
+  photonView: {fileID: 0}
