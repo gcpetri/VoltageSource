@@ -223,7 +223,7 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         PhotonNetwork.RaiseEvent(ChangeTeamSelection, content, raiseEventOptions, SendOptions.SendReliable);
     }
     
-    public void UpdateNamePlate(EventData photonEvent)
+    public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
 

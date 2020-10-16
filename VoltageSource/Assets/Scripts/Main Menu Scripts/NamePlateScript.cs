@@ -67,7 +67,7 @@ namespace Main_Menu_Scripts
 
         #endregion
     
-        public void UpdateNamePlate(EventData photonEvent)
+        public void OnEvent(EventData photonEvent)
         {
             byte eventcode = photonEvent.Code;
 

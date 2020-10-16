@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using ExitGames.Client.Photon;
 using UnityEngine.SceneManagement;
 
 using Photon.Pun;
@@ -27,7 +27,7 @@ namespace VoltageSource
 
         private int playerOneID;
         private int playerTwoID;
-        
+
         private void Start()
         {
             Instance = this;
@@ -42,42 +42,12 @@ namespace VoltageSource
                 Debug.LogError("One or more of the spawn points are missing");
                 return;
             }
+            Cursor.lockState = CursorLockMode.Locked;
             
-            foreach (Player obj in PhotonNetwork.PlayerList)
-            {
-                Debug.Log(PhotonNetwork.PlayerList.Length);
-                // Then assume player is Player one
-                if (obj.IsMasterClient)
-                {
-                    Debug.Log("Master client called");
-                    if (TeamManagerScript.Instance.PlayerOneTeam == 0) // This is if player is on the blue team 
-                    {
-                        PhotonNetwork.Instantiate(playerPrefab.name, blueTeamSpawn.position, Quaternion.identity, 0);
-                    }
-                    else
-                    {
-                        PhotonNetwork.Instantiate(playerPrefab.name, yellowTeamSpawn.position, Quaternion.identity, 0);
-                    }
-                        
-                }
-                else
-                {
-                    if (TeamManagerScript.Instance.PlayerTwoTeam == 0)
-                    {
-                        PhotonNetwork.Instantiate(playerPrefab.name, blueTeamSpawn.position, Quaternion.identity, 0);
-                    }
-                    else
-                    {
-                        PhotonNetwork.Instantiate(playerPrefab.name, yellowTeamSpawn.position, Quaternion.identity, 0);
-                    }
-                        
-                }
-            }
-                
-            Cursor.lockState = CursorLockMode.Locked; // Should be handled by a seperate script not player script
+            SpawnPlayers();
         }
 
-       
+   
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape)) // This should be done by the gamemanager, not the player 
@@ -125,15 +95,24 @@ namespace VoltageSource
             Debug.Log("Game ended, congrats!");
         }
 
-        public void SetPlayerOneID(int id)
-        {
-            playerOneID = id;
-        }
 
-        public void SetPlayerTwoID(int id)
+        private void SpawnPlayers()
         {
-            playerTwoID = id;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.Instantiate(playerPrefab.name,
+                    TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.position : yellowTeamSpawn.position,
+                    Quaternion.identity, 0);
+            }
+            else
+            {
+                PhotonNetwork.Instantiate(playerPrefab.name,
+                    TeamManagerScript.Instance.PlayerTwoTeam == 0 ? blueTeamSpawn.position : yellowTeamSpawn.position,
+                    Quaternion.identity, 0);
+            }
+
         }
+        
         #region Photon Callback
 
         public override void OnLeftRoom()
@@ -159,8 +138,7 @@ namespace VoltageSource
 
         public void SendProjectileRPC(GameObject prefab,Transform initialPos, Vector3 velocity, float lifeTime)
         {
-            GameObject reference =
-                PhotonNetwork.Instantiate(prefab.name, initialPos.position, initialPos.rotation, 0);
+            GameObject reference = PhotonNetwork.Instantiate(prefab.name, initialPos.position, initialPos.rotation, 0);
             reference.GetComponent<Rigidbody>().velocity = velocity;
             Destroy(reference, lifeTime);
         }

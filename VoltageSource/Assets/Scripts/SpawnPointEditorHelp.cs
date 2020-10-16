@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class SpawnPointEditorHelp : MonoBehaviour
 {
-    [SerializeField] private Vector3 drawedCubeSize;
-    [SerializeField] private Color cubeColor;
+    [SerializeField] private Vector3 drawedCubeSize = Vector3.one;
+    [SerializeField] private Color cubeColor = Color.gray;
     private void OnDrawGizmos()
     {
         Gizmos.color = cubeColor;

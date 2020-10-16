@@ -3337,11 +3337,11 @@ namespace Photon.Realtime
                 {
                     if (change.AddTarget)
                     {
-                        EventReceived += onEventCallback.UpdateNamePlate;
+                        EventReceived += onEventCallback.OnEvent;
                     }
                     else
                     {
-                        EventReceived -= onEventCallback.UpdateNamePlate;
+                        EventReceived -= onEventCallback.OnEvent;
                     }
                 }
             }
@@ -3713,7 +3713,7 @@ namespace Photon.Realtime
         /// It is best practice to assign an eventCode for each different type of content and action, so the Code
         /// will be essential to read the incoming events.
         /// </remarks>
-        void UpdateNamePlate(EventData photonEvent);
+        void OnEvent(EventData photonEvent);
     }
 
     /// <summary>
@@ -3826,7 +3826,7 @@ namespace Photon.Realtime
         /// (all clients will be disconnected and the room will be closed in this case)
         /// read more here: https://doc.photonengine.com/en-us/realtime/current/gameplay/cached-events#special_considerations
         ///
-        /// If you implement <see cref="IOnEventCallback.UpdateNamePlate"/> or <see cref="LoadBalancingClient.EventReceived"/> you will also get this event.
+        /// If you implement <see cref="IOnEventCallback.OnEvent"/> or <see cref="LoadBalancingClient.EventReceived"/> you will also get this event.
         /// </remarks>
         /// <param name="errorInfo">Object containing information about the error</param>
         void OnErrorInfo(ErrorInfo errorInfo);
@@ -4180,7 +4180,7 @@ namespace Photon.Realtime
     /// </summary>
     /// <remarks>
     /// This is passed inside <see cref="IErrorInfoCallback.OnErrorInfo"/> callback.
-    /// If you implement <see cref="IOnEventCallback.UpdateNamePlate"/> or <see cref="LoadBalancingClient.EventReceived"/> you will also get <see cref="EventCode.ErrorInfo"/> but not parsed.
+    /// If you implement <see cref="IOnEventCallback.OnEvent"/> or <see cref="LoadBalancingClient.EventReceived"/> you will also get <see cref="EventCode.ErrorInfo"/> but not parsed.
     ///
     /// In most cases this could be either:
     /// 1. an error from webhooks plugin (if HasErrorInfo is enabled), read more here:

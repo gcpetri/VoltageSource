@@ -51,11 +51,9 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/PhotonLauncher.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PickupChecker.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FP_camera_script.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/PlayerScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FP_movement.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FP_gunScript.cs" />
         <option value="$PROJECT_DIR$/Assets/GunScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonPlayerNameInputScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonJoinRoomScript.cs" />
         <option value="$PROJECT_DIR$/Assets/PhotonPlayerUI.cs" />
         <option value="$PROJECT_DIR$/Assets/TeamSelectPhotoViews.cs" />
@@ -67,13 +65,16 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GunsScriptable.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GunScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/FP_Controller.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/TeamManagerScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonCreateRoomScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
         <option value="$PROJECT_DIR$/Assets/EmptyPhotonSpawner.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/NamePlateScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/FP_Controller.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonPlayerNameInputScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PlayerScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/SpawnPointEditorHelp.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
       </list>
     </option>
@@ -88,6 +89,7 @@
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
@@ -154,6 +156,7 @@
       <workItem from="1602626771088" duration="17704000" />
       <workItem from="1602650226139" duration="2446000" />
       <workItem from="1602736565766" duration="4651000" />
+      <workItem from="1602825491740" duration="2512000" />
     </task>
     <servers />
   </component>
@@ -198,10 +201,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="-6" y="0" width="781" height="830" key="dock-window-4/0.0.1536.824@0.0.1536.824" timestamp="1601195026483" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1602653809400">
+    <state x="425" y="187" key="run.anything.popup" timestamp="1602827901692">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1602653809400" />
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1602827901692" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1602629043840">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

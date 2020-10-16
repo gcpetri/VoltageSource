@@ -254,7 +254,7 @@ namespace Photon.Pun.UtilityScripts
         /// Called by PhotonNetwork.OnEventCall registration
         /// </summary>
 		/// <param name="photonEvent">Photon event.</param>
-		public void UpdateNamePlate(EventData photonEvent)
+		public void OnEvent(EventData photonEvent)
         {
 			this.ProcessOnEvent(photonEvent.Code, photonEvent.CustomData, photonEvent.Sender);
         }

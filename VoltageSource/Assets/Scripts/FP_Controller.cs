@@ -144,6 +144,7 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
         var stack = fpsCamera.GetUniversalAdditionalCameraData();
         stack.cameraStack.Add(_currentGunInfo.GetCamera().GetComponent<Camera>());
         
+        /*
         #if DEBUG_VARIABLES
          // Checks to see if all required dependicies exists
          Debug.LogFormat("PhotonView exists: {0} on {1}", photonView != null, gameObject.name);
@@ -154,6 +155,7 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
          Debug.LogFormat("LocalAudioListener exists: {0} on {1}", (localAudioListener != null), gameObject.name);
          Debug.LogFormat("CurrentGunScript exists: {0} on {1}", (_currentGunInfo != null), gameObject.name);
         #endif
+        */
     }
     
     // Update is called once per frame

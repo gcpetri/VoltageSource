@@ -8,7 +8,6 @@ using VoltageSource;
 
 public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 {
-    [SerializeField] private PhotonView photonView;
     public static GameObject LocalPlayerInstance;
 
     private void Awake()
