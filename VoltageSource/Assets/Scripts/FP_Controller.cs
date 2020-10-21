@@ -58,8 +58,9 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
                 if (health <= 0)
                 {
                     Debug.LogFormat("Player with photon ID: {0} died", photonView.ViewID);
-                    // If player dies then all function to handle their death
-                    // Call GameManager 
+                // If player dies then all function to handle their death
+                // Call GameManager 
+                    setDeath();
                 }
                 health = value;
             }
@@ -157,6 +158,10 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
         #endif
         */
     }
+    void setDeath()
+    {
+        anim.SetBool(_animParams[3].name, true);
+    }
     
     // Update is called once per frame
     void Update()
@@ -216,7 +221,7 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
         if (Input.GetButtonDown("Jump") && _isGrounded) // Checks if jumps and runs appropriate code
         {
             _velocity.y = Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
-            anim.SetTrigger(_animParams[3].name);
+            anim.SetTrigger(_animParams[1].name);
             #if  DEBUG_METHODS
                 Debug.Log("Jump button was pressed");
             #endif
