@@ -1,0 +1,12 @@
+0 - all events
+1 - change team selection
+2 - name plate update
+3 - ?
+4 - start pre-round
+5 - end pre-round
+6 - game start
+7 - round start
+8 - round end
+9 - game end \\ for dancing anims
+...
+199 - 
