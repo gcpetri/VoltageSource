@@ -8,19 +8,22 @@ ModelImporter:
     second: Idle
   - first:
       74: -2463781497245029270
-    second: Running
+    second: CutieRunning
   - first:
       74: -5003131165045108139
     second: metarig|PoseLib
   - first:
       74: 1742679161841691293
-    second: Jumping
+    second: CutieJumping
   - first:
       74: -8905068881809413962
-    second: Dying
+    second: CutieDying
   - first:
       74: 2270989432139578439
-    second: Dancing
+    second: CutieDancing
+  - first:
+      74: 1704496772706791078
+    second: CutieIdle
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -65,7 +68,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
+      name: CutieIdle
       takeName: metarig|metarigAction.001
       internalID: 0
       firstFrame: 0
@@ -94,7 +97,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Running
+      name: CutieRunning
       takeName: metarig|metarigAction.001
       internalID: 0
       firstFrame: 60
@@ -123,7 +126,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Jumping
+      name: CutieJumping
       takeName: metarig|metarigAction.001
       internalID: 0
       firstFrame: 95
@@ -152,7 +155,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Dying
+      name: CutieDying
       takeName: metarig|metarigAction.001
       internalID: 0
       firstFrame: 135
@@ -181,7 +184,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Dancing
+      name: CutieDancing
       takeName: metarig|metarigAction.001
       internalID: 0
       firstFrame: 175
@@ -263,7 +266,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.002
+    globalScale: 0.2
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

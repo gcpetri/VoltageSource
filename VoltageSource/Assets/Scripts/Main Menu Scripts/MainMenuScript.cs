@@ -13,7 +13,8 @@ using VoltageSource;
 
 public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
 {
-
+    [SerializeField] private GameObject matchMakingBackground;
+    [SerializeField] private GameObject background;
     [SerializeField] private GameObject matchMakingPanel;
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject connecting;
@@ -31,12 +32,15 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
     private string _createRoomName;
 
     private byte ChangeTeamSelection = 1;
-
+    public Animator anim;
+    private AnimatorControllerParameter[] _animParams; // Copied 
 
     #region Unity Defaults
-
     private void Start()
     {
+        if (anim != null)
+            _animParams = anim.parameters;
+        InvokeRepeating("playWave", 10.0f, 10.0f);
         if (roomCodeText != null)
         {
             roomCodeText.text = "Room Code: " + PhotonLauncher.Instance.GetRoomCode().ToString();
@@ -46,7 +50,10 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         _createRoomName = null;
         
     }
-
+    void playWave()
+    {
+        anim.Play("Wave");
+    }
     private void OnEnable()
     {
         PhotonNetwork.AddCallbackTarget(this);
@@ -68,7 +75,9 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
     public void MatchMakingButton()
         {
+            background.SetActive(false);
             mainMenuPanel.SetActive(false);
+            matchMakingBackground.SetActive(true);
             matchMakingPanel.SetActive(true);
             // To ensure is connected to master, if not then we won't be able to join rooms or stuff
             PhotonLauncher.Instance.Connect();
@@ -87,7 +96,9 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
     
         public void BackButton()
         {
+            background.SetActive(true);
             mainMenuPanel.SetActive(true);
+            matchMakingBackground.SetActive(false);
             matchMakingPanel.SetActive(false);
             connecting.SetActive(false);
         }
@@ -102,6 +113,7 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
             connecting.SetActive(true);
             mainMenuPanel.SetActive(false);
             matchMakingPanel.SetActive(false);
+            matchMakingBackground.SetActive(false);
             PhotonLauncher.Instance.JoinRRoom();
         }
         
@@ -122,8 +134,10 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         public void JoinRoom()
         {
             connecting.SetActive(true);
+            background.SetActive(false);
             mainMenuPanel.SetActive(false);
             matchMakingPanel.SetActive(false);
+            matchMakingBackground.SetActive(false);
             if (string.IsNullOrEmpty(_joinRoomName))
             {
                 Debug.LogError("Room name is null or empty");
@@ -138,6 +152,7 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
             connecting.SetActive(true);
             mainMenuPanel.SetActive(false);
             matchMakingPanel.SetActive(false);
+            matchMakingBackground.SetActive(false);
             if (string.IsNullOrEmpty(_createRoomName))
             {
                 Debug.LogError("Room name is null or empty");
