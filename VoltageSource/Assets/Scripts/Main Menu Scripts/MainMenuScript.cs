@@ -30,8 +30,7 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
     // For creating the room
     private string _joinRoomName;
     private string _createRoomName;
-
-    private byte ChangeTeamSelection = 1;
+    
     public Animator anim;
     private AnimatorControllerParameter[] _animParams; // Copied 
 
@@ -123,12 +122,9 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
             TeamManagerScript.Instance.PlayerOneTeam = _playerOneTeamChoice;
             TeamManagerScript.Instance.PlayerTwoTeam = _playerTwoTeamChoice;
         
+            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+            PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.MatchStart, null, raiseEventOptions, SendOptions.SendReliable);
             // Get info regarding who is on what team then start the game based on that and update teammanager
-            if (!PhotonLauncher.Instance.LaunchGameMatch())
-            {
-                // do stuff that tells the person that there are not enough people in the match
-                // or have an button for the option to just go ahead and do single player. 
-            }
         }
         
         public void JoinRoom()
@@ -226,7 +222,7 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         string name = playerOne.gameObject.name;
         object[] content = new object[] {playerOneValue, name}; // Array contains the target position and the IDs of the selected units
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-        PhotonNetwork.RaiseEvent(ChangeTeamSelection, content, raiseEventOptions, SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.ChangeTeamSelection, content, raiseEventOptions, SendOptions.SendReliable);
     }
     
     public void TeamSelectionChangeP2()
@@ -235,14 +231,14 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         string name = playerTwo.gameObject.name;
         object[] content = new object[] {playerTwoValue, name}; // Array contains the target position and the IDs of the selected units
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-        PhotonNetwork.RaiseEvent(ChangeTeamSelection, content, raiseEventOptions, SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.ChangeTeamSelection, content, raiseEventOptions, SendOptions.SendReliable);
     }
     
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
 
-        if (eventCode == ChangeTeamSelection)
+        if (eventCode == (byte)EventManager.EventCodes.ChangeTeamSelection)
         {
             object[] data = (object[])photonEvent.CustomData;
             // 0 index is value
@@ -255,6 +251,17 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
             {
                 TeamSelectP2((int)data[0]);
             }
+        }else if (eventCode == (byte)EventManager.EventCodes.MatchStart)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                if (!PhotonLauncher.Instance.LaunchGameMatch())
+                {
+                    // do stuff that tells the person that there are not enough people in the match
+                    // or have an button for the option to just go ahead and do single player. 
+                }
+            }
+            
         }
     }
 
@@ -263,19 +270,7 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
     
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        /*
-        if (stream.IsWriting)
-        {
-            Debug.Log(_playerOneTeamChoice);
-            stream.SendNext(_playerOneTeamChoice);
-            stream.SendNext(_playerTwoTeamChoice);
-        }else
-        {
-            _playerOneTeamChoice = (int)stream.ReceiveNext();
-            _playerTwoTeamChoice = (int)stream.ReceiveNext();
-            Debug.Log(_playerOneTeamChoice);
-        }
-        */
+        
     }
         
     #endregion

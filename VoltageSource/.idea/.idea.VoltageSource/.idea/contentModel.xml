@@ -383,6 +383,7 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="BulletScript.cs" t="Include" />
+          <e p="EventManager.cs" t="Include" />
           <e p="FP_Controller.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
           <e p="GunScript.cs" t="Include" />
@@ -407,6 +408,7 @@
           <e p="PlayerScript.cs" t="Include" />
           <e p="SpawnPointEditorHelp.cs" t="Include" />
         </e>
+        <e p="shakeCuties.cs" t="Include" />
         <e p="TextMesh Pro" t="Include">
           <e p="Fonts" t="Include">
             <e p="LiberationSans - OFL.txt" t="Include" />

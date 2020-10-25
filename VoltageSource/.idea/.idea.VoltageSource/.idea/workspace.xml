@@ -32,6 +32,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonPlayerNameInputScript.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/EventManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@8.2.0/Editor/UniversalRenderPipelineCameraEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -69,13 +70,15 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonCreateRoomScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
         <option value="$PROJECT_DIR$/Assets/EmptyPhotonSpawner.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/FP_Controller.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonPlayerNameInputScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SpawnPointEditorHelp.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Info.txt" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/NamePlateScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/FP_Controller.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/EventManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
       </list>
     </option>
   </component>
@@ -157,6 +160,7 @@
       <workItem from="1602650226139" duration="2446000" />
       <workItem from="1602736565766" duration="4651000" />
       <workItem from="1602825491740" duration="2512000" />
+      <workItem from="1603587143301" duration="7416000" />
     </task>
     <servers />
   </component>
@@ -185,10 +189,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1603241429776" />
-    <state x="762" y="0" width="781" height="830" key="dock-window-1" timestamp="1601189545431">
+    <state x="762" y="0" width="781" height="830" key="dock-window-1" timestamp="1603590197270">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="762" y="0" width="781" height="830" key="dock-window-1/0.0.1536.824@0.0.1536.824" timestamp="1601189545431" />
+    <state x="762" y="0" width="781" height="830" key="dock-window-1/0.0.1536.824@0.0.1536.824" timestamp="1603590197270" />
     <state x="762" y="0" width="781" height="830" key="dock-window-2" timestamp="1601189545431">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

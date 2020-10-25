@@ -4,8 +4,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.Universal;
@@ -57,10 +59,12 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
                 //Debug.LogErrorFormat("PhotonView {0} took damage, current health is {1}", photonView.ViewID, health);
                 if (health <= 0)
                 {
-                    Debug.LogFormat("Player with photon ID: {0} died", photonView.ViewID);
-                // If player dies then all function to handle their death
-                // Call GameManager 
-                    setDeath();
+                    // If player dies then all function to handle their death
+                    // Call GameManager 
+                    object[] content = {photonView.ViewID}; 
+                    RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+                    PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.PlayerDied, content, raiseEventOptions, SendOptions.SendReliable);
+                    SetDeath();
                 }
                 health = value;
             }
@@ -158,7 +162,7 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
         #endif
         */
     }
-    void setDeath()
+    void SetDeath()
     {
         anim.SetBool(_animParams[3].name, true);
     }
@@ -290,7 +294,5 @@ public class FP_Controller : MonoBehaviourPunCallbacks, IPunObservable
             this.Health = (float) stream.ReceiveNext();
         }
     }
-    
-    
-    
+
 }

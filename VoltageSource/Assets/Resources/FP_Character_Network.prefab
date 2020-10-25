@@ -533,6 +533,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AssaultRifle
       objectReference: {fileID: 0}
+    - target: {fileID: 2299032111191214461, guid: e9ae1d75da550874a994778eff0fc599, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7092251834250468087, guid: e9ae1d75da550874a994778eff0fc599, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.016

@@ -13,9 +13,7 @@ namespace Main_Menu_Scripts
     {
         [SerializeField] private TMP_Text playerOnePlate;
         [SerializeField] private TMP_Text playerTwoPlate;
-
-        private byte UPDATENAMEPLATE = 2;
-
+        
         private void Start()
         {
             if (playerOnePlate == null || playerTwoPlate == null)
@@ -41,7 +39,7 @@ namespace Main_Menu_Scripts
             string playerTwoName = PhotonLauncher.Instance.GetOtherPlayerName();
             object[] content = new object[] {playerOneName, playerTwoName}; // Array contains the target position and the IDs of the selected units
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-            PhotonNetwork.RaiseEvent(UPDATENAMEPLATE, content, raiseEventOptions, SendOptions.SendReliable);
+            PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.UpdateNamePlate, content, raiseEventOptions, SendOptions.SendReliable);
         
         }
 
@@ -62,7 +60,7 @@ namespace Main_Menu_Scripts
         
             // Array contains the target position and the IDs of the selected units
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-            PhotonNetwork.RaiseEvent(UPDATENAMEPLATE, content, raiseEventOptions, SendOptions.SendReliable);
+            PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.UpdateNamePlate, content, raiseEventOptions, SendOptions.SendReliable);
         }
 
         #endregion
@@ -71,7 +69,7 @@ namespace Main_Menu_Scripts
         {
             byte eventcode = photonEvent.Code;
 
-            if (eventcode == UPDATENAMEPLATE)
+            if (eventcode == (byte)EventManager.EventCodes.UpdateNamePlate)
             {
                 object[] data = (object[]) photonEvent.CustomData;
                 playerOnePlate.text = (string) data[0];

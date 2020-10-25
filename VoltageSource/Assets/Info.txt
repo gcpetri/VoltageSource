@@ -1,12 +1,14 @@
 0 - all events
-1 - change team selection
-2 - name plate update
-3 - ?
+1 - change team selection Object[] = {int teamChoice, string gameObjectName}
+2 - name plate update Object[] = {string playerOneName, string playerTwoName} 
+3 - start match
 4 - start pre-round
 5 - end pre-round
-6 - game start
-7 - round start
-8 - round end
+6 - start round
+7 - end round
+8 - start game
 9 - game end \\ for dancing anims
+10 - Player died Object[] = {int photonViewID} 
+
 ...
 199 - 

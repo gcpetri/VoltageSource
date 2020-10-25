@@ -11,7 +11,7 @@ using Photon.Realtime;
 
 namespace VoltageSource
 {
-    public class GameManager : MonoBehaviourPunCallbacks
+    public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         public static GameManager Instance;
         public GameObject playerPrefab;
@@ -147,7 +147,7 @@ namespace VoltageSource
 
         #region Private Methods
 
-        void LoadAreana()
+        void LoadArena()
         {
             if (!PhotonNetwork.IsMasterClient)
             {
@@ -164,27 +164,40 @@ namespace VoltageSource
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
             Debug.LogFormat("OnPlayerEnteredRoom() {0}", newPlayer.NickName);
-            if (PhotonNetwork.IsMasterClient)
-            {
-                Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient);
-                LoadAreana();
-            }
         }
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
             Debug.LogFormat("OnPlayerLeftRoom {0}", otherPlayer.NickName);
+        }
+        
+        
 
-            if (PhotonNetwork.IsMasterClient)
+        #endregion
+
+        public void OnEvent(EventData photonEvent)
+        {
+            byte eventcode = photonEvent.Code;
+
+            if (eventcode == (byte)EventManager.EventCodes.PlayerDied)
             {
-                Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient);
+                object[] data = (object[]) photonEvent.CustomData;
                 
-                LoadAreana();
+                // Initiate pre-round event call
+                // Initiate  
+                
             }
         }
 
-        #endregion
-        
+        private void EndRound()
+        {
+            
+        }
+
+        private void StartRound()
+        {
+            
+        }
     }
 
 }
