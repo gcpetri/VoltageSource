@@ -77,9 +77,9 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/EventManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FP_Controller.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GunScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FpController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" />
       </list>
     </option>
   </component>
@@ -162,7 +162,7 @@
       <workItem from="1602736565766" duration="4651000" />
       <workItem from="1602825491740" duration="2512000" />
       <workItem from="1603587143301" duration="7416000" />
-      <workItem from="1603646138464" duration="21140000" />
+      <workItem from="1603646138464" duration="22464000" />
     </task>
     <servers />
   </component>

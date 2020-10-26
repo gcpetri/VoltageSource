@@ -47,6 +47,7 @@ namespace VoltageSource
         void Start()
         {
             _maxHealth = _target.Health;
+            Debug.Log(_target.Health);
         }
         
         // Update is called once per frame
@@ -57,13 +58,13 @@ namespace VoltageSource
                 Destroy(this.gameObject); 
                 return;
             }
-                
             
             if (playerHealthSlider != null)
             {
+                float healthDiff = _maxHealth - _target.Health;
                 playerHealthSlider.value = (_maxHealth - _target.Health) == 0
                     ? _maxHealth
-                    : (_maxHealth - _target.Health) / 10f;
+                    : (_maxHealth - healthDiff) / 100f;
             }
             
         }

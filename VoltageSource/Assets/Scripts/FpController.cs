@@ -60,6 +60,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
                     // Call GameManager 
                     if (_isDead)
                         return;
+                    
                     object[] content = {photonView.ViewID}; 
                     RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
                     PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.PlayerDied, content, raiseEventOptions, SendOptions.SendReliable);

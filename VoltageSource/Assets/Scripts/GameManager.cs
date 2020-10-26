@@ -202,15 +202,21 @@ namespace VoltageSource
         {
             yield return new WaitForSeconds(endRoundTimer);
             // Spawn other stuff
-            for (int i = 0; i < blueTeamKills; i++)
+            for (int i = 0; i < yellowTeamKills; i++)
             {
+                if (i >= 2)
+                    break;
+                
                 foreach (MeshRenderer obj in blueTeamSide[i].GetComponentsInChildren<MeshRenderer>())
                 {
                     obj.material = transparentMaterial;
                 }
             }
-            for (int i = 0; i < yellowTeamKills; i++)
+            for (int i = 0; i < blueTeamKills; i++)
             {
+                if (i >= 2)
+                    break;
+                
                 foreach (MeshRenderer obj in yellowTeamSide[i].GetComponentsInChildren<MeshRenderer>())
                 {
                     obj.material = transparentMaterial;
