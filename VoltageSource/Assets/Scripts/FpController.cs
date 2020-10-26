@@ -47,7 +47,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
     // Handle being hit and store health. Best done by get and set funcitons
         [SerializeField] private float health;
-        private float _maxHealth;
+        [SerializeField]private float _maxHealth;
         public float Health
         {
             get => health;
@@ -125,7 +125,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             UiGameObject.SetActive(true);
         }
 
-        _maxHealth = health;
+        Health = _maxHealth;
         
         if (UiGameObject != null && photonView.IsMine)
         {
@@ -328,5 +328,11 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         Health = _maxHealth;
         _isDead = false;
     }
+
+    public void LoseHealth()
+    {
+        Health -= 10;
+    }
+    
 
 }

@@ -12,5 +12,7 @@ public class SpawnPointEditorHelp : MonoBehaviour
     {
         Gizmos.color = cubeColor;
         Gizmos.DrawCube(this.transform.position + (Vector3.up * (drawedCubeSize.y * 0.5f)), drawedCubeSize);
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position + transform.forward + (Vector3.up * (drawedCubeSize.y * 0.5f)), 1);
     }
 }

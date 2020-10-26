@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using ExitGames.Client.Photon;
 using UnityEngine.SceneManagement;
@@ -26,14 +27,15 @@ namespace VoltageSource
         [SerializeField]private Material transparentMaterial;
 
         private RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        [SerializeField]private float preRoundTimer = 5f;
-        [SerializeField] private float endRoundTimer = 10f;
+        public float preRoundTimer = 5f;
+        public float endRoundTimer = 10f;
 
         private GameObject _playerOne;
         private GameObject _playerTwo;
         
         private void Start()
         {
+            PhotonNetwork.AddCallbackTarget(this);
             Instance = this;
             if (playerPrefab == null)
             {
@@ -51,25 +53,28 @@ namespace VoltageSource
             SpawnPlayers();
             // Call pre-round event, on this event players cannot move but can look around but can't shoot. 
             PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.StartPreRound, null, raiseEventOptions, SendOptions.SendReliable);
-            
         }
 
-  
+
+        private void OnDestroy()
+        {
+            PhotonNetwork.RemoveCallbackTarget(this);
+        }
+
         private void SpawnPlayers()
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                GameObject PlayerOne = PhotonNetwork.Instantiate(playerPrefab.name,
+                 _playerOne = PhotonNetwork.Instantiate(playerPrefab.name,
                     TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.position : yellowTeamSpawn.position,
-                    Quaternion.identity, 0);
+                    TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation, 0);
             }
             else
             {
-                PhotonNetwork.Instantiate(playerPrefab.name,
+                 _playerTwo =PhotonNetwork.Instantiate(playerPrefab.name,
                     TeamManagerScript.Instance.PlayerTwoTeam == 0 ? blueTeamSpawn.position : yellowTeamSpawn.position,
-                    Quaternion.identity, 0);
+                    TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation, 0);
             }
-
         }
         
         #region Public Methods
@@ -223,29 +228,31 @@ namespace VoltageSource
                 }
             }
 
-            _playerOne.transform.position = TeamManagerScript.Instance.PlayerOneTeam == 0
-                ? blueTeamSpawn.position
-                : yellowTeamSpawn.position;
-            
-            _playerTwo.transform.position = TeamManagerScript.Instance.PlayerTwoTeam == 0
-                ? blueTeamSpawn.position
-                : yellowTeamSpawn.position;
-            
-            _playerOne.transform.rotation = TeamManagerScript.Instance.PlayerOneTeam == 0
-                ? blueTeamSpawn.rotation
-                : yellowTeamSpawn.rotation;
-            
-            _playerTwo.transform.rotation = TeamManagerScript.Instance.PlayerTwoTeam == 0
-                ? blueTeamSpawn.rotation
-                : yellowTeamSpawn.rotation;
+            if (_playerOne != null)
+            {
+                // TO - DO
+                // Set it up so players can respawn in the correct locations!
+                
+                _playerOne.GetComponent<FpController>().ResetHealth();      
+            }
 
-            _playerOne.GetComponent<FpController>().ResetHealth();
-            _playerTwo.GetComponent<FpController>().ResetHealth();
+            if (_playerTwo != null)
+            {
+                _playerTwo.transform.position = TeamManagerScript.Instance.PlayerTwoTeam == 0
+                    ? blueTeamSpawn.position
+                    : yellowTeamSpawn.position;
+                            
+                           
+                _playerTwo.transform.rotation = TeamManagerScript.Instance.PlayerTwoTeam == 0
+                    ? blueTeamSpawn.rotation
+                    : yellowTeamSpawn.rotation;
+                
+                _playerTwo.GetComponent<FpController>().ResetHealth();
+            }
             
             Debug.Log("End of EndRound event coroutine");
             PhotonNetwork.RaiseEvent((byte) EventManager.EventCodes.StartPreRound, null, raiseEventOptions,
                 SendOptions.SendReliable);
-
         }
         
 

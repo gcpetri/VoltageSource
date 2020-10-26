@@ -44,3 +44,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1791268988159633231, guid: c779dbd021649e847a12f33f98a3983c, type: 3}
+  yellowTeamSpawn: {fileID: 0}
+  blueTeamSpawn: {fileID: 0}
+  blueTeamKills: 0
+  yellowTeamKills: 0
+  blueTeamSide: []
+  yellowTeamSide: []
+  transparentMaterial: {fileID: 2100000, guid: 315ca04551f49d14fa95ce89fc9e012b, type: 2}
+  preRoundTimer: 5
+  endRoundTimer: 10

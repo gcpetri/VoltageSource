@@ -46,6 +46,7 @@ MonoBehaviour:
   - StartMatch
   - TeamSelectP1D
   - TeamSelectP2D
+  - ResetPos
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
