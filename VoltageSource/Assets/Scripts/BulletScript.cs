@@ -35,7 +35,7 @@ public class BulletScript : MonoBehaviour
                 if (val == Owner)
                     return;
                             
-                _hit.collider.GetComponent<FP_Controller>().Health = _hit.collider.GetComponent<FP_Controller>().Health - damage; 
+                _hit.collider.GetComponent<FpController>().Health = _hit.collider.GetComponent<FpController>().Health - damage; 
             }
             else
             {

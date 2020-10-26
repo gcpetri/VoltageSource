@@ -28,7 +28,7 @@ public class GunScript : MonoBehaviour
 
     [SerializeField] private Transform cameraAim;
     [SerializeField] private GameObject camera;
-    [SerializeField] private FP_Controller owner;
+    [SerializeField] private FpController owner;
     [SerializeField] private LayerMask collisionMask;
     
     private int _reloadingID;
@@ -145,7 +145,7 @@ public class GunScript : MonoBehaviour
         return camera;
     }
 
-    public void SetOwner(FP_Controller obj)
+    public void SetOwner(FpController obj)
     {
         owner = obj;
     }

@@ -384,7 +384,7 @@
         <e p="Scripts" t="Include">
           <e p="BulletScript.cs" t="Include" />
           <e p="EventManager.cs" t="Include" />
-          <e p="FP_Controller.cs" t="Include" />
+          <e p="FpController.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
           <e p="GunScript.cs" t="Include" />
           <e p="GunsScriptable.cs" t="Include" />

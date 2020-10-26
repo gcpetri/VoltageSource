@@ -1,13 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 using ExitGames.Client.Photon;
 using UnityEngine.SceneManagement;
-
 using Photon.Pun;
-using Photon.Pun.UtilityScripts;
 using Photon.Realtime;
+
 
 namespace VoltageSource
 {
@@ -19,15 +16,22 @@ namespace VoltageSource
         [SerializeField] private Transform yellowTeamSpawn;
         [SerializeField] private Transform blueTeamSpawn;
 
-        [SerializeField] private int blueTeamKills = -1;
-        [SerializeField] private int yellowTeamKills = -1;
+        [SerializeField] private int blueTeamKills = 0;
+        [SerializeField] private int yellowTeamKills = 0;
 
         public GameObject[] blueTeamSide;
         public GameObject[] yellowTeamSide;
+        
 
-        private int playerOneID;
-        private int playerTwoID;
+        [SerializeField]private Material transparentMaterial;
 
+        private RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        [SerializeField]private float preRoundTimer = 5f;
+        [SerializeField] private float endRoundTimer = 10f;
+
+        private GameObject _playerOne;
+        private GameObject _playerTwo;
+        
         private void Start()
         {
             Instance = this;
@@ -45,62 +49,17 @@ namespace VoltageSource
             Cursor.lockState = CursorLockMode.Locked;
             
             SpawnPlayers();
-        }
-
-   
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Escape)) // This should be done by the gamemanager, not the player 
-            {
-                Cursor.lockState = Cursor.lockState == CursorLockMode.Confined
-                    ? CursorLockMode.None
-                    : CursorLockMode.Confined;
-            }
-            
-            if (Input.GetKey(KeyCode.Tab))
-            {
-                // Preform unconnect actions
-                Cursor.lockState = CursorLockMode.Confined;
-                LeaveRoom();
-            }
-        }
-
-        public void RestartGame(int winnerID)
-        {
+            // Call pre-round event, on this event players cannot move but can look around but can't shoot. 
+            PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.StartPreRound, null, raiseEventOptions, SendOptions.SendReliable);
             
         }
 
-        public void BlueTeamIncrement()
-        {
-            blueTeamKills++;
-            if (blueTeamKills >= 5)
-            {
-                EndGame();
-                return;
-            }
-        }
-
-        public void YellowTeamIncrement()
-        {
-            yellowTeamKills++;
-            if (yellowTeamKills >= 5)
-            {
-                EndGame();
-                return;
-            }
-        }
-
-        public void EndGame()
-        {
-            Debug.Log("Game ended, congrats!");
-        }
-
-
+  
         private void SpawnPlayers()
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                PhotonNetwork.Instantiate(playerPrefab.name,
+                GameObject PlayerOne = PhotonNetwork.Instantiate(playerPrefab.name,
                     TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.position : yellowTeamSpawn.position,
                     Quaternion.identity, 0);
             }
@@ -113,17 +72,6 @@ namespace VoltageSource
 
         }
         
-        #region Photon Callback
-
-        public override void OnLeftRoom()
-        {
-            // This makes the assumption that the main menu is scene 0
-            // which is typically the case
-            SceneManager.LoadScene(0);
-        }
-
-        #endregion
-
         #region Public Methods
 
         public void LeaveRoom()
@@ -136,13 +84,14 @@ namespace VoltageSource
             return PhotonNetwork.GetPing();
         }
 
+        /*
         public void SendProjectileRPC(GameObject prefab,Transform initialPos, Vector3 velocity, float lifeTime)
         {
             GameObject reference = PhotonNetwork.Instantiate(prefab.name, initialPos.position, initialPos.rotation, 0);
             reference.GetComponent<Rigidbody>().velocity = velocity;
             Destroy(reference, lifeTime);
         }
-        
+        */
         #endregion
 
         #region Private Methods
@@ -171,33 +120,193 @@ namespace VoltageSource
             Debug.LogFormat("OnPlayerLeftRoom {0}", otherPlayer.NickName);
         }
         
-        
+        public override void OnLeftRoom()
+        {
+            // This makes the assumption that the main menu is scene 0
+            // which is typically the case
+            SceneManager.LoadScene(0);
+        }
 
         #endregion
 
+        #region PhotonEvents
+        
         public void OnEvent(EventData photonEvent)
         {
             byte eventcode = photonEvent.Code;
-
-            if (eventcode == (byte)EventManager.EventCodes.PlayerDied)
+            object[] data = null;
+            if (photonEvent.CustomData != null)
             {
-                object[] data = (object[]) photonEvent.CustomData;
-                
-                // Initiate pre-round event call
-                // Initiate  
-                
+                data = photonEvent.CustomData as object[];
+            }
+
+            switch (eventcode)
+            {
+                case (byte)EventManager.EventCodes.PlayerDied: PlayerDied(data);
+                    break;
+                case (byte)EventManager.EventCodes.StartRound: StartRound();
+                    break;
+                case (byte)EventManager.EventCodes.EndRound: EndRound();
+                    break;
+                case (byte)EventManager.EventCodes.StartPreRound: StartPreRound();
+                    break;
+                case (byte)EventManager.EventCodes.EndPreRound: EndPreRound();
+                    break;
+                default: break;
+            }
+            
+        }
+
+        private void PlayerDied(object[] data = null)
+        {
+            if (data == null)
+            {
+                Debug.LogError("Data needed for PlayerDied is missing");
+                return;
+            }
+        
+            // 0 photonViewID of the player that died
+            if (PhotonView.Find((int) data[0]).IsMine)
+            {
+                // This means the host died instead
+                if (TeamManagerScript.Instance.PlayerOneTeam == 0) // Which means blue team
+                    BlueTeamIncrement();
+                else
+                    YellowTeamIncrement();
+            }
+            else
+            {
+                if (TeamManagerScript.Instance.PlayerTwoTeam == 0) // Which means blue team
+                    BlueTeamIncrement();
+                else
+                    YellowTeamIncrement();
+            }
+            
+            PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.EndRound, null, raiseEventOptions, SendOptions.SendReliable);
+        }
+        
+        private void EndRound(object[] data = null)
+        {
+            if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
+                return;
+            
+            Debug.Log("Round ended");
+
+            StartCoroutine(IEndRound());
+            // Based on # of kills for each player, apply the appropriate actions to the level
+            // Change level's pickups to either enabled or disabled and set appropriate materials to level cover and properties 
+
+        }
+
+        private IEnumerator IEndRound()
+        {
+            yield return new WaitForSeconds(endRoundTimer);
+            // Spawn other stuff
+            for (int i = 0; i < blueTeamKills; i++)
+            {
+                foreach (MeshRenderer obj in blueTeamSide[i].GetComponentsInChildren<MeshRenderer>())
+                {
+                    obj.material = transparentMaterial;
+                }
+            }
+            for (int i = 0; i < yellowTeamKills; i++)
+            {
+                foreach (MeshRenderer obj in yellowTeamSide[i].GetComponentsInChildren<MeshRenderer>())
+                {
+                    obj.material = transparentMaterial;
+                }
+            }
+
+            _playerOne.transform.position = TeamManagerScript.Instance.PlayerOneTeam == 0
+                ? blueTeamSpawn.position
+                : yellowTeamSpawn.position;
+            
+            _playerTwo.transform.position = TeamManagerScript.Instance.PlayerTwoTeam == 0
+                ? blueTeamSpawn.position
+                : yellowTeamSpawn.position;
+            
+            _playerOne.transform.rotation = TeamManagerScript.Instance.PlayerOneTeam == 0
+                ? blueTeamSpawn.rotation
+                : yellowTeamSpawn.rotation;
+            
+            _playerTwo.transform.rotation = TeamManagerScript.Instance.PlayerTwoTeam == 0
+                ? blueTeamSpawn.rotation
+                : yellowTeamSpawn.rotation;
+
+            _playerOne.GetComponent<FpController>().ResetHealth();
+            _playerTwo.GetComponent<FpController>().ResetHealth();
+            
+            Debug.Log("End of EndRound event coroutine");
+            PhotonNetwork.RaiseEvent((byte) EventManager.EventCodes.StartPreRound, null, raiseEventOptions,
+                SendOptions.SendReliable);
+
+        }
+        
+
+        private void StartRound(object[] data = null)
+        {
+            if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
+                return;
+            
+            Debug.Log("Round started");
+        }
+        
+        private void RestartGame(int winnerID)
+        {
+            if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
+                return;
+        }
+
+        private void BlueTeamIncrement()
+        {
+            blueTeamKills++;
+            Debug.Log(blueTeamKills);
+            if (blueTeamKills >= 5)
+            {
+                EndGame();
+                return;
             }
         }
 
-        private void EndRound()
+        private void YellowTeamIncrement()
         {
+            yellowTeamKills++;
+            Debug.Log(yellowTeamKills);
+            if (yellowTeamKills >= 5)
+            {
+                EndGame();
+                return;
+            }
+        }
+
+        private void EndGame()
+        {
+            if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
+                return;
+            Debug.Log("EndGame() Called");
+        }
+
+        private void StartPreRound()
+        {
+            StartCoroutine(PreRound());
+        }
+
+        private IEnumerator PreRound()
+        {
+            Debug.Log("Pre round started");
+            yield return new WaitForSeconds(preRoundTimer);
+            PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.EndPreRound, null, raiseEventOptions, SendOptions.SendReliable);
             
         }
 
-        private void StartRound()
+        private void EndPreRound()
         {
-            
+            Debug.Log("Pre round Ended");
+            // If the pre-round ends then start the actual round 
+            PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.StartRound, null, raiseEventOptions, SendOptions.SendReliable);
         }
+        
+        #endregion
     }
 
 }
