@@ -40,6 +40,7 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         if (anim != null)
             _animParams = anim.parameters;
         InvokeRepeating("playWave", 10.0f, 10.0f);
+
         if (roomCodeText != null)
         {
             roomCodeText.text = "Room Code: " + PhotonLauncher.Instance.GetRoomCode().ToString();
@@ -80,6 +81,7 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
             matchMakingPanel.SetActive(true);
             // To ensure is connected to master, if not then we won't be able to join rooms or stuff
             PhotonLauncher.Instance.Connect();
+            CancelInvoke("playWave");
         }
     
         public void SettingsButton()
@@ -100,6 +102,7 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
             matchMakingBackground.SetActive(false);
             matchMakingPanel.SetActive(false);
             connecting.SetActive(false);
+            InvokeRepeating("playWave", 10f, 10f);
         }
 
         public void CallLeaveRoom()
@@ -119,12 +122,19 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         [PunRPC]
         public void StartMatch()
         {
+            if (PhotonNetwork.CountOfPlayers < 2)
+            {
+                Debug.LogError("Not enough players in the game");
+                
+            }
+            
             TeamManagerScript.Instance.PlayerOneTeam = _playerOneTeamChoice;
             TeamManagerScript.Instance.PlayerTwoTeam = _playerTwoTeamChoice;
         
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
             PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.MatchStart, null, raiseEventOptions, SendOptions.SendReliable);
             // Get info regarding who is on what team then start the game based on that and update teammanager
+            
         }
         
         public void JoinRoom()

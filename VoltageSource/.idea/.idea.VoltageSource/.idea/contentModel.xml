@@ -6,6 +6,8 @@
     <e p="D:\Users\Erik\Documents\VoltageSource\VoltageSource\VoltageSource" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="CustomizeCharacterMenu.cs" t="Include" />
+        <e p="cutieCamera.cs" t="Include" />
         <e p="Info.txt" t="Include" />
         <e p="Scenes" t="Include">
           <e p="Photon" t="Include">
@@ -407,6 +409,8 @@
           <e p="PickupChecker.cs" t="Include" />
           <e p="PlayerScript.cs" t="Include" />
           <e p="SpawnPointEditorHelp.cs" t="Include" />
+          <e p="textWriter.cs" t="Include" />
+          <e p="UI_Mission.cs" t="Include" />
         </e>
         <e p="shakeCuties.cs" t="Include" />
         <e p="TextMesh Pro" t="Include">

@@ -146,11 +146,6 @@ namespace VoltageSource
 
         public bool LaunchGameMatch()
         {
-            if (PhotonNetwork.CountOfPlayers < 2)
-            {
-                Debug.LogError("Not enough players in the game");
-            }
-            
             LoadGameScene();
             return true;
         }
