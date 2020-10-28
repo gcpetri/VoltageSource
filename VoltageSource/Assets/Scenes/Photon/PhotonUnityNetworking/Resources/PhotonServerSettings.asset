@@ -25,12 +25,12 @@ MonoBehaviour:
     Protocol: 0
     EnableProtocolFallback: 1
     AuthMode: 0
-    EnableLobbyStatistics: 0
-    NetworkLogging: 1
+    EnableLobbyStatistics: 1
+    NetworkLogging: 5
   DevRegion: us
   PunLogging: 2
   EnableSupportLogger: 0
-  RunInBackground: 0
+  RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
   - ClickRpc

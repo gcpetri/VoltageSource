@@ -48,8 +48,7 @@ namespace VoltageSource
                 Debug.LogError("One or more of the spawn points are missing");
                 return;
             }
-            Cursor.lockState = CursorLockMode.Locked;
-            
+
             SpawnPlayers();
             // Call pre-round event, on this event players cannot move but can look around but can't shoot. 
             PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.StartPreRound, null, raiseEventOptions, SendOptions.SendReliable);
@@ -178,6 +177,8 @@ namespace VoltageSource
                     BlueTeamIncrement();
                 else
                     YellowTeamIncrement();
+                
+                
             }
             else
             {
@@ -227,27 +228,27 @@ namespace VoltageSource
                     obj.material = transparentMaterial;
                 }
             }
-
+            
+            FpController fpsReference;
+            
             if (_playerOne != null)
             {
-                // TO - DO
-                // Set it up so players can respawn in the correct locations!
+                fpsReference = _playerOne.GetComponent<FpController>();
+                fpsReference.SetPos(TeamManagerScript.Instance.PlayerTwoTeam == 0
+                    ? blueTeamSpawn
+                    : yellowTeamSpawn);
                 
-                _playerOne.GetComponent<FpController>().ResetHealth();      
+                fpsReference.ResetHealth();      
             }
 
             if (_playerTwo != null)
             {
-                _playerTwo.transform.position = TeamManagerScript.Instance.PlayerTwoTeam == 0
-                    ? blueTeamSpawn.position
-                    : yellowTeamSpawn.position;
-                            
-                           
-                _playerTwo.transform.rotation = TeamManagerScript.Instance.PlayerTwoTeam == 0
-                    ? blueTeamSpawn.rotation
-                    : yellowTeamSpawn.rotation;
+                fpsReference = _playerTwo.GetComponent<FpController>();
+                fpsReference.SetPos(TeamManagerScript.Instance.PlayerTwoTeam == 0
+                    ? blueTeamSpawn
+                    : yellowTeamSpawn);
                 
-                _playerTwo.GetComponent<FpController>().ResetHealth();
+                fpsReference.ResetHealth();
             }
             
             Debug.Log("End of EndRound event coroutine");

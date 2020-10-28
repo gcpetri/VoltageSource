@@ -7,10 +7,11 @@ using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 namespace VoltageSource
 {
-    public class PhotonPlayerUI : MonoBehaviour, IOnEventCallback
+    public class PhotonPlayerUI : MonoBehaviour, IOnEventCallback, IPunObservable
     {
 
         #region Private fields
@@ -80,7 +81,7 @@ namespace VoltageSource
             if (TimerUI.activeSelf)
             {
                 currentTime -= Time.deltaTime;
-                TimerText.text = Math.Round(currentTime, 2).ToString() + " secs";
+                TimerText.text = Mathf.Clamp((float)Math.Round(currentTime, 2), 0, 100).ToString() + " secs";
             }
             
         }
@@ -100,20 +101,27 @@ namespace VoltageSource
 
         public void LeaveGame()
         {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.LoadLevel(0); // Go back to main menu
+            }
+            else
+            {
+                SceneManager.LoadScene(0);
+            }
             GameManager.Instance.LeaveRoom();
         }
 
         public bool TogglePause()
         {
             isPaused = isPaused != true;
+            Cursor.lockState = Cursor.lockState == CursorLockMode.Confined ? CursorLockMode.Locked : CursorLockMode.Confined;
             if (isPaused)
             {
-                GameUI.SetActive(false);
                 PauseUI.SetActive(true);
             }
             else
             {
-                GameUI.SetActive(true);
                 PauseUI.SetActive(false);
             }
 
@@ -166,7 +174,18 @@ namespace VoltageSource
         {
             PhotonNetwork.RemoveCallbackTarget(this);
         }
-        
+
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+            if (stream.IsWriting)
+            {
+                stream.SendNext((float) currentTime);
+            }
+            else
+            {
+                currentTime = (float) stream.ReceiveNext();
+            }
+        }
     }
 
 }

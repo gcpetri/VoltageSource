@@ -108,13 +108,15 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     private bool isPaused = false;
     
     #endregion
-    
+
+    private Rigidbody _rb;
     [SerializeField] private AudioListener localAudioListener; // Reference
     /// <summary>
     /// Initialize all the values we need to run this script
     /// </summary>
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         _photonView = GetComponent<PhotonView>(); // Need to get this value to do networking
         _cController = GetComponent<CharacterController>();
         _currentGunInfo = currentGun.GetComponent<GunScript>();
@@ -125,6 +127,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             UiGameObject.SetActive(true);
         }
 
+        _rb = GetComponent<Rigidbody>();
         Health = _maxHealth;
         
         if (UiGameObject != null && photonView.IsMine)
@@ -332,6 +335,17 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     public void LoseHealth()
     {
         Health -= 10;
+    }
+
+    public void SetPos(Transform pos)
+    {
+        /*
+        transform.position = pos.position;
+        transform.rotation = pos.rotation;
+        */
+
+        _rb.position = pos.position;
+        _rb.rotation = pos.rotation;
     }
     
 
