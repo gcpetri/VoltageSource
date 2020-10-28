@@ -170,7 +170,10 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         #endif
         */
     }
-    
+    void PauseGame()
+    {
+        isPaused = playerUI.TogglePause();
+    }
     // Update is called once per frame
     private void Update()
     {
@@ -185,7 +188,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            isPaused = playerUI.TogglePause();
+            PauseGame();
         }
 
         if (isPaused)

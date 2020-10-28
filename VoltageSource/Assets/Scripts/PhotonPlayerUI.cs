@@ -26,7 +26,7 @@ namespace VoltageSource
         private CanvasGroup _canvasGroup;
         private Vector3 _targetPosition;
         #endregion
-
+        [SerializeField] private GameObject MissionUI;
         [SerializeField] private GameObject GameUI;
         [SerializeField] private GameObject PauseUI;
         [SerializeField] private GameObject InfoUI;
@@ -147,6 +147,7 @@ namespace VoltageSource
                 GameUI.SetActive(true);
                 InfoUI.SetActive(true);
                 TimerUI.SetActive(true);
+                MissionUI.SetActive(true);
                 currentTime = GameManager.Instance.preRoundTimer;
                 InfoText.text = "Pre-Round";
             }
@@ -156,6 +157,7 @@ namespace VoltageSource
                 GameUI.SetActive(true);
                 InfoUI.SetActive(false);
                 TimerUI.SetActive(false);
+                MissionUI.SetActive(false);
                 InfoText.text = "";
             }
         }
