@@ -77,6 +77,7 @@
     <Compile Include="Assets\Scripts\Outdated Scripts\FP_movement.cs" />
     <Compile Include="Assets\Scripts\PhotonPlayerUI.cs" />
     <Compile Include="Assets\Scenes\Photon\PhotonChat\Demos\DemoChat\FriendItem.cs" />
+    <Compile Include="Assets\Scripts\textWriter.cs" />
     <Compile Include="Assets\Scripts\TesterScript.cs" />
     <Compile Include="Assets\Scripts\Main Menu Scripts\MainMenuScript.cs" />
     <Compile Include="Assets\Scripts\Outdated Scripts\FP_gunScript.cs" />
@@ -84,9 +85,10 @@
     <Compile Include="Assets\Scenes\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
     <Compile Include="Assets\Scripts\BulletScript.cs" />
     <Compile Include="Assets\Scripts\SpawnPointEditorHelp.cs" />
-    <Compile Include="Assets\Scripts\Outdated Scripts\FP_camera_script.cs" />
     <Compile Include="Assets\Scripts\UI_Mission.cs" />
-    <Compile Include="Assets\Scripts\textWriter.cs" />
+    <Compile Include="Assets\Scripts\Outdated Scripts\FP_camera_script.cs" />
+    <Compile Include="Assets\CustomizeCharacterMenu.cs" />
+    <Compile Include="Assets\cutieCamera.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Scenes\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
