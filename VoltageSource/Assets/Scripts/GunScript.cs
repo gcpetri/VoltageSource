@@ -29,8 +29,7 @@ public class GunScript : MonoBehaviour
     [SerializeField] private Transform cameraAim;
     [SerializeField] private GameObject camera;
     [SerializeField] private FpController owner;
-    [SerializeField] private LayerMask collisionMask;
-    
+
     private int _reloadingID;
     private int _aimingID;
     private int _shootingID;

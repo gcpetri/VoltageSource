@@ -77,13 +77,13 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Pickupable.cs" />
         <option value="$PROJECT_DIR$/Assets/AudioManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/FpController.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GunScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/TeamManagerScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/EventManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/FpController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GunScript.cs" />
       </list>
     </option>
   </component>
@@ -168,7 +168,7 @@
       <workItem from="1603587143301" duration="7416000" />
       <workItem from="1603646138464" duration="30167000" />
       <workItem from="1603919072585" duration="12994000" />
-      <workItem from="1603995184170" duration="9375000" />
+      <workItem from="1603995184170" duration="10557000" />
     </task>
     <servers />
   </component>

@@ -2630,19 +2630,19 @@ PrefabInstance:
     - target: {fileID: 2256326311265043882, guid: b6e3ba540c5a1c14aa811da4ebb6bdaa, type: 3}
       propertyPath: gunPrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 919132149155446097, guid: 1162e2849c3fc7b4ebec99d850f2bd93, type: 3}
+      objectReference: {fileID: 3186047473292845281, guid: 19b630f0d04326342a4894e441f46062, type: 3}
     - target: {fileID: 2256326311265043882, guid: b6e3ba540c5a1c14aa811da4ebb6bdaa, type: 3}
       propertyPath: gunPrefabs.Array.data[1]
       value: 
-      objectReference: {fileID: 919132149155446097, guid: 8e21583cb030cb449a9a4038ed8221ad, type: 3}
+      objectReference: {fileID: 4371801381835363661, guid: 145c57a3cbf99d84dbed7d21a8d9fceb, type: 3}
     - target: {fileID: 2256326311265043882, guid: b6e3ba540c5a1c14aa811da4ebb6bdaa, type: 3}
       propertyPath: gunPrefabs.Array.data[2]
       value: 
-      objectReference: {fileID: 919132149155446097, guid: a6735d3dfca2427439112e73cd2da699, type: 3}
+      objectReference: {fileID: 8730984653395962964, guid: 8023e0dfb3367064596f92b209ffec88, type: 3}
     - target: {fileID: 2256326311265043882, guid: b6e3ba540c5a1c14aa811da4ebb6bdaa, type: 3}
       propertyPath: gunPrefabs.Array.data[3]
       value: 
-      objectReference: {fileID: 919132149155446097, guid: 99a6a1872bd2ee54fa9c6a006a3fbaa9, type: 3}
+      objectReference: {fileID: 511953755098756494, guid: e9ae1d75da550874a994778eff0fc599, type: 3}
     - target: {fileID: 2256326311265043882, guid: b6e3ba540c5a1c14aa811da4ebb6bdaa, type: 3}
       propertyPath: gunWallPrefab
       value: 

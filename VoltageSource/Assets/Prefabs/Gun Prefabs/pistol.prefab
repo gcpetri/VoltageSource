@@ -5119,18 +5119,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunData: {fileID: 11400000, guid: e19dab75497db014b8112ae7baab3f5e, type: 2}
   bulletSpawnPoint: {fileID: 2296853654008468878}
-  gunAnimator: {fileID: 0}
+  gunAnimator: {fileID: 6397933066574049086}
   _gunParticleSystem: {fileID: 8560364345836165265}
   firingSound: {fileID: 8300000, guid: b5b1b1669d42e6245bf8780d637adf6e, type: 3}
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 2146745844129668006}
   reloadSound: {fileID: 8300000, guid: 87825692a171b9041bd27f3fa435841d, type: 3}
   cameraIdle: {fileID: 2123210427094057381}
   cameraAim: {fileID: 9044555077968275617}
   camera: {fileID: 6900404403433817024}
   owner: {fileID: 0}
-  collisionMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &4266140039841570277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5147,10 +5144,10 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Reloading
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Aiming
   m_SynchronizeLayers:
   - SynchronizeType: 0
@@ -5179,7 +5176,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3871870320791016411}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: -0.01, z: 0.045}
+  m_LocalPosition: {x: 0, y: -0.0219, z: 0.0557}
   m_LocalScale: {x: 6.22, y: 20.6, z: 26.60001}
   m_Children: []
   m_Father: {fileID: 2845375458518170203}
