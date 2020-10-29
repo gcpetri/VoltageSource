@@ -25,6 +25,7 @@ namespace VoltageSource
         public GameObject[] gunPrefabs;
 
         // Gun Spawning
+        public GameObject gunWallPrefab;
         public int BlueSegments = 5;
         public int YellowSegments = 5;
         public float BlueTerrScale = 75.0f;
@@ -95,12 +96,14 @@ namespace VoltageSource
         {
             int gunIndexB = UnityEngine.Random.Range(0, 3);
             float blueRangeHorizontal = UnityEngine.Random.Range(-75.0f, BlueTerrScale);
-            Vector3 BlueSpawnPos = new Vector3(blueRangeHorizontal, 2.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
+            Vector3 BlueSpawnPos = new Vector3(blueRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
             GameObject blueGun = Instantiate(gunPrefabs[gunIndexB], BlueSpawnPos, Quaternion.identity) as GameObject;
+            GameObject gunWallB = Instantiate(gunWallPrefab, BlueSpawnPos, Quaternion.identity) as GameObject;
             int gunIndexY = UnityEngine.Random.Range(0, 3);
             float yellowRangeHorizontal = UnityEngine.Random.Range(BlueTerrScale, 75.0f);
-            Vector3 YellowSpawnPos = new Vector3(yellowRangeHorizontal, 2.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
+            Vector3 YellowSpawnPos = new Vector3(yellowRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
             GameObject yellowGun = Instantiate(gunPrefabs[gunIndexY], YellowSpawnPos, Quaternion.identity) as GameObject;
+            GameObject gunWallY = Instantiate(gunWallPrefab, YellowSpawnPos, Quaternion.identity) as GameObject;
             Debug.Log("spawned gun");
         }
         // spawns the gun prefabs over time
