@@ -5070,7 +5070,7 @@ PrefabInstance:
     - target: {fileID: 4632938646592457157, guid: 9c9439ee2310e13478bd80a61493dbdf, type: 3}
       propertyPath: camera
       value: 
-      objectReference: {fileID: 5502160508932084554}
+      objectReference: {fileID: 4194138643566829974}
     - target: {fileID: 4632938646592457157, guid: 9c9439ee2310e13478bd80a61493dbdf, type: 3}
       propertyPath: cameraAim
       value: 
