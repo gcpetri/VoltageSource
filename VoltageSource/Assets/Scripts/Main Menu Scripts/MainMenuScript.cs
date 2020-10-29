@@ -135,6 +135,9 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
         public void CallJoinRRoom()
         {
+            if (!PhotonNetwork.IsConnectedAndReady)
+                return;
+            
             connecting.SetActive(true);
             mainMenuPanel.SetActive(false);
             matchMakingPanel.SetActive(false);
@@ -162,6 +165,9 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         
         public void JoinRoom()
         {
+            if (!PhotonNetwork.IsConnectedAndReady)
+                return;
+            
             connecting.SetActive(true);
             background.SetActive(false);
             mainMenuPanel.SetActive(false);
@@ -178,6 +184,9 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         
         public void CreateRoom()
         {
+            if (!PhotonNetwork.IsConnectedAndReady)
+                return;
+            
             connecting.SetActive(true);
             mainMenuPanel.SetActive(false);
             matchMakingPanel.SetActive(false);
@@ -299,7 +308,6 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
                     // or have an button for the option to just go ahead and do single player. 
                 }
             }
-            
         }
     }
 

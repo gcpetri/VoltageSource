@@ -70,12 +70,10 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Info.txt" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/NamePlateScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/EventManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FP_Controller.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TesterScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SpawnPointEditorHelp.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/EditorScript/TesterScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Pickupable.cs" />
         <option value="$PROJECT_DIR$/Assets/AudioManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
@@ -83,7 +81,9 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/GunScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/TeamManagerScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/EventManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
       </list>
     </option>
   </component>
@@ -168,7 +168,7 @@
       <workItem from="1603587143301" duration="7416000" />
       <workItem from="1603646138464" duration="30167000" />
       <workItem from="1603919072585" duration="12994000" />
-      <workItem from="1603995184170" duration="2784000" />
+      <workItem from="1603995184170" duration="7177000" />
     </task>
     <servers />
   </component>
@@ -193,6 +193,10 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="449" y="148" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1604004662341">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="449" y="148" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1536.824@0.0.1536.824" timestamp="1604004662341" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1603241429776">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

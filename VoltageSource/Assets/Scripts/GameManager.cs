@@ -17,8 +17,8 @@ namespace VoltageSource
         [SerializeField] private Transform yellowTeamSpawn;
         [SerializeField] private Transform blueTeamSpawn;
 
-        [SerializeField] private int blueTeamKills = 0;
-        [SerializeField] private int yellowTeamKills = 0;
+        [SerializeField] private int blueTeamDeaths = 0;
+        [SerializeField] private int yellowTeamDeaths = 0;
 
         public GameObject[] blueTeamSide;
         public GameObject[] yellowTeamSide;
@@ -94,18 +94,24 @@ namespace VoltageSource
         // gun spawn function
         public void GunSpawn()
         {
-            int gunIndexB = UnityEngine.Random.Range(0, 3);
-            float blueRangeHorizontal = UnityEngine.Random.Range(-75.0f, BlueTerrScale);
-            Vector3 BlueSpawnPos = new Vector3(blueRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
-            GameObject blueGun = Instantiate(gunPrefabs[gunIndexB], BlueSpawnPos, Quaternion.identity) as GameObject;
-            GameObject gunWallB = Instantiate(gunWallPrefab, BlueSpawnPos, Quaternion.identity) as GameObject;
-            int gunIndexY = UnityEngine.Random.Range(0, 3);
-            float yellowRangeHorizontal = UnityEngine.Random.Range(BlueTerrScale, 75.0f);
-            Vector3 YellowSpawnPos = new Vector3(yellowRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
-            GameObject yellowGun = Instantiate(gunPrefabs[gunIndexY], YellowSpawnPos, Quaternion.identity) as GameObject;
-            GameObject gunWallY = Instantiate(gunWallPrefab, YellowSpawnPos, Quaternion.identity) as GameObject;
-            Debug.Log("spawned gun");
+            if (PhotonNetwork.IsMasterClient)
+            {
+                var gunIndexB = UnityEngine.Random.Range(0, gunPrefabs.Length); // Get random index between what guns exist
+                var blueRangeHorizontal = UnityEngine.Random.Range(-75.0f, BlueTerrScale);
+                Vector3 blueSpawnPos = new Vector3(blueRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
+                PhotonNetwork.Instantiate(gunPrefabs[gunIndexB].name, blueSpawnPos, Quaternion.identity, 0);
+                PhotonNetwork.Instantiate(gunWallPrefab.name, blueSpawnPos, Quaternion.identity, 0);
+                
+                int gunIndexY = UnityEngine.Random.Range(0, 3);
+                float yellowRangeHorizontal = UnityEngine.Random.Range(BlueTerrScale, 75.0f);
+                Vector3 YellowSpawnPos = new Vector3(yellowRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
+                PhotonNetwork.Instantiate(gunPrefabs[gunIndexY].name, YellowSpawnPos, Quaternion.identity, 0);
+                PhotonNetwork.Instantiate(gunWallPrefab.name, YellowSpawnPos, Quaternion.identity, 0);
+                
+                Debug.Log("Gun Spawn Called");
+            }
         }
+        
         // spawns the gun prefabs over time
         IEnumerator SpawnGunAfterTime()
         {
@@ -113,6 +119,7 @@ namespace VoltageSource
             yield return new WaitForSeconds(spawnTime);
             GunSpawn();
         }
+        
         // determines the territory range for spawning 
         private void SpawnLocations(int BlueSegments)
         {
@@ -253,15 +260,13 @@ namespace VoltageSource
             }
         
             // 0 photonViewID of the player that died
-            if (PhotonView.Find((int) data[0]).IsMine)
+            if (PhotonView.Find((int) data[0]).gameObject == _playerOne)
             {
                 // This means the host died instead
                 if (TeamManagerScript.Instance.PlayerOneTeam == 0) // Which means blue team
                     BlueTeamIncrement();
                 else
                     YellowTeamIncrement();
-                
-                
             }
             else
             {
@@ -292,9 +297,9 @@ namespace VoltageSource
         {
             yield return new WaitForSeconds(endRoundTimer);
             // Spawn other stuff
-            for (int i = 0; i < yellowTeamKills; i++)
+            for (int i = 0; i < yellowTeamDeaths; i++)
             {
-                if (i >= 2)
+                if (i >= 2) // Remove this once level is totally built
                     break;
                 
                 foreach (MeshRenderer obj in blueTeamSide[i].GetComponentsInChildren<MeshRenderer>())
@@ -302,9 +307,9 @@ namespace VoltageSource
                     obj.material = transparentMaterial;
                 }
             }
-            for (int i = 0; i < blueTeamKills; i++)
+            for (int i = 0; i < blueTeamDeaths; i++)
             {
-                if (i >= 2)
+                if (i >= 2) // Remove this once level is totally built
                     break;
                 
                 foreach (MeshRenderer obj in yellowTeamSide[i].GetComponentsInChildren<MeshRenderer>())
@@ -315,24 +320,30 @@ namespace VoltageSource
             
             FpController fpsReference;
             
-            if (_playerOne != null)
+            if (_playerOne)
             {
-                fpsReference = _playerOne.GetComponent<FpController>();
-                fpsReference.SetPos(TeamManagerScript.Instance.PlayerTwoTeam == 0
-                    ? blueTeamSpawn
-                    : yellowTeamSpawn);
-                
-                fpsReference.ResetHealth();      
+                if (_playerOne.GetComponent<PhotonView>().IsMine)
+                {
+                    fpsReference = _playerOne.GetComponent<FpController>();
+                                    fpsReference.SetPos(TeamManagerScript.Instance.PlayerTwoTeam == 0
+                                        ? blueTeamSpawn
+                                        : yellowTeamSpawn);
+                                    
+                                    fpsReference.ResetHealth();    
+                }
             }
 
-            if (_playerTwo != null)
+            if (_playerTwo)
             {
-                fpsReference = _playerTwo.GetComponent<FpController>();
-                fpsReference.SetPos(TeamManagerScript.Instance.PlayerTwoTeam == 0
-                    ? blueTeamSpawn
-                    : yellowTeamSpawn);
+                if (_playerTwo.GetComponent<PhotonView>().IsMine)
+                {
+                    fpsReference = _playerTwo.GetComponent<FpController>();
+                    fpsReference.SetPos(TeamManagerScript.Instance.PlayerTwoTeam == 0
+                        ? blueTeamSpawn
+                        : yellowTeamSpawn);
                 
-                fpsReference.ResetHealth();
+                    fpsReference.ResetHealth();
+                }
             }
             
             Debug.Log("End of EndRound event coroutine");
@@ -359,9 +370,9 @@ namespace VoltageSource
 
         private void BlueTeamIncrement()
         {
-            blueTeamKills++;
-            Debug.Log(blueTeamKills);
-            if (blueTeamKills >= 5)
+            blueTeamDeaths++;
+            Debug.Log(blueTeamDeaths);
+            if (blueTeamDeaths >= 5)
             {
                 EndGame();
                 return;
@@ -372,9 +383,9 @@ namespace VoltageSource
 
         private void YellowTeamIncrement()
         {
-            yellowTeamKills++;
-            Debug.Log(yellowTeamKills);
-            if (yellowTeamKills >= 5)
+            yellowTeamDeaths++;
+            Debug.Log(yellowTeamDeaths);
+            if (yellowTeamDeaths >= 5)
             {
                 EndGame();
                 return;
