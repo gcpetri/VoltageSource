@@ -358,8 +358,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2174101811611515373}
   - {fileID: 758412129}
+  - {fileID: 2174101811611515373}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2364,7 +2364,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 59893144}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &758412130
 Light:
@@ -7068,6 +7068,9 @@ MonoBehaviour:
   playerTwo: {fileID: 1499181431}
   roomCodeText: {fileID: 1123395347}
   startMatchButton: {fileID: 0}
+  settingsPanel: {fileID: 0}
+  volumeSlider: {fileID: 0}
+  privateGameToggle: {fileID: 0}
   _playerOneTeamChoice: 0
   _playerTwoTeamChoice: 0
   anim: {fileID: 0}
@@ -7650,15 +7653,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1540273647230608215}
-  m_LocalRotation: {x: 0, y: 0.8143688, z: 0, w: 0.5803478}
-  m_LocalPosition: {x: 587.3092, y: -98.39032, z: 879.30817}
+  m_LocalRotation: {x: -0, y: 0.41786712, z: -0, w: 0.9085082}
+  m_LocalPosition: {x: -559, y: -78, z: 794}
   m_LocalScale: {x: 38, y: 38, z: 38}
   m_Children:
   - {fileID: 1721775986782418742}
   - {fileID: 7538585508191045114}
   m_Father: {fileID: 59893144}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 109.05, z: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 49.4, z: 0}
 --- !u!4 &2394849423788443116
 Transform:
   m_ObjectHideFlags: 0

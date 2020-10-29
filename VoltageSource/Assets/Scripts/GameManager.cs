@@ -99,14 +99,13 @@ namespace VoltageSource
                 var gunIndexB = UnityEngine.Random.Range(0, gunPrefabs.Length); // Get random index between what guns exist
                 var blueRangeHorizontal = UnityEngine.Random.Range(-75.0f, BlueTerrScale);
                 Vector3 blueSpawnPos = new Vector3(blueRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
-                PhotonNetwork.Instantiate(gunPrefabs[gunIndexB].name, blueSpawnPos, Quaternion.identity, 0);
-                PhotonNetwork.Instantiate(gunWallPrefab.name, blueSpawnPos, Quaternion.identity, 0);
-                
+
                 int gunIndexY = UnityEngine.Random.Range(0, 3);
                 float yellowRangeHorizontal = UnityEngine.Random.Range(BlueTerrScale, 75.0f);
                 Vector3 YellowSpawnPos = new Vector3(yellowRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
-                PhotonNetwork.Instantiate(gunPrefabs[gunIndexY].name, YellowSpawnPos, Quaternion.identity, 0);
-                PhotonNetwork.Instantiate(gunWallPrefab.name, YellowSpawnPos, Quaternion.identity, 0);
+
+                object[] content = {gunIndexB, blueSpawnPos, gunIndexY, YellowSpawnPos};
+                PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.SpawnGun, content, raiseEventOptions, SendOptions.SendReliable);
                 
                 Debug.Log("Gun Spawn Called");
             }
@@ -246,9 +245,20 @@ namespace VoltageSource
                     break;
                 case (byte)EventManager.EventCodes.EndPreRound: EndPreRound();
                     break;
+                case (byte)EventManager.EventCodes.SpawnGun: SpawnGun(data);
+                    break;
                 default: break;
             }
             
+        }
+
+        private void SpawnGun(object[] data = null)
+        {
+            if (data == null)
+                return;
+
+            Instantiate(gunPrefabs[(int) data[0]], (Vector3)data[1],Quaternion.identity);
+            Instantiate(gunPrefabs[(int) data[2]], (Vector3)data[3],Quaternion.identity);
         }
 
         private void PlayerDied(object[] data = null)
@@ -357,8 +367,11 @@ namespace VoltageSource
             if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
                 return;
             SpawnLocations(BlueSegments);
-            GunSpawn();
-            SpawnRandomLocation();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                GunSpawn();
+                SpawnRandomLocation();
+            }
             Debug.Log("Round started");
         }
         

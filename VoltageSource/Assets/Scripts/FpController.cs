@@ -244,9 +244,6 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         {
             _velocity.y = Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
             anim.SetTrigger(_animParams[1].name);
-            #if  DEBUG_METHODS
-                Debug.Log("Jump button was pressed");
-            #endif
         }
     }
 
