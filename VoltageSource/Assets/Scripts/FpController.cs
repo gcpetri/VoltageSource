@@ -105,8 +105,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     [SerializeField] private GameObject UiGameObject; // Reference 
     private PhotonPlayerUI playerUI;
     private bool isPaused = false;
-    [SerializeField] public GameObject MiniMap;
-    
+
     #endregion
 
     private Rigidbody _rb;
@@ -193,13 +192,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
         if (isPaused)
             return;
-        if (Input.GetKey(KeyCode.Tab))
-        {
-            MiniMap.SetActive(true);
-        } else
-        {
-            MiniMap.SetActive(false);
-        }
+        
         InputProcess();
 
         if (_isPreRound)

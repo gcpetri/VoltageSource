@@ -52,6 +52,10 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         _joinRoomName = null;
         _createRoomName = null;
 
+        if (volumeSlider == null)
+        {
+            return;
+        }
         volumeSlider.value = PlayerPrefs.HasKey("VolumeValue") ? PlayerPrefs.GetFloat("VolumeValue") : 1f;
 
     }
@@ -63,6 +67,10 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
     
     void playWave()
     {
+        if(!anim)
+        {
+            return;
+        }
         anim.Play("Wave");
     }
     private void OnEnable()

@@ -60,7 +60,7 @@ public class GunScript : MonoBehaviour
             Debug.LogFormat("GunData exists: {0} on {1}", (gunData != null), gameObject.name);
             Debug.LogFormat("AudioSource exists: {0} on {1}", (audioSource != null), gameObject.name);
         #endif
-        
+        audioSource.volume = PlayerPrefs.GetFloat("VolumeValue");
     }
     
     [PunRPC]

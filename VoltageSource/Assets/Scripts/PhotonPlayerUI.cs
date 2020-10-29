@@ -33,6 +33,7 @@ namespace VoltageSource
         [SerializeField] private GameObject TimerUI;
         [SerializeField] private TMP_Text InfoText;
         [SerializeField] private TMP_Text TimerText;
+        [SerializeField] public GameObject MiniMap;
         
         private bool isPaused = false;
         private float currentTime = 10f;
@@ -83,7 +84,8 @@ namespace VoltageSource
                 currentTime -= Time.deltaTime;
                 TimerText.text = Mathf.Clamp((float)Math.Round(currentTime, 2), 0, 100).ToString() + " secs";
             }
-            
+
+            MiniMap.SetActive(Input.GetKey(KeyCode.Tab));
         }
 
         private void LateUpdate()
@@ -101,6 +103,7 @@ namespace VoltageSource
 
         public void LeaveGame()
         {
+            Debug.Log("Button pressed");
             if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.LoadLevel(0); // Go back to main menu
