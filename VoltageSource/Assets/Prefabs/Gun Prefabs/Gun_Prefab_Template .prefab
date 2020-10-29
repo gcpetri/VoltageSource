@@ -221,6 +221,13 @@ MonoBehaviour:
   firingSound: {fileID: 0}
   audioSource: {fileID: 0}
   reloadSound: {fileID: 0}
+  cameraIdle: {fileID: 0}
+  cameraAim: {fileID: 0}
+  camera: {fileID: 0}
+  owner: {fileID: 0}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &7048855840884861789
 MonoBehaviour:
   m_ObjectHideFlags: 0
