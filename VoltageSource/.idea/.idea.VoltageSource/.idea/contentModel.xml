@@ -6,6 +6,7 @@
     <e p="D:\Users\Erik\Documents\VoltageSource\VoltageSource\VoltageSource" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="AudioManager.cs" t="Include" />
         <e p="CustomizeCharacterMenu.cs" t="Include" />
         <e p="cutieCamera.cs" t="Include" />
         <e p="Info.txt" t="Include" />
