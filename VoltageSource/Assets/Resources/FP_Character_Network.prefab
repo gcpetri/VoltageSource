@@ -539,6 +539,7 @@ MonoBehaviour:
   gunRotationPoint: {fileID: 6463004130150679357}
   anim: {fileID: 2114782981884598830}
   UiGameObject: {fileID: 8656688984477261101}
+  MiniMap: {fileID: 0}
   localAudioListener: {fileID: 1791268987700070072}
 --- !u!114 &5166323483910779359
 MonoBehaviour:
