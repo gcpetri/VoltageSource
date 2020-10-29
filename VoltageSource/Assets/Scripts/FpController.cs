@@ -79,7 +79,6 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
     private float _xRotation; // Local
     public Camera fpsCamera; // Reference
-
     #endregion
 
     #region Gun Variables
@@ -106,6 +105,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     [SerializeField] private GameObject UiGameObject; // Reference 
     private PhotonPlayerUI playerUI;
     private bool isPaused = false;
+    [SerializeField] public GameObject MiniMap;
     
     #endregion
 
@@ -193,7 +193,13 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
         if (isPaused)
             return;
-        
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            MiniMap.SetActive(true);
+        } else
+        {
+            MiniMap.SetActive(false);
+        }
         InputProcess();
 
         if (_isPreRound)
