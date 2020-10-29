@@ -22,6 +22,9 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
     [SerializeField] private TMP_Dropdown playerTwo;
     [SerializeField] private TMP_Text roomCodeText;
     [SerializeField] private Button startMatchButton;
+    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private Slider volumeSlider;
+    [SerializeField] private Toggle privateGameToggle;
 
     [SerializeField]
     private int _playerOneTeamChoice;
@@ -48,8 +51,16 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
         _joinRoomName = null;
         _createRoomName = null;
-        
+
+        volumeSlider.value = PlayerPrefs.HasKey("VolumeValue") ? PlayerPrefs.GetFloat("VolumeValue") : 1f;
+
     }
+
+    public void PrivateToggle()
+    {
+        PhotonLauncher.Instance.PrivateStatus(privateGameToggle);
+    }
+    
     void playWave()
     {
         anim.Play("Wave");
@@ -86,7 +97,8 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
     
         public void SettingsButton()
         {
-            Debug.Log("Setting button on MainMenu pressed");
+            mainMenuPanel.SetActive(false);
+            settingsPanel.SetActive(true);
         }
     
         public void QuitGameButton()
@@ -102,8 +114,11 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
             matchMakingBackground.SetActive(false);
             matchMakingPanel.SetActive(false);
             connecting.SetActive(false);
+            settingsPanel.SetActive(false);
             InvokeRepeating("playWave", 10f, 10f);
         }
+        
+        
 
         public void CallLeaveRoom()
         {
@@ -168,6 +183,11 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         }
     #endregion
 
+    public void SetVolume()
+    {
+        AudioManager.Instance.SetVolume(volumeSlider.value);
+    }
+    
     public void SetJoinRoomName(string value)
     {
         if (string.IsNullOrEmpty(value))
@@ -189,7 +209,7 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         
         _createRoomName = value;
     }
-
+    
     
     private void TeamSelectP1(int value)
     {

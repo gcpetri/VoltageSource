@@ -7,7 +7,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(SphereCollider))]
 public class Pickupable : MonoBehaviour
 {
-   
+    
     public void PickupObject()
     {
         Debug.Log("Picked up");

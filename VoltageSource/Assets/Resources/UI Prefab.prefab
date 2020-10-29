@@ -1200,6 +1200,8 @@ GameObject:
   - component: {fileID: 2630972004372555064}
   - component: {fileID: 2990881290014047842}
   - component: {fileID: 6461464558939939446}
+  - component: {fileID: 3343729762833739402}
+  - component: {fileID: 6711868738467657968}
   m_Layer: 0
   m_Name: UI Prefab
   m_TagString: Untagged
@@ -1245,6 +1247,7 @@ MonoBehaviour:
   playerNameText: {fileID: 2731416945559751391}
   playerHealthSlider: {fileID: 4026306808532434246}
   pingCounter: {fileID: 3010122158850983013}
+  MissionUI: {fileID: 0}
   GameUI: {fileID: 1729559060897463505}
   PauseUI: {fileID: 2346072888377213660}
   InfoUI: {fileID: 2096237782560742623}
@@ -1301,6 +1304,40 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &3343729762833739402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5469184491831271201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!114 &6711868738467657968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5469184491831271201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
 --- !u!1 &5652602054996360859
 GameObject:
   m_ObjectHideFlags: 0

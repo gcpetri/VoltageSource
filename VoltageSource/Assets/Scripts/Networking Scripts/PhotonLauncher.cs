@@ -22,10 +22,6 @@ namespace VoltageSource
         [SerializeField]
         private byte maxPlayersPerRoom = 2;
 
-        [SerializeField] private GameObject controlPanel;
-        [SerializeField] private GameObject progressLabel;
-        [SerializeField] private Toggle _privateToggle;
-
         [SerializeField] private int MainMenuIndex;
         [SerializeField] private int TeamSelectIndex;
         [SerializeField] private int GameSceneIndex;
@@ -93,9 +89,9 @@ namespace VoltageSource
             
         }
 
-        public void PrivateStatus()
+        public void PrivateStatus(Toggle tm)
         {
-            _isPrivate = _privateToggle.isOn;
+            _isPrivate = tm.isOn;
             Debug.Log(_isPrivate);
         }
 
@@ -148,11 +144,6 @@ namespace VoltageSource
         {
             LoadGameScene();
             return true;
-        }
-
-        public void TestRPCCall(string rpcCallName)
-        {
-            photonView.RPC(rpcCallName, RpcTarget.All);
         }
         
         #region MonoBehaviourPunCallBacks CallBacks
