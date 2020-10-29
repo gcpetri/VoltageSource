@@ -2717,7 +2717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2256326311265043882, guid: b6e3ba540c5a1c14aa811da4ebb6bdaa, type: 3}
       propertyPath: gunPrefabs.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2256326311265043882, guid: b6e3ba540c5a1c14aa811da4ebb6bdaa, type: 3}
       propertyPath: redTeamSpawn
