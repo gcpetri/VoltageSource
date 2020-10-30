@@ -349,16 +349,21 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         Health -= 10;
     }
 
+    private Transform teleportLocation;
+    
     public void SetPos(Transform pos)
     {
-        /*
-        transform.position = pos.position;
-        transform.rotation = pos.rotation;
-        */
-
-        _rb.position = pos.position;
-        _rb.rotation = pos.rotation;
+        teleportLocation = pos;
+        photonView.RPC("RPCSetPos", RpcTarget.All);
     }
-    
+
+    [PunRPC]
+    private void RPCSetPos()
+    {
+        transform.position = teleportLocation.position;
+        transform.rotation = teleportLocation.rotation;
+        _rb.position = teleportLocation.position;
+        _rb.rotation = teleportLocation.rotation;
+    }
 
 }

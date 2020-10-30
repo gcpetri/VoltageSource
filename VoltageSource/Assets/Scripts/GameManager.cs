@@ -84,7 +84,7 @@ namespace VoltageSource
             {
                  _playerTwo =PhotonNetwork.Instantiate(playerPrefab.name,
                     TeamManagerScript.Instance.PlayerTwoTeam == 0 ? blueTeamSpawn.position : yellowTeamSpawn.position,
-                    TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation, 0);
+                    TeamManagerScript.Instance.PlayerTwoTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation, 0);
             }
         }
 
