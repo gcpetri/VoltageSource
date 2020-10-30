@@ -60,6 +60,9 @@ namespace VoltageSource
 
             SpawnPlayers();
             // Call pre-round event, on this event players cannot move but can look around but can't shoot. 
+            if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
+                return;
+            
             PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.StartPreRound, null, raiseEventOptions, SendOptions.SendReliable);
         }
 
@@ -268,7 +271,7 @@ namespace VoltageSource
                 Debug.LogError("Data needed for PlayerDied is missing");
                 return;
             }
-        
+
             // 0 photonViewID of the player that died
             if (PhotonView.Find((int) data[0]).gameObject == _playerOne)
             {
@@ -286,17 +289,22 @@ namespace VoltageSource
                     YellowTeamIncrement();
             }
             
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
+            
             PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.EndRound, null, raiseEventOptions, SendOptions.SendReliable);
         }
         
         private void EndRound(object[] data = null)
         {
-            if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
-                return;
-            
             Debug.Log("Round ended");
 
             StartCoroutine(IEndRound());
+            
+            if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
+                return;
             StopCoroutine(SpawnGunAfterTime());
             // Based on # of kills for each player, apply the appropriate actions to the level
             // Change level's pickups to either enabled or disabled and set appropriate materials to level cover and properties 
@@ -309,9 +317,6 @@ namespace VoltageSource
             // Spawn other stuff
             for (int i = 0; i < yellowTeamDeaths; i++)
             {
-                if (i >= 2) // Remove this once level is totally built
-                    break;
-                
                 foreach (MeshRenderer obj in blueTeamSide[i].GetComponentsInChildren<MeshRenderer>())
                 {
                     obj.material = transparentMaterial;
@@ -319,9 +324,6 @@ namespace VoltageSource
             }
             for (int i = 0; i < blueTeamDeaths; i++)
             {
-                if (i >= 2) // Remove this once level is totally built
-                    break;
-                
                 foreach (MeshRenderer obj in yellowTeamSide[i].GetComponentsInChildren<MeshRenderer>())
                 {
                     obj.material = transparentMaterial;
@@ -357,6 +359,10 @@ namespace VoltageSource
             }
             
             Debug.Log("End of EndRound event coroutine");
+            if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
+                yield return null;
+            
+            
             PhotonNetwork.RaiseEvent((byte) EventManager.EventCodes.StartPreRound, null, raiseEventOptions,
                 SendOptions.SendReliable);
         }
@@ -367,11 +373,8 @@ namespace VoltageSource
             if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
                 return;
             SpawnLocations(BlueSegments);
-            if (PhotonNetwork.IsMasterClient)
-            {
-                GunSpawn();
-                SpawnRandomLocation();
-            }
+            GunSpawn();
+            SpawnRandomLocation();
             Debug.Log("Round started");
         }
         
@@ -424,6 +427,9 @@ namespace VoltageSource
         {
             Debug.Log("Pre round started");
             yield return new WaitForSeconds(preRoundTimer);
+            
+            if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
+                yield return null;
             PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.EndPreRound, null, raiseEventOptions, SendOptions.SendReliable);
             
         }
@@ -432,6 +438,9 @@ namespace VoltageSource
         {
             Debug.Log("Pre round Ended");
             // If the pre-round ends then start the actual round 
+            if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
+                return;
+            
             PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.StartRound, null, raiseEventOptions, SendOptions.SendReliable);
         }
         

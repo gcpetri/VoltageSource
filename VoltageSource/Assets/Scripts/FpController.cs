@@ -53,6 +53,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             get => health;
             set
             {
+                if (!photonView.IsMine)
+                    return;
                 //Debug.LogErrorFormat("PhotonView {0} took damage, current health is {1}", photonView.ViewID, health);
                 if (health <= 0)
                 {
@@ -177,12 +179,9 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     private void Update()
     {
         
-        if (!photonView.IsMine && PhotonNetwork.IsConnected)
+        if (!photonView.IsMine || _isDead)
             return;
 
-        if (_isDead)
-            return;
-        
         _currentGunInfo.isAiming = Input.GetButton("Fire2");
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -202,7 +201,11 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         {
             // The if statement is used just to reduce number of RPC calls between clients
             if (_nextTimeToFire < Time.time)
-                photonView.RPC("ShootRPC", RpcTarget.All, null);
+            {
+                photonView.RPC("ShootRPC", RpcTarget.All);
+                PhotonNetwork.SendAllOutgoingCommands();
+            }
+                
 
         }
 
@@ -289,21 +292,31 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     #endregion
 
     [PunRPC]
-    private void ShootRPC()
+    private void ShootRPC(PhotonMessageInfo info)
     {
-        _currentGunInfo.Shoot(photonView.ViewID);
+        _currentGunInfo.Shoot(info.photonView.ViewID);
         _nextTimeToFire = Time.time + (1 / _fireRate);
     }
     
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+
         if (stream.IsWriting)
         {
             stream.SendNext(Health);
+            stream.SendNext(_rb.position);
+            stream.SendNext(_rb.rotation);
+            stream.SendNext(_rb.velocity);
         }
         else
         {
             this.Health = (float) stream.ReceiveNext();
+            _rb.position = (Vector3) stream.ReceiveNext();
+            _rb.rotation = (Quaternion) stream.ReceiveNext();
+            _rb.velocity = (Vector3) stream.ReceiveNext();
+
+            float lag = Mathf.Abs((float) (PhotonNetwork.Time - info.SentServerTime));
+            _rb.position += _rb.velocity * lag;
         }
     }
 
