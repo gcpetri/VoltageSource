@@ -18,6 +18,9 @@ public class EventManager : MonoBehaviour
         MatchEnd,
         PlayerDied,
         SpawnGun,
-        Test
+        Test,
+        ChangeCharacterColor1,
+        ChangeCharacterColor2
+
     }
 }
