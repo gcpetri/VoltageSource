@@ -1,6 +1,7 @@
 ﻿#define DEBUG_VARIABLES
 #define DEBUG_METHODS
 
+using System;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -112,15 +113,26 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
     private Rigidbody _rb;
     [SerializeField] private AudioListener localAudioListener; // Reference
-    /// <summary>
-    /// Initialize all the values we need to run this script
-    /// </summary>
+    private Transform teleportLocation;
+
+    #region GunPickup Variables
+
+    [Header("Gun Pickup Variables")] [SerializeField]
+    private LayerMask pickupMask;
+    [SerializeField] private float pickupDistance = 5f;
+    private RaycastHit _pickUpHit;
+    [SerializeField] private GameObject pistolRef;
+    [SerializeField] private GameObject sniperRef;
+    [SerializeField] private GameObject assualtRef;
+    [SerializeField] private GameObject shotgunRef;
+    
+    #endregion
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         _photonView = GetComponent<PhotonView>(); // Need to get this value to do networking
         _cController = GetComponent<CharacterController>();
-        _currentGunInfo = currentGun.GetComponent<GunScript>();
         if (photonView.IsMine)
         {
             fpsCamera.enabled = true;
@@ -131,7 +143,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         _rb = GetComponent<Rigidbody>();
         Health = _maxHealth;
         
-        if (UiGameObject != null && photonView.IsMine)
+        if (UiGameObject && photonView.IsMine)
         {
             UiGameObject.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
             playerUI = UiGameObject.GetComponent<PhotonPlayerUI>();
@@ -141,48 +153,50 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             Debug.LogWarning("Missing uiPrefab reference on player prefab");
         }
         
-
-        if (anim != null)
+        if (anim)
         {
             _animParams = anim.parameters;
         }
+        
+        _groundCheckPosition = transform.position - (new Vector3(0, _cController.height / 2, 0));
 
-        if (_currentGunInfo != null)
+        // Gun Initilization 
+        if (currentGun)
         {
+            _currentGunInfo = currentGun.GetComponent<GunScript>();
             _currentGunInfo.SetOwner(this);
+            _fireRate = _currentGunInfo.GetFireRate();
         }
         
-        _fireRate = _currentGunInfo.GetFireRate();
-        _groundCheckPosition = transform.position - (new Vector3(0, _cController.height / 2, 0));
-        
         var stack = fpsCamera.GetUniversalAdditionalCameraData();
-        stack.cameraStack.Add(_currentGunInfo.GetCamera().GetComponent<Camera>());
+        if(stack != null)
+            stack.cameraStack.Add(_currentGunInfo.GetCamera().GetComponent<Camera>());
         
         /*
         #if DEBUG_VARIABLES
          // Checks to see if all required dependicies exists
-         Debug.LogFormat("PhotonView exists: {0} on {1}", photonView != null, gameObject.name);
-         Debug.LogFormat("CharacterController exists: {0} on {1}", (_cController != null), gameObject.name);
-         Debug.LogFormat("CurrentGun exists: {0} on {1}", (currentGun != null), gameObject.name);
-         Debug.LogFormat("Animator exists: {0} on {1}", (anim != null), gameObject.name);
-         Debug.LogFormat("Camera exists: {0} on {1}", (fpsCamera != null), gameObject.name);
-         Debug.LogFormat("LocalAudioListener exists: {0} on {1}", (localAudioListener != null), gameObject.name);
-         Debug.LogFormat("CurrentGunScript exists: {0} on {1}", (_currentGunInfo != null), gameObject.name);
+         Debug.LogFormat("PhotonView exists: {0} on {1}", photonView, gameObject.name);
+         Debug.LogFormat("CharacterController exists: {0} on {1}", (_cController), gameObject.name);
+         Debug.LogFormat("CurrentGun exists: {0} on {1}", (currentGun), gameObject.name);
+         Debug.LogFormat("Animator exists: {0} on {1}", (anim), gameObject.name);
+         Debug.LogFormat("Camera exists: {0} on {1}", (fpsCamera), gameObject.name);
+         Debug.LogFormat("LocalAudioListener exists: {0} on {1}", (localAudioListener), gameObject.name);
+         Debug.LogFormat("CurrentGunScript exists: {0} on {1}", (_currentGunInfo), gameObject.name);
         #endif
         */
     }
-    void PauseGame()
+    private void PauseGame()
     {
         isPaused = playerUI.TogglePause();
     }
     // Update is called once per frame
     private void Update()
     {
-        
         if (!photonView.IsMine || _isDead)
             return;
 
-        _currentGunInfo.isAiming = Input.GetButton("Fire2");
+        if(_currentGunInfo)
+            _currentGunInfo.isAiming = Input.GetButton("Fire2");
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -202,13 +216,21 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             // The if statement is used just to reduce number of RPC calls between clients
             if (_nextTimeToFire < Time.time)
             {
-                photonView.RPC("ShootRPC", RpcTarget.All);
-                PhotonNetwork.SendAllOutgoingCommands();
+                _currentGunInfo.Shoot();
+                _nextTimeToFire = Time.time + (1 / _fireRate);
             }
-                
-
         }
 
+        if (Input.GetKeyDown(KeyCode.E)) // Change this to interactable axis later
+        {
+            Ray ray = fpsCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out _pickUpHit, pickupDistance, pickupMask))
+            {
+                GameObject newGun = _pickUpHit.transform.gameObject;
+                
+            }
+        }
+        
         GroundCheck();
         
         _cController.Move(_velocity * Time.deltaTime); // This calls to move the character downward based on gravity
@@ -222,6 +244,11 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         _velocity.y += Physics.gravity.y * Time.fixedDeltaTime;
     }
 
+    private void SwitchGun(GameObject obj)
+    {
+        
+    }
+    
     /// <summary>
     /// Processes all the inputs required for the FP_Controller
     /// </summary>
@@ -247,6 +274,9 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         {
             _velocity.y = Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
             anim.SetTrigger(_animParams[1].name);
+            RaiseEventOptions eventOptions = RaiseEventOptions.Default;
+            eventOptions.CachingOption = EventCaching.AddToRoomCache;
+            PhotonNetwork.RaiseEvent((byte) EventManager.EventCodes.Test, null, eventOptions, SendOptions.SendReliable);
         }
     }
 
@@ -291,13 +321,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
     #endregion
 
-    [PunRPC]
-    private void ShootRPC(PhotonMessageInfo info)
-    {
-        _currentGunInfo.Shoot(info.photonView.ViewID);
-        _nextTimeToFire = Time.time + (1 / _fireRate);
-    }
-    
+    #region Photon Serialize View
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
 
@@ -320,6 +345,34 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         }
     }
 
+    #endregion
+    
+    private void SetDeath()
+    {
+        anim.SetBool(_animParams[3].name, true);
+        _isDead = true;
+    }
+    
+    
+
+    #region Public Methods
+
+    public void SetPos(Transform pos)
+    {
+        teleportLocation = pos;
+        photonView.RPC("RPCSetPos", RpcTarget.All);
+    }
+    
+    public void ResetHealth()
+    {
+        Health = _maxHealth;
+        _isDead = false;
+    }
+
+    #endregion
+    
+    #region Event Callbacks
+
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
@@ -329,34 +382,32 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         }else if (eventCode == (byte) EventManager.EventCodes.EndPreRound)
         {
             _isPreRound = false;
+        }else if (eventCode == (byte) EventManager.EventCodes.Test)
+        {
+            Debug.Log("Got cached event");
         }
     }
+
+    #endregion
+
+    #region Custom Callbacks
+
+    // Want an OnGunPickup and an OnGunDrop
+    // Both of these functions will call setting gun owner and appropriate info needed for each gun. 
+    private void OnGunPickup(Action action)
+    {
+        action?.Invoke();
+    }
+
+    private void OnGunDrop(Action action)
+    {
+        action?.Invoke();
+    }
+
+    #endregion
     
-    private void SetDeath()
-    {
-        anim.SetBool(_animParams[3].name, true);
-        _isDead = true;
-    }
-
-    public void ResetHealth()
-    {
-        Health = _maxHealth;
-        _isDead = false;
-    }
-
-    public void LoseHealth()
-    {
-        Health -= 10;
-    }
-
-    private Transform teleportLocation;
+    #region RPCCalls
     
-    public void SetPos(Transform pos)
-    {
-        teleportLocation = pos;
-        photonView.RPC("RPCSetPos", RpcTarget.All);
-    }
-
     [PunRPC]
     private void RPCSetPos()
     {
@@ -365,5 +416,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         _rb.position = teleportLocation.position;
         _rb.rotation = teleportLocation.rotation;
     }
+
+    #endregion
 
 }

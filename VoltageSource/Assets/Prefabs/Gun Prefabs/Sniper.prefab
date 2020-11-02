@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7441513103107963462}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: CameraIdleSpot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 6199850221485232184}
   - component: {fileID: 4066252043496767510}
   - component: {fileID: 7753640294592664370}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: GunCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 7824060240633960933}
   - component: {fileID: 5391953350886617964}
   - component: {fileID: 6350274333084742526}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: FinishedMag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2823990508164678895}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: Bullet_SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
@@ -256,7 +256,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 869031324768417012}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: CameraAimSpot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 1749204867972246031}
   - component: {fileID: 255035050540280059}
   - component: {fileID: 4009568231952890708}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: Gun_Shot_FX
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
@@ -5162,7 +5162,9 @@ GameObject:
   - component: {fileID: 7711541487253664059}
   - component: {fileID: 8087343176166319789}
   - component: {fileID: 2432300799098015987}
-  m_Layer: 12
+  - component: {fileID: 5866813603516997549}
+  - component: {fileID: 6526288526726322057}
+  m_Layer: 11
   m_Name: Sniper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5176,7 +5178,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8730984653395962964}
-  m_LocalRotation: {x: -0.5, y: 0.50000006, z: 0.50000006, w: 0.5}
+  m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: -0.006061347, y: 0, z: -0.2}
   m_LocalScale: {x: 26.6, y: 6.22, z: 20.6}
   m_Children:
@@ -5188,7 +5190,7 @@ Transform:
   - {fileID: 869031324768417012}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: -90}
 --- !u!33 &5030163929061587275
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5248,7 +5250,7 @@ Animator:
   m_GameObject: {fileID: 8730984653395962964}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: db1e4f1eefc6d4c44a0098fb93300420, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5270,19 +5272,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunData: {fileID: 11400000, guid: c00e1d369e1d2e24298265c7f5c4fa59, type: 2}
-  bulletSpawnPoint: {fileID: 0}
-  gunAnimator: {fileID: 0}
-  _gunParticleSystem: {fileID: 0}
+  bulletSpawnPoint: {fileID: 2823990508164678895}
+  gunAnimator: {fileID: 8964787537746132690}
+  _gunParticleSystem: {fileID: 255035050540280059}
   firingSound: {fileID: 8300000, guid: b5b1b1669d42e6245bf8780d637adf6e, type: 3}
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 8087343176166319789}
   reloadSound: {fileID: 8300000, guid: 87825692a171b9041bd27f3fa435841d, type: 3}
-  cameraIdle: {fileID: 0}
-  cameraAim: {fileID: 0}
-  camera: {fileID: 0}
-  owner: {fileID: 0}
-  collisionMask:
-    serializedVersion: 2
-    m_Bits: 0
+  cameraIdle: {fileID: 7441513103107963462}
+  cameraAim: {fileID: 869031324768417012}
+  camera: {fileID: 5194491251154411409}
+  fpController: {fileID: 0}
+  rotatingSpeed: 100
+  collider: {fileID: 5866813603516997549}
+  photonAnimatorView: {fileID: 2432300799098015987}
 --- !u!82 &8087343176166319789
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5395,11 +5397,39 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: Reloading
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 0
     Name: Aiming
+  - Type: 4
+    SynchronizeType: 0
+    Name: Rotating
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!135 &5866813603516997549
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8730984653395962964}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.07
+  m_Center: {x: -0.04, y: 0, z: 0}
+--- !u!114 &6526288526726322057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8730984653395962964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66cfb6739e08a454e8cc50694abaaed1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

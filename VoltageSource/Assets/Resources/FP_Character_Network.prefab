@@ -484,6 +484,14 @@ MonoBehaviour:
   anim: {fileID: 2114782981884598830}
   UiGameObject: {fileID: 2290379690051498740}
   localAudioListener: {fileID: 1791268987700070072}
+  pickupMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  pickupDistance: 5
+  pistolRef: {fileID: 0}
+  sniperRef: {fileID: 0}
+  assualtRef: {fileID: 0}
+  shotgunRef: {fileID: 0}
 --- !u!114 &5166323483910779359
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6363190406070694379}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: CameraIdleSpot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2772020401978590027}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: CameraAimSpot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 4672324959174363160}
   - component: {fileID: 7331113150130914945}
   - component: {fileID: 247800475600192781}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: GunCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7050370175996832439}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: Bullet_SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
@@ -211,8 +211,10 @@ GameObject:
   - component: {fileID: 4033944668683258531}
   - component: {fileID: 4288067213830736964}
   - component: {fileID: 7631027700185079665}
-  m_Layer: 12
-  m_Name: shotgun
+  - component: {fileID: 5052589945754978839}
+  - component: {fileID: 5582927581067780763}
+  m_Layer: 11
+  m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,7 +227,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4371801381835363661}
-  m_LocalRotation: {x: -0.52481145, y: -0.52017653, z: -0.47389126, w: 0.47897428}
+  m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: -0.09, y: -0.17, z: -0.5}
   m_LocalScale: {x: 30.4, y: 5.44, z: 28.2}
   m_Children:
@@ -237,7 +239,7 @@ Transform:
   - {fileID: 2772020401978590027}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: -90}
 --- !u!33 &22457561309806674
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -297,7 +299,7 @@ Animator:
   m_GameObject: {fileID: 4371801381835363661}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c63b66ec536810d4d8343902d1c14eaa, type: 2}
+  m_Controller: {fileID: 9100000, guid: db1e4f1eefc6d4c44a0098fb93300420, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -323,15 +325,15 @@ MonoBehaviour:
   gunAnimator: {fileID: 6758876910654286806}
   _gunParticleSystem: {fileID: 6900894696992822769}
   firingSound: {fileID: 8300000, guid: b5b1b1669d42e6245bf8780d637adf6e, type: 3}
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 4288067213830736964}
   reloadSound: {fileID: 8300000, guid: 87825692a171b9041bd27f3fa435841d, type: 3}
   cameraIdle: {fileID: 6363190406070694379}
   cameraAim: {fileID: 2772020401978590027}
   camera: {fileID: 3771844105231421042}
-  owner: {fileID: 0}
-  collisionMask:
-    serializedVersion: 2
-    m_Bits: 0
+  fpController: {fileID: 0}
+  rotatingSpeed: 100
+  collider: {fileID: 5052589945754978839}
+  photonAnimatorView: {fileID: 7631027700185079665}
 --- !u!82 &4288067213830736964
 AudioSource:
   m_ObjectHideFlags: 0
@@ -442,8 +444,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 0
+    Name: Reloading
+  - Type: 4
+    SynchronizeType: 0
+    Name: Aiming
+  - Type: 4
+    SynchronizeType: 0
+    Name: Rotating
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
+--- !u!135 &5052589945754978839
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4371801381835363661}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.05198512
+  m_Center: {x: 0.041972958, y: -0.000000014072525, z: 0.00035216144}
+--- !u!114 &5582927581067780763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4371801381835363661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66cfb6739e08a454e8cc50694abaaed1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5072990592914564543
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,7 +493,7 @@ GameObject:
   - component: {fileID: 1064358487488133282}
   - component: {fileID: 4021011142738442892}
   - component: {fileID: 344245050235142467}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: Pump.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -536,7 +574,7 @@ GameObject:
   - component: {fileID: 5001972126594539973}
   - component: {fileID: 6900894696992822769}
   - component: {fileID: 1032834806399491653}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: Gun_Shot_FX
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}

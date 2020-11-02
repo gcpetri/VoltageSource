@@ -1,9 +1,11 @@
 ﻿#define DEBUG
 #undef  DEBUG
 
+using System;
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Animator))]
 public class GunScript : MonoBehaviour
@@ -28,11 +30,20 @@ public class GunScript : MonoBehaviour
 
     [SerializeField] private Transform cameraAim;
     [SerializeField] private GameObject camera;
-    [SerializeField] private FpController owner;
+    [SerializeField] private FpController fpController;
+    private int ownerPhotonID;
+
+
+    [SerializeField] private float rotatingSpeed = 200f;
+    private bool _hasAnOwner = false;
+    [SerializeField] private SphereCollider collider;
+    private Transform _thisTransform;
+    [SerializeField] private PhotonAnimatorView photonAnimatorView;
 
     private int _reloadingID;
     private int _aimingID;
     private int _shootingID;
+    private int _rotatingID;
     private bool _isAiming = false;
     public bool isAiming
     {
@@ -47,9 +58,11 @@ public class GunScript : MonoBehaviour
     private void Start()
     {
         gunAnimator = GetComponent<Animator>();
-        _reloadingID = Animator.StringToHash("Reloading");
-        _aimingID = Animator.StringToHash("Aiming");
-        _shootingID = Animator.StringToHash("Shooting");
+        _thisTransform = transform;
+        if (photonAnimatorView)
+        {
+            photonAnimatorView.enabled = false;
+        }
         
         // Gun start with max ammo by default
         _currentAmmo = gunData.maxAmmo;
@@ -59,18 +72,29 @@ public class GunScript : MonoBehaviour
             Debug.LogFormat("GunData exists: {0} on {1}", (gunData != null), gameObject.name);
             Debug.LogFormat("AudioSource exists: {0} on {1}", (audioSource != null), gameObject.name);
         #endif
-        audioSource.volume = PlayerPrefs.GetFloat("VolumeValue");
+        if (audioSource)
+        {
+            audioSource.volume = PlayerPrefs.GetFloat("VolumeValue");
+        }
+
+        if (_hasAnOwner)
+        {
+            collider.enabled = false;
+        }
+
+        if (gunAnimator)
+        {
+            _reloadingID = Animator.StringToHash("Reloading");
+            _aimingID = Animator.StringToHash("Aiming");
+            _shootingID = Animator.StringToHash("Shooting");
+            _rotatingID = Animator.StringToHash("Rotating");
+            gunAnimator.SetBool(_rotatingID, true);
+        }
     }
     
-    [PunRPC]
-    public void Shoot(int owner)
+    
+    public void Shoot()
     {
-        #if DEBUG
-            Debug.LogFormat("MaxAmmo: {0}", gunData.maxAmmo);
-            Debug.LogFormat("CurrentAmmo: {0}", _currentAmmo);
-            Debug.LogFormat("NextTimeToFire: {0}", _nextTimeToFire);
-            Debug.LogFormat("IsReloading: {0}", _isReloading);
-        #endif
         if ((_nextTimeToFire >= Time.time) || _isReloading) 
         {
             return;
@@ -80,10 +104,11 @@ public class GunScript : MonoBehaviour
             StartReloading();
             return;
         }
+        
 
-        var spreadRatio = gunData.spreadAngle / this.owner.fpsCamera.fieldOfView;
+        var spreadRatio = gunData.spreadAngle / this.fpController.fpsCamera.fieldOfView;
         Vector2 spread = spreadRatio * Random.insideUnitCircle;
-        var r = this.owner.fpsCamera.ViewportPointToRay(Vector3.one * 0.5f + (Vector3) spread);
+        var r = this.fpController.fpsCamera.ViewportPointToRay(Vector3.one * 0.5f + (Vector3) spread);
         Vector3 hitpos = r.origin + r.direction * 200f;
         Debug.DrawRay(r.origin, r.direction, Color.red);
         // What I want to do is send a ray out from the cam
@@ -95,7 +120,7 @@ public class GunScript : MonoBehaviour
         var instantiateBullet = Instantiate(gunData.bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.transform.rotation);
         instantiateBullet.GetComponent<BulletScript>().damage = gunData.damage;
         instantiateBullet.GetComponent<Rigidbody>().velocity = r.direction * gunData.bulletSpeed;
-        instantiateBullet.GetComponent<BulletScript>().Owner = owner;
+        instantiateBullet.GetComponent<BulletScript>().Owner = 1; // Change this value, its not right
         Destroy(instantiateBullet, Mathf.Clamp(gunData.range / (gunData.bulletSpeed), 0f, 10f));
         if (_currentAmmo <= 0)
         {
@@ -146,8 +171,26 @@ public class GunScript : MonoBehaviour
 
     public void SetOwner(FpController obj)
     {
-        owner = obj;
+        fpController = obj;
+        _hasAnOwner = true;
+        collider.enabled = false;
+        gameObject.layer = LayerMask.NameToLayer("Gun");
+        if (gunAnimator)
+        {
+            gunAnimator.SetBool(_rotatingID, false);
+        }
+
+        photonAnimatorView.enabled = true;
     }
-    
-    
+
+    private void Update()
+    {
+        if (gunAnimator)
+        {
+            if (_hasAnOwner && gunAnimator.GetBool(_rotatingID))
+            {
+                gunAnimator.SetBool(_rotatingID, false);
+            }
+        }
+    }
 }

@@ -7072,7 +7072,7 @@ MonoBehaviour:
   volumeSlider: {fileID: 0}
   privateGameToggle: {fileID: 0}
   _playerOneTeamChoice: 0
-  _playerTwoTeamChoice: 0
+  _playerTwoTeamChoice: 1
   anim: {fileID: 0}
 --- !u!114 &2074732392
 MonoBehaviour:
