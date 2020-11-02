@@ -17,6 +17,8 @@ public class EventManager : MonoBehaviour
         EndRound,
         MatchEnd,
         PlayerDied,
-        SpawnGun
+        SpawnGun,
+        ChangeCharacterColor1,
+        ChangeCharacterColor2
     }
 }
