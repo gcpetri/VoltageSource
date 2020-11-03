@@ -111,6 +111,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
     #endregion
 
+    [SerializeField] private Renderer playerRenderer;
+
     private Rigidbody _rb;
     [SerializeField] private AudioListener localAudioListener; // Reference
     private Transform teleportLocation;
@@ -247,6 +249,20 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     private void SwitchGun(GameObject obj)
     {
         
+    }
+
+    private Color tempColor;
+    public void SetPlayerColor(Color color)
+    {
+        tempColor= color;
+        photonView.RPC("SetPlayerColorRPC", RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void SetPlayerColorRPC()
+    {
+        playerRenderer.material.color = tempColor;
+        playerRenderer.UpdateGIMaterials();
     }
     
     /// <summary>

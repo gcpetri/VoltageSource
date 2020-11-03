@@ -14,7 +14,9 @@ namespace VoltageSource
     {
         public string gameVersion = "1";
         public static PhotonLauncher Instance;
-        
+
+        private Color playerOneColor;
+        private Color playerTwoColor;
 
         #region Private Serializable Fields
 
@@ -144,6 +146,21 @@ namespace VoltageSource
         {
             LoadGameScene();
             return true;
+        }
+
+        public void SetPlayerColors(Color playerOne, Color playerTwo)
+        {
+            playerOneColor = playerOne;
+            playerTwoColor = playerTwo;
+        }
+
+        public Color GetPlayerOneColor()
+        {
+            return playerOneColor;
+        }
+        public Color GetPlayerTwoColor()
+        {
+            return playerTwoColor;
         }
         
         #region MonoBehaviourPunCallBacks CallBacks

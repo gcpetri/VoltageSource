@@ -226,6 +226,8 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
                 
             }
             
+            PhotonLauncher.Instance.SetPlayerColors(currentPlayerOneColor, currentPlayerTwoColor);
+            
             TeamManagerScript.Instance.PlayerOneTeam = _playerOneTeamChoice;
             TeamManagerScript.Instance.PlayerTwoTeam = _playerTwoTeamChoice;
         
@@ -443,6 +445,9 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
             
             PlayerOneRenderer.material.color = new Color(playerOneData.x, playerOneData.y, playerOneData.z, 1);
             PlayerTwoRenderer.material.color = new Color(playerTwoData.x, playerTwoData.y, playerTwoData.z, 1);
+            
+            currentPlayerOneColor = new Color(playerOneData.x, playerOneData.y, playerOneData.z, 1);
+            currentPlayerTwoColor = new Color(playerTwoData.x, playerTwoData.y, playerTwoData.z, 1);
             
             PlayerOneRenderer.UpdateGIMaterials();
             PlayerTwoRenderer.UpdateGIMaterials();

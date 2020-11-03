@@ -483,6 +483,7 @@ MonoBehaviour:
   gunRotationPoint: {fileID: 6463004130150679357}
   anim: {fileID: 2114782981884598830}
   UiGameObject: {fileID: 2290379690051498740}
+  playerRenderer: {fileID: 6335770071348417015}
   localAudioListener: {fileID: 1791268987700070072}
   pickupMask:
     serializedVersion: 2
@@ -877,6 +878,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02cc969183bdf7e44b59a374fd9398a5, type: 3}
+--- !u!137 &6335770071348417015 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4422936236625503000, guid: 02cc969183bdf7e44b59a374fd9398a5, type: 3}
+  m_PrefabInstance: {fileID: 7677582233221346031}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7856240517703488772 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 02cc969183bdf7e44b59a374fd9398a5, type: 3}
