@@ -19,8 +19,7 @@ public class EventManager : MonoBehaviour
         PlayerDied,
         SpawnGun,
         Test,
-        ChangeCharacterColor1,
-        ChangeCharacterColor2
+        ChangeCharacterColor
 
     }
 }

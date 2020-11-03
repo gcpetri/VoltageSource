@@ -384,6 +384,7 @@
         <e p="Scripts" t="Include">
           <e p="AudioManager.cs" t="Include" />
           <e p="BulletScript.cs" t="Include" />
+          <e p="CharacterColorChoices.cs" t="Include" />
           <e p="CustomizeCharacterMenu.cs" t="Include" />
           <e p="cutieCamera.cs" t="Include" />
           <e p="EventManager.cs" t="Include" />

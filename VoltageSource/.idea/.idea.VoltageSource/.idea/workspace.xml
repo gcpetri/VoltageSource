@@ -29,6 +29,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/CharacterColorChoices.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/EventManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonPlayerNameInputScript.cs" root0="FORCE_HIGHLIGHTING" />
@@ -77,12 +78,13 @@
         <option value="$PROJECT_DIR$/Assets/AudioManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/TeamManagerScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/EventManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FpController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GunScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterColorChoices.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/EventManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
       </list>
     </option>
   </component>
@@ -170,6 +172,9 @@
       <workItem from="1603995184170" duration="19186000" />
       <workItem from="1604184404824" duration="6725000" />
       <workItem from="1604194074592" duration="8459000" />
+      <workItem from="1604348388544" duration="1631000" />
+      <workItem from="1604352215359" duration="1839000" />
+      <workItem from="1604355044236" duration="9183000" />
     </task>
     <servers />
   </component>
@@ -202,14 +207,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1603241429776" />
-    <state x="762" y="0" width="781" height="830" key="dock-window-1" timestamp="1604190650964">
+    <state x="888" y="0" width="654" height="830" key="dock-window-1" timestamp="1604357300795">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="762" y="0" width="781" height="830" key="dock-window-1/0.0.1536.824@0.0.1536.824" timestamp="1604190650964" />
-    <state x="762" y="0" width="781" height="830" key="dock-window-2" timestamp="1601189545431">
+    <state x="888" y="0" width="654" height="830" key="dock-window-1/0.0.1536.824@0.0.1536.824" timestamp="1604357300795" />
+    <state x="762" y="0" width="781" height="830" key="dock-window-2" timestamp="1604371015149">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="762" y="0" width="781" height="830" key="dock-window-2/0.0.1536.824@0.0.1536.824" timestamp="1601189545431" />
+    <state x="762" y="0" width="781" height="830" key="dock-window-2/0.0.1536.824@0.0.1536.824" timestamp="1604371015149" />
     <state x="762" y="0" width="781" height="830" key="dock-window-3" timestamp="1601190736517">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -218,10 +223,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="-6" y="0" width="781" height="830" key="dock-window-4/0.0.1536.824@0.0.1536.824" timestamp="1601195026483" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1604015683191">
+    <state x="425" y="186" key="run.anything.popup" timestamp="1604373952441">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1604015683191" />
+    <state x="425" y="186" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1604373952441" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1604202977729">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

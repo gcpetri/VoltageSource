@@ -61,6 +61,7 @@
      <Compile Include="Assets\Scenes\Photon\PhotonRealtime\Demos\DemoLoadBalancing\ConnectAndJoinRandomLb.cs" />
      <Compile Include="Assets\Scripts\Pickupable.cs" />
      <Compile Include="Assets\Scenes\Photon\PhotonChat\Demos\DemoChat\NamePickGui.cs" />
+     <Compile Include="Assets\Scripts\CharacterColorChoices.cs" />
      <Compile Include="Assets\Scripts\Networking Scripts\PhotonPlayerNameInputScript.cs" />
      <Compile Include="Assets\Scripts\PickupChecker.cs" />
      <Compile Include="Assets\Scenes\Photon\PhotonChat\Demos\Common\EventSystemSpawner.cs" />

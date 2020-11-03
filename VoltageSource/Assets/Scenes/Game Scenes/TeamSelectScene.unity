@@ -928,7 +928,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
+          m_IntArgument: 7
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1181,7 +1181,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 6
+          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1585,7 +1585,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
+          m_IntArgument: 7
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2645,7 +2645,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: UpdateColor(
           m_BoolArgument: 0
@@ -2984,7 +2984,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 7
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3271,7 +3271,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
+          m_IntArgument: 6
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -4620,6 +4620,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 2074732391}
+        m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
+        m_MethodName: UpdateColors
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &946033876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5606,6 +5618,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 2074732391}
+        m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
+        m_MethodName: UpdateColors
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1077624707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6382,7 +6406,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 2
           m_BoolArgument: 0
@@ -6655,7 +6679,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 7
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -7111,9 +7135,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CustomizeCharacterMenu, Assembly-CSharp
-        m_MethodName: UpdateColor
+      - m_Target: {fileID: 2074732391}
+        m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
+        m_MethodName: ChracterColorP1
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7325,7 +7349,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -7922,7 +7946,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 6
+          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -9361,7 +9385,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -10007,21 +10031,58 @@ MonoBehaviour:
   settingsPanel: {fileID: 0}
   volumeSlider: {fileID: 0}
   privateGameToggle: {fileID: 0}
-  Obj1: {fileID: 2648154494790696222}
-  Obj2: {fileID: 1550121379}
-  YelB: {fileID: 1469452335}
-  RedB: {fileID: 1178649416}
-  GreB: {fileID: 1384847782}
-  PurB: {fileID: 104521805}
-  MagB: {fileID: 730537408}
-  BlkB: {fileID: 1613463249}
-  BluB: {fileID: 1298038168}
-  OrgB: {fileID: 1417194983}
-  AquB: {fileID: 799443550}
-  MarB: {fileID: 757445490}
-  WhtB: {fileID: 88424678}
-  ActiveIndex1: 0
-  ActiveIndex2: 0
+  PlayerOneRenderer: {fileID: 2648154494790696222}
+  PlayerTwoRenderer: {fileID: 1550121379}
+  playerOneButtonSelection:
+  - {fileID: 1178649416}
+  - {fileID: 1469452335}
+  - {fileID: 1169353675}
+  - {fileID: 1298038168}
+  - {fileID: 1613463249}
+  - {fileID: 730537408}
+  - {fileID: 104521805}
+  - {fileID: 1417194983}
+  - {fileID: 799443550}
+  - {fileID: 757445490}
+  - {fileID: 88424678}
+  playerTwoButtonSelection:
+  - {fileID: 555940305}
+  - {fileID: 1870541403}
+  - {fileID: 1815238529}
+  - {fileID: 648679876}
+  - {fileID: 119764666}
+  - {fileID: 2119877577}
+  - {fileID: 190946889}
+  - {fileID: 2102288341}
+  - {fileID: 1032403867}
+  - {fileID: 582947660}
+  - {fileID: 1829632646}
+  playerOneButtonColors:
+  - {fileID: 1384847782}
+  - {fileID: 1129275444}
+  - {fileID: 154263912}
+  - {fileID: 766142394}
+  - {fileID: 1028370757}
+  - {fileID: 1985367077}
+  - {fileID: 1371060966}
+  - {fileID: 666354929}
+  - {fileID: 1759195741}
+  - {fileID: 919133439}
+  - {fileID: 939882897}
+  playerTwoButtonColors:
+  - {fileID: 735587985}
+  - {fileID: 929103637}
+  - {fileID: 1655760836}
+  - {fileID: 385870311}
+  - {fileID: 611647855}
+  - {fileID: 1087465768}
+  - {fileID: 1587456980}
+  - {fileID: 1354493554}
+  - {fileID: 852656000}
+  - {fileID: 1241888681}
+  - {fileID: 82357541}
+  playerOneColorPicker: {fileID: 516504181}
+  playerTwoColorPicker: {fileID: 489398452}
   _playerOneTeamChoice: 0
   _playerTwoTeamChoice: 1
   anim: {fileID: 0}
@@ -10564,7 +10625,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
+          m_IntArgument: 6
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

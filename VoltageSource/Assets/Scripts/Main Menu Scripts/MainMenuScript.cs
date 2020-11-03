@@ -5,6 +5,7 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using UnityEngine.UI;
 using TMPro;
@@ -41,17 +42,23 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
      * White = 11;
     */
     // Materials
-    [SerializeField] public Renderer Obj1, Obj2;
-    [SerializeField] public Image YelB, RedB, GreB, PurB, MagB, BlkB, BluB, OrgB, AquB, MarB, WhtB;
-    Image[] Images1 = new Image[11];
-    Image[] Images2 = new Image[11];
-    private Color yelCol, redCol, greCol, purCol, magCol, blkCol, bluCol, orgCol, aquCol, marCol, whtCol;
-    Color[] Colors1 = new Color[11];
-    Color[] Colors2 = new Color[11];
-    [SerializeField] public int ActiveIndex1 = 0;
-    [SerializeField] public int ActiveIndex2 = 0; // index of the current color and image selected in the arrays (+ 1)
+    [SerializeField] public Renderer PlayerOneRenderer, PlayerTwoRenderer;
+    Color[] ColorChoices = new Color[11];
+
+    [SerializeField] private Image[] playerOneButtonSelection;
+    [SerializeField] private Image[] playerTwoButtonSelection;
+    
+    [SerializeField] private Image[] playerOneButtonColors;
+    [SerializeField] private Image[] playerTwoButtonColors;
+
     #endregion
 
+    [SerializeField] private GameObject playerOneColorPicker;
+    [SerializeField] private GameObject playerTwoColorPicker;
+    
+    private Color currentPlayerOneColor = CharacterColorChoices.Yellow;
+    private Color currentPlayerTwoColor = CharacterColorChoices.Yellow;
+    
     [SerializeField]
     private int _playerOneTeamChoice;
     [SerializeField]private int _playerTwoTeamChoice;
@@ -77,69 +84,52 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
         _joinRoomName = null;
         _createRoomName = null;
+        
+        
 
         if (volumeSlider == null)
         {
             return;
         }
         volumeSlider.value = PlayerPrefs.HasKey("VolumeValue") ? PlayerPrefs.GetFloat("VolumeValue") : 1f;
+    }
 
-        // Character Color Arrays
-        yelCol = new Color(0.849746f, 0.9056604f, 0.39644f, 1);
-        redCol = new Color(1, 0, 0, 1);
-        greCol = new Color(0, 0.8679245f, 0.119f, 1);
-        purCol = new Color(0.8362575f, 0, 1, 1);
-        magCol = new Color(1, 0, 0.7459249f, 1);
-        blkCol = new Color(0, 0, 0, 1);
-        bluCol = new Color(0.0194375f, 0.3716098f, 0.8584906f, 1);
-        orgCol = new Color(1, 0.4027772f, 0, 1);
-        aquCol = new Color(0, 1, 0.7527807f, 1);
-        marCol = new Color(0.5283019f, 0.0966f, 0.0966f, 1);
-        whtCol = new Color(1, 1, 1, 1);
-        Colors1[0] = yelCol;
-        Colors1[1] = redCol;
-        Colors1[2] = greCol;
-        Colors1[3] = purCol;
-        Colors1[4] = magCol;
-        Colors1[5] = blkCol;
-        Colors1[6] = bluCol;
-        Colors1[7] = orgCol;
-        Colors1[8] = aquCol;
-        Colors1[9] = marCol;
-        Colors1[10] = whtCol;
-        Images1[0] = YelB;
-        Images1[1] = RedB;
-        Images1[2] = GreB;
-        Images1[3] = PurB;
-        Images1[4] = MagB;
-        Images1[5] = BlkB;
-        Images1[6] = BluB;
-        Images1[7] = OrgB;
-        Images1[8] = AquB;
-        Images1[9] = MarB;
-        Images1[10] = WhtB;
-        Colors2[0] = yelCol;
-        Colors2[1] = redCol;
-        Colors2[2] = greCol;
-        Colors2[3] = purCol;
-        Colors2[4] = magCol;
-        Colors2[5] = blkCol;
-        Colors2[6] = bluCol;
-        Colors2[7] = orgCol;
-        Colors2[8] = aquCol;
-        Colors2[9] = marCol;
-        Colors2[10] = whtCol;
-        Images2[0] = YelB;
-        Images2[1] = RedB;
-        Images2[2] = GreB;
-        Images2[3] = PurB;
-        Images2[4] = MagB;
-        Images2[5] = BlkB;
-        Images2[6] = BluB;
-        Images2[7] = OrgB;
-        Images2[8] = AquB;
-        Images2[9] = MarB;
-        Images2[10] = WhtB;
+
+    public void UpdateColors()
+    {
+        ColorChoices[0] = CharacterColorChoices.Yellow;
+        ColorChoices[1] = CharacterColorChoices.Red;
+        ColorChoices[2] = CharacterColorChoices.Green;
+        ColorChoices[3] = CharacterColorChoices.Purple;
+        ColorChoices[4] = CharacterColorChoices.Magenta;
+        ColorChoices[5] = CharacterColorChoices.Black;
+        ColorChoices[6] = CharacterColorChoices.Blue;
+        ColorChoices[7] = CharacterColorChoices.Orange;
+        ColorChoices[8] = CharacterColorChoices.Aqua;
+        ColorChoices[9] = CharacterColorChoices.Maroon;
+        ColorChoices[10] = CharacterColorChoices.White;
+
+        if (playerOneColorPicker && playerTwoColorPicker) // this means we are in the main menu scene instead of team select scene
+        {
+            if (PhotonNetwork.IsMasterClient) // This means player one in the game
+            {
+                playerTwoColorPicker.SetActive(false);
+                for (int i = 0; i < 11; i++)
+                {
+                    playerOneButtonColors[i].color = ColorChoices[i];
+                    playerOneButtonSelection[i].color = Color.white;
+                }
+            }
+            else
+            {
+                playerOneColorPicker.SetActive(false);
+                for (int i = 0; i < 11; i++)
+                {
+                    playerTwoButtonColors[i].color = ColorChoices[i];
+                    playerTwoButtonSelection[i].color = Color.white;
+                }
+            }
+        }
     }
 
     public void PrivateToggle()
@@ -363,272 +353,58 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.ChangeTeamSelection, content, raiseEventOptions, SendOptions.SendReliable);
     }
 
+    private void ColorSelector(int ColorIndex)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PlayerOneRenderer.material.color = ColorChoices[ColorIndex - 1];
+            playerOneButtonSelection[ColorIndex - 1].color = new Color32(100, 140, 160, 200);
+            for (int i = 0; i < 11; i++)
+            {
+                if (i != (ColorIndex - 1))
+                {
+                    playerOneButtonSelection[i].color = new Color32(255, 255, 255, 255);
+                    playerOneButtonSelection[i].GraphicUpdateComplete();
+                }
+            }
+            currentPlayerOneColor = PlayerOneRenderer.material.color;
+        }
+        else
+        {
+            PlayerTwoRenderer.material.color = ColorChoices[ColorIndex - 1];
+            playerTwoButtonSelection[ColorIndex - 1].color = new Color32(100, 140, 160, 200);
+            for (int i = 0; i < 11; i++)
+            {
+                if (i != (ColorIndex - 1))
+                {
+                    playerTwoButtonSelection[i].color = new Color32(255, 255, 255, 255);
+                    playerTwoButtonSelection[i].GraphicUpdateComplete();
+                }
+            }
+            currentPlayerTwoColor = PlayerTwoRenderer.material.color;
+        }
+
+        playerOneButtonSelection[ColorIndex - 1].GraphicUpdateComplete();
+        playerTwoButtonSelection[ColorIndex - 1].GraphicUpdateComplete();
+    }
+    
     public void ChracterColorP1(int color)
     {
-        int holderIndex = ActiveIndex1;
-        switch (color)
-        {
-            case 1:
-                    Images1[0].color = new Color32(100, 140, 160, 200);
-                    Obj1.material.color = Colors1[0];
-                    ActiveIndex1 = 1;
-                    for (int i = 0; i < 11; i++)
-                    {
-                        if (i != (ActiveIndex1 - 1))
-                            Images1[i].color = new Color32(255, 255, 255, 255);
-                    }
-                    break;
-            case 2:
-                    Images1[1].color = new Color32(100, 140, 160, 200);
-                    Obj1.material.color = Colors1[1];
-                    ActiveIndex1 = 2;
-                    for (int i = 0; i < 11; i++)
-                    {
-                        if (i != (ActiveIndex1 - 1))
-                            Images1[i].color = new Color32(255, 255, 255, 255);
-                    }
-                    break;
-            case 3:
-                    Images1[2].color = new Color32(100, 140, 160, 200);
-                    Obj1.material.color = Colors1[2];
-                    ActiveIndex1 = 3;
-                    for (int i = 0; i < 11; i++)
-                    {
-                        if (i != (ActiveIndex1 - 1))
-                            Images1[i].color = new Color32(255, 255, 255, 255);
-                    }
-                    break;
-            case 4:
-                    Images1[3].color = new Color32(100, 140, 160, 200);
-                    Obj1.material.color = Colors1[3];
-                    ActiveIndex1 = 4;
-                    for (int i = 0; i < 11; i++)
-                    {
-                        if (i != (ActiveIndex1 - 1))
-                            Images1[i].color = new Color32(255, 255, 255, 255);
-                    }
-                    break;
-            case 5:
-                    Images1[4].color = new Color32(100, 140, 160, 200);
-                    Obj1.material.color = Colors1[4];
-                    ActiveIndex1 = 5;
-                    for (int i = 0; i < 11; i++)
-                    {
-                        if (i != (ActiveIndex1 - 1))
-                            Images1[i].color = new Color32(255, 255, 255, 255);
-                    }
-                    break;
-            case 6:
-                    Images1[5].color = new Color32(100, 140, 160, 200);
-                    Obj1.material.color = Colors1[5];
-                    ActiveIndex1 = 6;
-                    for (int i = 0; i < 11; i++)
-                    {
-                        if (i != (ActiveIndex1 - 1))
-                            Images1[i].color = new Color32(255, 255, 255, 255);
-                    }
-                    break;
-            case 7:
-                    Images1[6].color = new Color32(100, 140, 160, 200);
-                    Obj1.material.color = Colors1[6];
-                    ActiveIndex1 = 7;
-                    for (int i = 0; i < 11; i++)
-                    {
-                        if (i != (ActiveIndex1 - 1))
-                            Images1[i].color = new Color32(255, 255, 255, 255);
-                    }
-                    break;
-            case 8:
-                    Images1[7].color = new Color32(100, 140, 160, 200);
-                    Obj1.material.color = Colors1[7];
-                    ActiveIndex1 = 8;
-                    for (int i = 0; i < 11; i++)
-                    {
-                        if (i != (ActiveIndex1 - 1))
-                            Images1[i].color = new Color32(255, 255, 255, 255);
-                    }
-                    break;
-            case 9:
-                    Images1[8].color = new Color32(100, 140, 160, 200);
-                    Obj1.material.color = Colors1[8];
-                    ActiveIndex1 = 9;
-                    for (int i = 0; i < 11; i++)
-                    {
-                        if (i != (ActiveIndex1 - 1))
-                            Images1[i].color = new Color32(255, 255, 255, 255);
-                    }
-                    break;
-            case 10:
-                    Images1[9].color = new Color32(100, 140, 160, 200);
-                    Obj1.material.color = Colors1[9];
-                    ActiveIndex1 = 10;
-                    for (int i = 0; i < 11; i++)
-                    {
-                        if (i != (ActiveIndex1 - 1))
-                            Images1[i].color = new Color32(255, 255, 255, 255);
-                    }
-                    break;
-            case 11:
-                Images1[10].color = new Color32(100, 140, 160, 200);
-                Obj1.material.color = Colors1[10];
-                ActiveIndex1 = 11;
-                for (int i = 0; i < 11; i++)
-                {
-                    if (i != (ActiveIndex1 - 1))
-                         Images1[i].color = new Color32(255, 255, 255, 255);
-                }
-                break;
-            default:
-                Images1[11].color = new Color32(100, 140, 160, 200);
-                Obj1.material.color = Colors1[11];
-                ActiveIndex1 = 11;
-                for (int i = 0; i < 11; i++)
-                {
-                    if (i != (ActiveIndex1 - 1))
-                        Images1[i].color = new Color32(255, 255, 255, 255);
-                }
-            break;
-        };
-        if (holderIndex != ActiveIndex1)
-        {
-            object[] content = new object[] { holderIndex, ActiveIndex1 }; // Array contains the target position and the IDs of the selected units
-            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-            PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.ChangeCharacterColor1, content, raiseEventOptions, SendOptions.SendReliable);
-        }
+        ColorSelector(color);
+        
+        object[] content = new object[] {new Vector3(currentPlayerOneColor.r, currentPlayerOneColor.g, currentPlayerOneColor.b),new Vector3(currentPlayerTwoColor.r, currentPlayerTwoColor.g, currentPlayerTwoColor.b)}; 
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; 
+        PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.ChangeCharacterColor, content, raiseEventOptions, SendOptions.SendReliable);
     }
+    
+    
 
     public void CharacterColorP2(int color)
     {
-        int holderIndex = ActiveIndex2;
-        switch (color)
-        {
-            case 1:
-                Images2[0].color = new Color32(100, 140, 160, 200);
-                Obj2.material.color = Colors2[0];
-                ActiveIndex2 = 1;
-                for (int i = 0; i < 11; i++)
-                {
-                    if (i != (ActiveIndex2 - 1))
-                        Images2[i].color = new Color32(255, 255, 255, 255);
-                }
-                break;
-            case 2:
-                Images2[1].color = new Color32(100, 140, 160, 200);
-                Obj2.material.color = Colors2[1];
-                ActiveIndex2 = 2;
-                for (int i = 0; i < 11; i++)
-                {
-                    if (i != (ActiveIndex2 - 1))
-                        Images2[i].color = new Color32(255, 255, 255, 255);
-                }
-                break;
-            case 3:
-                Images2[2].color = new Color32(100, 140, 160, 200);
-                Obj2.material.color = Colors2[2];
-                ActiveIndex2 = 3;
-                for (int i = 0; i < 11; i++)
-                {
-                    if (i != (ActiveIndex2 - 1))
-                        Images2[i].color = new Color32(255, 255, 255, 255);
-                }
-                break;
-            case 4:
-                Images2[3].color = new Color32(100, 140, 160, 200);
-                Obj2.material.color = Colors2[3];
-                ActiveIndex2 = 4;
-                for (int i = 0; i < 11; i++)
-                {
-                    if (i != (ActiveIndex2 - 1))
-                        Images2[i].color = new Color32(255, 255, 255, 255);
-                }
-                break;
-            case 5:
-                Images2[4].color = new Color32(100, 140, 160, 200);
-                Obj2.material.color = Colors2[4];
-                ActiveIndex2 = 5;
-                for (int i = 0; i < 11; i++)
-                {
-                    if (i != (ActiveIndex2 - 1))
-                        Images2[i].color = new Color32(255, 255, 255, 255);
-                }
-                break;
-            case 6:
-                Images2[5].color = new Color32(100, 140, 160, 200);
-                Obj2.material.color = Colors2[5];
-                ActiveIndex2 = 6;
-                for (int i = 0; i < 11; i++)
-                {
-                    if (i != (ActiveIndex2 - 1))
-                        Images2[i].color = new Color32(255, 255, 255, 255);
-                }
-                break;
-            case 7:
-                Images2[6].color = new Color32(100, 140, 160, 200);
-                Obj2.material.color = Colors2[6];
-                ActiveIndex2 = 7;
-                for (int i = 0; i < 11; i++)
-                {
-                    if (i != (ActiveIndex2 - 1))
-                        Images2[i].color = new Color32(255, 255, 255, 255);
-                }
-                break;
-            case 8:
-                Images2[7].color = new Color32(100, 140, 160, 200);
-                Obj2.material.color = Colors2[7];
-                ActiveIndex2 = 8;
-                for (int i = 0; i < 11; i++)
-                {
-                    if (i != (ActiveIndex2 - 1))
-                        Images2[i].color = new Color32(255, 255, 255, 255);
-                }
-                break;
-            case 9:
-                Images2[8].color = new Color32(100, 140, 160, 200);
-                Obj2.material.color = Colors2[8];
-                ActiveIndex2 = 9;
-                for (int i = 0; i < 11; i++)
-                {
-                    if (i != (ActiveIndex2 - 1))
-                        Images2[i].color = new Color32(255, 255, 255, 255);
-                }
-                break;
-            case 10:
-                Images2[9].color = new Color32(100, 140, 160, 200);
-                Obj2.material.color = Colors2[9];
-                ActiveIndex2 = 10;
-                for (int i = 0; i < 11; i++)
-                {
-                    if (i != (ActiveIndex2 - 1))
-                        Images2[i].color = new Color32(255, 255, 255, 255);
-                }
-                break;
-            case 11:
-                Images2[10].color = new Color32(100, 140, 160, 200);
-                Obj2.material.color = Colors2[10];
-                ActiveIndex2 = 11;
-                for (int i = 0; i < 11; i++)
-                {
-                    if (i != (ActiveIndex2 - 1))
-                        Images2[i].color = new Color32(255, 255, 255, 255);
-                }
-                break;
-            default:
-                Images2[11].color = new Color32(100, 140, 160, 200);
-                Obj2.material.color = Colors2[11];
-                ActiveIndex2 = 11;
-                for (int i = 0; i < 11; i++)
-                {
-                    if (i != (ActiveIndex2 - 1))
-                        Images2[i].color = new Color32(255, 255, 255, 255);
-                }
-                break;
-        };
-        if (holderIndex != ActiveIndex2)
-        {
-            object[] content = new object[] { holderIndex, ActiveIndex2 }; // Array contains the target position and the IDs of the selected units
-            RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-            PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.ChangeCharacterColor2, content, raiseEventOptions, SendOptions.SendReliable);
-        }
+        ColorSelector(color);
+        object[] content = new object[] {new Vector3(currentPlayerOneColor.r, currentPlayerOneColor.g, currentPlayerOneColor.b), new Vector3(currentPlayerTwoColor.r, currentPlayerTwoColor.g, currentPlayerTwoColor.b)}; 
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.ChangeCharacterColor, content, raiseEventOptions, SendOptions.SendReliable);
     }
     
     public void OnEvent(EventData photonEvent)
@@ -658,16 +434,19 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
                     // or have an button for the option to just go ahead and do single player. 
                 }
             }
-        } else if (eventCode == (byte)EventManager.EventCodes.ChangeCharacterColor1)
+        } else if (eventCode == (byte)EventManager.EventCodes.ChangeCharacterColor)
         {
             object[] data = (object[])photonEvent.CustomData;
-            Obj1.UpdateGIMaterials();
-            Images1[(int)data[1]].GraphicUpdateComplete();
-        } else if (eventCode == (byte)EventManager.EventCodes.ChangeCharacterColor2)
-        {
-            object[] data = (object[])photonEvent.CustomData;
-            Obj2.UpdateGIMaterials();
-            Images2[(int)data[1]].GraphicUpdateComplete();
+
+            Vector3 playerOneData = (Vector3) data[0];
+            Vector3 playerTwoData = (Vector3) data[1];
+            
+            PlayerOneRenderer.material.color = new Color(playerOneData.x, playerOneData.y, playerOneData.z, 1);
+            PlayerTwoRenderer.material.color = new Color(playerTwoData.x, playerTwoData.y, playerTwoData.z, 1);
+            
+            PlayerOneRenderer.UpdateGIMaterials();
+            PlayerTwoRenderer.UpdateGIMaterials();
+            
         }
     }
 
