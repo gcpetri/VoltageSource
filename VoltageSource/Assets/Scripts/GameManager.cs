@@ -80,12 +80,16 @@ namespace VoltageSource
                     TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.position : yellowTeamSpawn.position,
                     TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation, 0);
                  
+                 _playerOne.GetComponent<FpController>().SetMyColor();
+                 
             }
             else
             {
                  _playerTwo = PhotonNetwork.Instantiate(playerPrefab.name,
                     TeamManagerScript.Instance.PlayerTwoTeam == 0 ? blueTeamSpawn.position : yellowTeamSpawn.position,
                     TeamManagerScript.Instance.PlayerTwoTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation, 0);
+                 
+                 _playerOne.GetComponent<FpController>().SetMyColor();
             }
         }
 
@@ -341,8 +345,6 @@ namespace VoltageSource
                                     fpsReference.SetPos(TeamManagerScript.Instance.PlayerTwoTeam == 0
                                         ? blueTeamSpawn
                                         : yellowTeamSpawn);
-                                    
-                                    fpsReference.ResetHealth();    
                 }
             }
 
@@ -354,8 +356,7 @@ namespace VoltageSource
                     fpsReference.SetPos(TeamManagerScript.Instance.PlayerTwoTeam == 0
                         ? blueTeamSpawn
                         : yellowTeamSpawn);
-                
-                    fpsReference.ResetHealth();
+                    
                 }
             }
             

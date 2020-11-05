@@ -57,6 +57,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
                 if (!photonView.IsMine)
                     return;
                 //Debug.LogErrorFormat("PhotonView {0} took damage, current health is {1}", photonView.ViewID, health);
+                health = value;
                 if (health <= 0)
                 {
                     // If player dies then all function to handle their death
@@ -69,7 +70,6 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
                     PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.PlayerDied, content, raiseEventOptions, SendOptions.SendReliable);
                     SetDeath();
                 }
-                health = value;
             }
         }
 
@@ -206,12 +206,15 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         {
             PauseGame();
         }
-
+        
+        _cController.Move(_velocity * Time.deltaTime); // This calls to move the character downward based on gravity
+        
         if (isPaused)
             return;
         
         InputProcess();
-
+        
+        
         if (_isPreRound)
             return;
         
@@ -239,7 +242,6 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         
         GroundCheck();
         
-        _cController.Move(_velocity * Time.deltaTime); // This calls to move the character downward based on gravity
     }
 
     private void FixedUpdate()
@@ -308,10 +310,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
     private void Awake()
     {
-        if (photonView.IsMine && PhotonNetwork.IsMasterClient) 
-        {
-            photonView.RPC("SetMyColor", RpcTarget.All);   
-        }
+        
     }
 
     #region Movement/Camera Methods
@@ -387,6 +386,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     {
         anim.SetBool(_animParams[3].name, true);
         _isDead = true;
+        Health = _maxHealth;
+        currentGun.SetActive(false);
     }
     
     
@@ -415,6 +416,14 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         if (eventCode == (byte)EventManager.EventCodes.StartPreRound)
         {
             _isPreRound = true;
+            currentGun.SetActive(true);
+            if (anim)
+            {
+                anim.SetBool(_animParams[3].name, false);
+            }
+
+            _isDead = false;
+            
         }else if (eventCode == (byte) EventManager.EventCodes.EndPreRound)
         {
             _isPreRound = false;
@@ -453,8 +462,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         Health -= (float)damage;
     }
 
-    [PunRPC]
-    private void SetMyColor()
+    
+    public void SetMyColor()
     {
         if (photonView.IsMine && photonView.name == PhotonLauncher.Instance.GetOtherPlayerName()) // This means you are the second player
         {
@@ -486,6 +495,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         transform.rotation = teleportLocation.rotation;
         _rb.position = teleportLocation.position;
         _rb.rotation = teleportLocation.rotation;
+        
     }
 
     #endregion

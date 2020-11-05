@@ -440,9 +440,6 @@ MonoBehaviour:
   - {fileID: 5805035139915440950}
   - {fileID: 2797611469075162474}
   - {fileID: 8305197374414508465}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

@@ -225,7 +225,6 @@ namespace VoltageSource
         
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
-
             if (stream.IsWriting)
             {
                 stream.SendNext((object)playerOneColor);
