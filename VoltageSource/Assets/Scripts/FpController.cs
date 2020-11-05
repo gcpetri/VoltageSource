@@ -143,11 +143,6 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             
         }
         
-        if (PhotonNetwork.IsMasterClient)
-        {
-            photonView.RPC("SetMyColor", RpcTarget.All);
-        }
-        
         
         _rb = GetComponent<Rigidbody>();
         Health = _maxHealth;
@@ -311,6 +306,11 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         }
     }
 
+    private void Awake()
+    {
+        photonView.RPC("SetMyColor", RpcTarget.All);   
+    }
+
     #region Movement/Camera Methods
 
         /// <summary>
@@ -453,15 +453,14 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     [PunRPC]
     private void SetMyColor()
     {
-
         if (photonView.IsMine && photonView.name == PhotonLauncher.Instance.GetOtherPlayerName()) // This means you are the second player
         {
             playerRenderer.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
-            Debug.Log("Set my color called by {0} in condition 1", photonView);
+            Debug.LogFormat("Set my color called by {0} in condition 1", photonView);
         }else if (photonView.IsMine && PhotonNetwork.IsMasterClient)
         {
             playerRenderer.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
-            Debug.Log("Set my color called by {0} in condition 2", photonView);
+            Debug.LogFormat("Set my color called by {0} in condition 2", photonView);
         }
         
         playerRenderer.UpdateGIMaterials();
