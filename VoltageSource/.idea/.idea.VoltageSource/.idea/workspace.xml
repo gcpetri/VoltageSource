@@ -75,7 +75,6 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Pickupable.cs" />
         <option value="$PROJECT_DIR$/Assets/AudioManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/TeamManagerScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterColorChoices.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/EventManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/BulletScript.cs" />
@@ -84,6 +83,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterColorChoices.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FpController.cs" />
       </list>
     </option>
@@ -177,6 +177,7 @@
       <workItem from="1604355044236" duration="9183000" />
       <workItem from="1604419636330" duration="1466000" />
       <workItem from="1604430248459" duration="22110000" />
+      <workItem from="1604545573053" duration="598000" />
     </task>
     <servers />
   </component>

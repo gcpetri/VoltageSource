@@ -453,17 +453,19 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     [PunRPC]
     private void SetMyColor()
     {
-        if (photonView.IsMine && PhotonNetwork.IsMasterClient)
-        {
-            playerRenderer.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
-            playerRenderer.UpdateGIMaterials();
-        }
-        else
+
+        if (photonView.IsMine && photonView.name == PhotonLauncher.Instance.GetOtherPlayerName()) // This means you are the second player
         {
             playerRenderer.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
-            playerRenderer.UpdateGIMaterials();
+            Debug.Log("Set my color called by {0} in condition 1", photonView);
+        }else if (photonView.IsMine && PhotonNetwork.IsMasterClient)
+        {
+            playerRenderer.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
+            Debug.Log("Set my color called by {0} in condition 2", photonView);
         }
-        Debug.LogFormat("Set my color called by {0}", photonView);
+        
+        playerRenderer.UpdateGIMaterials();
+        Debug.LogFormat("Set my color called by {0}, my color is {1}", photonView, playerRenderer.material.color);
     }
     
     #region RPCCalls
