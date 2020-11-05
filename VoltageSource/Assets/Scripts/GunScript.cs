@@ -40,6 +40,10 @@ public class GunScript : MonoBehaviour
     private Transform _thisTransform;
     [SerializeField] private PhotonAnimatorView photonAnimatorView;
 
+    private float spreadRatio;
+    private PhotonView ownerPhotonView = null;
+    private PhotonView _photonView;
+
     private int _reloadingID;
     private int _aimingID;
     private int _shootingID;
@@ -59,6 +63,7 @@ public class GunScript : MonoBehaviour
     {
         gunAnimator = GetComponent<Animator>();
         _thisTransform = transform;
+        _photonView = GetComponent<PhotonView>();
         if (photonAnimatorView)
         {
             photonAnimatorView.enabled = false;
@@ -80,6 +85,7 @@ public class GunScript : MonoBehaviour
         if (_hasAnOwner)
         {
             collider.enabled = false;
+            spreadRatio = gunData.spreadAngle / this.fpController.fpsCamera.fieldOfView;
         }
 
         if (gunAnimator)
@@ -91,43 +97,53 @@ public class GunScript : MonoBehaviour
             gunAnimator.SetBool(_rotatingID, true);
         }
     }
+
+    private Vector2 spread;
+    private Ray r;
+    private Vector3 hitpos;
     
-    
-    public void Shoot()
+    public bool Shoot() // This just now call local changes to the script
     {
         if ((_nextTimeToFire >= Time.time) || _isReloading) 
         {
-            return;
+            return false;
         }
         if (_currentAmmo <= 0)
         {
             StartReloading();
-            return;
+            return false;
         }
         
-
-        var spreadRatio = gunData.spreadAngle / this.fpController.fpsCamera.fieldOfView;
-        Vector2 spread = spreadRatio * Random.insideUnitCircle;
-        var r = this.fpController.fpsCamera.ViewportPointToRay(Vector3.one * 0.5f + (Vector3) spread);
-        Vector3 hitpos = r.origin + r.direction * 200f;
-        Debug.DrawRay(r.origin, r.direction, Color.red);
-        // What I want to do is send a ray out from the cam
-        
-        gunAnimator.SetBool(_shootingID, true);
+        spread = spreadRatio * Random.insideUnitCircle;
+        r = fpController.fpsCamera.ViewportPointToRay((Vector3.one * 0.5f) + (Vector3) spread);
+        hitpos = r.origin + r.direction * 200f;
         _currentAmmo--;
-        _gunParticleSystem.Play(); // tells data, but doens't have location
-        audioSource.PlayOneShot(firingSound);
-        var instantiateBullet = Instantiate(gunData.bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.transform.rotation);
-        instantiateBullet.GetComponent<BulletScript>().damage = gunData.damage;
-        instantiateBullet.GetComponent<Rigidbody>().velocity = r.direction * gunData.bulletSpeed;
-        instantiateBullet.GetComponent<BulletScript>().Owner = 1; // Change this value, its not right
-        Destroy(instantiateBullet, Mathf.Clamp(gunData.range / (gunData.bulletSpeed), 0f, 10f));
+        gunAnimator.SetBool(_shootingID,true);
+
         if (_currentAmmo <= 0)
         {
             StartReloading();
         }
         _nextTimeToFire = Time.time + (1 / gunData.firerate);
+        return true;
     }
+
+    /// <summary>
+    /// These are actions shared by all clients that need to be called locally 
+    /// </summary>
+    public void SharedActions() // This calls the info that should be shared with all players
+    {
+        _gunParticleSystem.Play(); // tells data, but doens't have location
+        audioSource.PlayOneShot(firingSound);
+        var instantiateBullet = Instantiate(gunData.bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.transform.rotation);
+        Debug.LogFormat("Called ShareActions() on object {0} with photonView {1}", gameObject.name, ownerPhotonID);
+        BulletScript bulletScript = instantiateBullet.GetComponent<BulletScript>();
+        bulletScript.damage = gunData.damage;
+        instantiateBullet.GetComponent<Rigidbody>().velocity = r.direction * gunData.bulletSpeed;
+        bulletScript.Owner = ownerPhotonID;
+        Destroy(instantiateBullet, Mathf.Clamp(gunData.range / (gunData.bulletSpeed), 0f, 10f));
+    }
+    
     
     private IEnumerator Reload()
     {
@@ -156,11 +172,24 @@ public class GunScript : MonoBehaviour
 
     public void SetCameraIdlePos()
     {
+        if (!camera)
+        {
+            Debug.LogWarning("Missing camera reference");
+            return;
+        }
+            
+        
         camera.transform.position = cameraIdle.position;
     }
 
     public void SetCameraAimPose()
     {
+        if (!camera)
+        {
+            Debug.LogWarning("Missing camera reference");
+            return;
+        }
+        
         camera.transform.position = cameraAim.position;
     }
 
@@ -181,6 +210,9 @@ public class GunScript : MonoBehaviour
         }
 
         photonAnimatorView.enabled = true;
+        ownerPhotonID = obj.photonView.ViewID;
+        spreadRatio = gunData.spreadAngle / this.fpController.fpsCamera.fieldOfView;
+        ownerPhotonView = obj.photonView;
     }
 
     private void Update()

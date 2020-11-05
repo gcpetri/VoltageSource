@@ -72,6 +72,10 @@ namespace Main_Menu_Scripts
             if (eventcode == (byte)EventManager.EventCodes.UpdateNamePlate)
             {
                 object[] data = (object[]) photonEvent.CustomData;
+                if (data == null)
+                {
+                    return;
+                }
                 playerOnePlate.text = (string) data[0];
                 playerTwoPlate.text = (string) data[1];
             }

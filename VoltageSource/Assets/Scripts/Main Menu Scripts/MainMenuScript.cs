@@ -55,6 +55,8 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
     [SerializeField] private GameObject playerOneColorPicker;
     [SerializeField] private GameObject playerTwoColorPicker;
+    private int playerOneColorIndex = 0;
+    private int playerTwoColorIndex = 0;
     
     private Color currentPlayerOneColor = CharacterColorChoices.Yellow;
     private Color currentPlayerTwoColor = CharacterColorChoices.Yellow;
@@ -85,7 +87,17 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         _joinRoomName = null;
         _createRoomName = null;
         
-        
+        ColorChoices[0] = CharacterColorChoices.Yellow;
+        ColorChoices[1] = CharacterColorChoices.Red;
+        ColorChoices[2] = CharacterColorChoices.Green;
+        ColorChoices[3] = CharacterColorChoices.Purple;
+        ColorChoices[4] = CharacterColorChoices.Magenta;
+        ColorChoices[5] = CharacterColorChoices.Black;
+        ColorChoices[6] = CharacterColorChoices.Blue;
+        ColorChoices[7] = CharacterColorChoices.Orange;
+        ColorChoices[8] = CharacterColorChoices.Aqua;
+        ColorChoices[9] = CharacterColorChoices.Maroon;
+        ColorChoices[10] = CharacterColorChoices.White;
 
         if (volumeSlider == null)
         {
@@ -225,8 +237,11 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
                 Debug.LogError("Not enough players in the game");
                 
             }
+
+            Color one = ColorChoices[playerOneColorIndex];
+            Color two = ColorChoices[playerTwoColorIndex];
             
-            PhotonLauncher.Instance.SetPlayerColors(currentPlayerOneColor, currentPlayerTwoColor);
+            PhotonLauncher.Instance.SetPlayerColors(one,two);
             
             TeamManagerScript.Instance.PlayerOneTeam = _playerOneTeamChoice;
             TeamManagerScript.Instance.PlayerTwoTeam = _playerTwoTeamChoice;
@@ -359,7 +374,8 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PlayerOneRenderer.material.color = ColorChoices[ColorIndex - 1];
+            playerOneColorIndex = ColorIndex - 1;
+            //PlayerOneRenderer.material.color = ColorChoices[ColorIndex - 1];
             playerOneButtonSelection[ColorIndex - 1].color = new Color32(100, 140, 160, 200);
             for (int i = 0; i < 11; i++)
             {
@@ -369,11 +385,13 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
                     playerOneButtonSelection[i].GraphicUpdateComplete();
                 }
             }
-            currentPlayerOneColor = PlayerOneRenderer.material.color;
+
+            //currentPlayerOneColor = ColorChoices[ColorIndex - 1];
         }
         else
         {
-            PlayerTwoRenderer.material.color = ColorChoices[ColorIndex - 1];
+            playerTwoColorIndex = ColorIndex - 1;
+            //PlayerTwoRenderer.material.color = ColorChoices[ColorIndex - 1];
             playerTwoButtonSelection[ColorIndex - 1].color = new Color32(100, 140, 160, 200);
             for (int i = 0; i < 11; i++)
             {
@@ -383,20 +401,21 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
                     playerTwoButtonSelection[i].GraphicUpdateComplete();
                 }
             }
-            currentPlayerTwoColor = PlayerTwoRenderer.material.color;
+            //currentPlayerTwoColor = ColorChoices[ColorIndex - 1];
         }
 
         playerOneButtonSelection[ColorIndex - 1].GraphicUpdateComplete();
         playerTwoButtonSelection[ColorIndex - 1].GraphicUpdateComplete();
+        
+        object[] content = new object[] {playerOneColorIndex, playerTwoColorIndex}; 
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All}; 
+        PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.ChangeCharacterColor, content, raiseEventOptions, SendOptions.SendReliable);
+        
     }
     
     public void ChracterColorP1(int color)
     {
         ColorSelector(color);
-        
-        object[] content = new object[] {new Vector3(currentPlayerOneColor.r, currentPlayerOneColor.g, currentPlayerOneColor.b),new Vector3(currentPlayerTwoColor.r, currentPlayerTwoColor.g, currentPlayerTwoColor.b)}; 
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; 
-        PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.ChangeCharacterColor, content, raiseEventOptions, SendOptions.SendReliable);
     }
     
     
@@ -404,9 +423,6 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
     public void CharacterColorP2(int color)
     {
         ColorSelector(color);
-        object[] content = new object[] {new Vector3(currentPlayerOneColor.r, currentPlayerOneColor.g, currentPlayerOneColor.b), new Vector3(currentPlayerTwoColor.r, currentPlayerTwoColor.g, currentPlayerTwoColor.b)}; 
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
-        PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.ChangeCharacterColor, content, raiseEventOptions, SendOptions.SendReliable);
     }
     
     public void OnEvent(EventData photonEvent)
@@ -440,18 +456,33 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         {
             object[] data = (object[])photonEvent.CustomData;
 
-            Vector3 playerOneData = (Vector3) data[0];
-            Vector3 playerTwoData = (Vector3) data[1];
+            playerOneColorIndex = (int) data[0];
+            playerTwoColorIndex = (int) data[1];
             
-            PlayerOneRenderer.material.color = new Color(playerOneData.x, playerOneData.y, playerOneData.z, 1);
-            PlayerTwoRenderer.material.color = new Color(playerTwoData.x, playerTwoData.y, playerTwoData.z, 1);
-            
-            currentPlayerOneColor = new Color(playerOneData.x, playerOneData.y, playerOneData.z, 1);
-            currentPlayerTwoColor = new Color(playerTwoData.x, playerTwoData.y, playerTwoData.z, 1);
-            
+            PlayerOneRenderer.material.color = ColorChoices[playerOneColorIndex];
+            PlayerTwoRenderer.material.color = ColorChoices[playerTwoColorIndex];
+
             PlayerOneRenderer.UpdateGIMaterials();
             PlayerTwoRenderer.UpdateGIMaterials();
             
+            // if ((int)data[0] != -1)
+            // {
+            //     int playerOneColorIndex = (int) data[0];
+            //     PlayerOneRenderer.material.color = ColorChoices[playerOneColorIndex];
+            //     currentPlayerOneColor = ColorChoices[playerOneColorIndex];
+            //     PlayerOneRenderer.UpdateGIMaterials();
+            // }
+            //
+            // if ((int)data[1] != -1)
+            // {
+            //     int playerTwoColorIndex = (int) data[1];
+            //     PlayerTwoRenderer.material.color = ColorChoices[playerTwoColorIndex];
+            //     currentPlayerTwoColor = ColorChoices[playerTwoColorIndex];
+            //     PlayerTwoRenderer.UpdateGIMaterials();          
+            // }
+            // Debug.LogFormat("Player one color changed to : {0}", currentPlayerOneColor);
+            // Debug.LogFormat("Player two color changed to : {0}", currentPlayerTwoColor);
+            //
         }
     }
 

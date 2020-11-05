@@ -25,10 +25,10 @@ MonoBehaviour:
     Protocol: 0
     EnableProtocolFallback: 1
     AuthMode: 0
-    EnableLobbyStatistics: 1
-    NetworkLogging: 5
+    EnableLobbyStatistics: 0
+    NetworkLogging: 1
   DevRegion: us
-  PunLogging: 2
+  PunLogging: 1
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
@@ -49,6 +49,10 @@ MonoBehaviour:
   - ResetPos
   - RPCSetPos
   - SetPlayerColorRPC
+  - SendBulletShotInfo
+  - SharedActions
+  - IGotShotRPC
+  - SetMyColor
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

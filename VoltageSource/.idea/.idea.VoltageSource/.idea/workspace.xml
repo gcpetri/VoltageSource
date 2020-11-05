@@ -62,14 +62,12 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/NamePlateScript.cs" />
         <option value="$PROJECT_DIR$/Assets/TeamManagerScript.cs" />
         <option value="$PROJECT_DIR$/Assets/SpawnPointEditorHelp.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/BulletScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GunsScriptable.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonCreateRoomScript.cs" />
         <option value="$PROJECT_DIR$/Assets/EmptyPhotonSpawner.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonPlayerNameInputScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Info.txt" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/NamePlateScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FP_Controller.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TesterScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SpawnPointEditorHelp.cs" />
@@ -77,14 +75,16 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Pickupable.cs" />
         <option value="$PROJECT_DIR$/Assets/AudioManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/TeamManagerScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GunScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CharacterColorChoices.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/EventManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/BulletScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GunScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/NamePlateScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/FpController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/FpController.cs" />
       </list>
     </option>
   </component>
@@ -176,6 +176,7 @@
       <workItem from="1604352215359" duration="1839000" />
       <workItem from="1604355044236" duration="9183000" />
       <workItem from="1604419636330" duration="1466000" />
+      <workItem from="1604430248459" duration="22110000" />
     </task>
     <servers />
   </component>
@@ -224,13 +225,13 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="-6" y="0" width="781" height="830" key="dock-window-4/0.0.1536.824@0.0.1536.824" timestamp="1601195026483" />
-    <state x="425" y="186" key="run.anything.popup" timestamp="1604373952441">
+    <state x="425" y="186" key="run.anything.popup" timestamp="1604433532424">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="186" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1604373952441" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1604202977729">
+    <state x="425" y="186" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1604433532424" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1604436908937">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1604202977729" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1604436908937" />
   </component>
 </project>

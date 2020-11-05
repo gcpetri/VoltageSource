@@ -51,13 +51,16 @@ namespace VoltageSource
                 playerNameText.text = this._target.photonView.Owner.NickName;
             }
             _targetRenderer = this._target.GetComponent<Renderer>();
+            _maxHealth = _target._maxHealth;
         }
 
         // Start is called before the first frame update
         void Start()
         {
             PhotonNetwork.AddCallbackTarget(this);
-            _maxHealth = _target.Health;
+            if(_target)
+                _maxHealth = _target.Health;
+            
             InfoUI.SetActive(true);
             InfoText.text = "Pre-round";
         }

@@ -28,14 +28,14 @@ public class BulletScript : MonoBehaviour
         Debug.DrawRay(_lastPosition, direction, Color.green);
         if (Physics.Raycast(_lastPosition, direction, out _hit, 100f, layermask))
         {
-            
             if (_hit.collider.CompareTag("Player"))
             {
                 var val = _hit.collider.GetComponent<PhotonView>().ViewID;
                 if (val == Owner)
                     return;
                             
-                _hit.collider.GetComponent<FpController>().Health = _hit.collider.GetComponent<FpController>().Health - damage; 
+                _hit.collider.gameObject.GetComponent<FpController>().SendMessage("IGotShot", damage, SendMessageOptions.DontRequireReceiver);
+                //_hit.collider.GetComponent<FpController>().Health = _hit.collider.GetComponent<FpController>().Health - damage; 
             }
             else
             {

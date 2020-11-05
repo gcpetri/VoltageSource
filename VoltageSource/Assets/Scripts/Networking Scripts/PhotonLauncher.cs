@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using ExitGames.Client.Photon;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Pun.UtilityScripts;
@@ -152,14 +153,20 @@ namespace VoltageSource
         {
             playerOneColor = playerOne;
             playerTwoColor = playerTwo;
+            Debug.LogFormat("Color set for p1: {0}", playerOne);
+            Debug.LogFormat("Color set for p2: {0}", playerTwo);
+            Debug.LogFormat("Color set for p1: {0}", playerOneColor);
+            Debug.LogFormat("Color set for p2: {0}", playerTwoColor);
         }
 
         public Color GetPlayerOneColor()
         {
+            Debug.LogFormat("Player one color: {0}", playerOneColor);
             return playerOneColor;
         }
         public Color GetPlayerTwoColor()
         {
+            Debug.LogFormat("Player two color: {0}", playerTwoColor);
             return playerTwoColor;
         }
         
@@ -196,7 +203,7 @@ namespace VoltageSource
         public override void OnJoinedRoom()
         {
             Debug.LogFormat("OnJoinedRoom called loading level {0}", TeamSelectIndex);
-            PhotonNetwork.LoadLevel(TeamSelectIndex);
+            LoadTeamSelect();
         }
 
         public override void OnCreateRoomFailed(short returnCode, string message)

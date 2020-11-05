@@ -80,15 +80,14 @@ namespace VoltageSource
                     TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.position : yellowTeamSpawn.position,
                     TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation, 0);
                  
-                 _playerOne.GetComponent<FpController>().SetPlayerColor(PhotonLauncher.Instance.GetPlayerOneColor());
             }
             else
             {
-                 _playerTwo =PhotonNetwork.Instantiate(playerPrefab.name,
+                 _playerTwo = PhotonNetwork.Instantiate(playerPrefab.name,
                     TeamManagerScript.Instance.PlayerTwoTeam == 0 ? blueTeamSpawn.position : yellowTeamSpawn.position,
                     TeamManagerScript.Instance.PlayerTwoTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation, 0);
                  
-                 _playerTwo.GetComponent<FpController>().SetPlayerColor(PhotonLauncher.Instance.GetPlayerTwoColor());
+                 
             }
         }
 

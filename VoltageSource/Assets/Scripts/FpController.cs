@@ -48,7 +48,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
     // Handle being hit and store health. Best done by get and set funcitons
         [SerializeField] private float health;
-        [SerializeField]private float _maxHealth;
+        public float _maxHealth;
         public float Health
         {
             get => health;
@@ -140,8 +140,15 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             fpsCamera.enabled = true;
             localAudioListener.enabled = true;
             UiGameObject.SetActive(true);
+            
         }
-
+        
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("SetMyColor", RpcTarget.All);
+        }
+        
+        
         _rb = GetComponent<Rigidbody>();
         Health = _maxHealth;
         
@@ -218,7 +225,9 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             // The if statement is used just to reduce number of RPC calls between clients
             if (_nextTimeToFire < Time.time)
             {
-                _currentGunInfo.Shoot();
+                if(_currentGunInfo.Shoot())
+                    photonView.RPC("ShootRPC", RpcTarget.All);
+                
                 _nextTimeToFire = Time.time + (1 / _fireRate);
             }
         }
@@ -249,6 +258,12 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     private void SwitchGun(GameObject obj)
     {
         
+    }
+
+    [PunRPC]
+    private void ShootRPC()
+    {
+        _currentGunInfo.SharedActions();
     }
 
     private Color tempColor;
@@ -352,6 +367,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         else
         {
             this.Health = (float) stream.ReceiveNext();
+            if (!_rb)
+                return;
             _rb.position = (Vector3) stream.ReceiveNext();
             _rb.rotation = (Quaternion) stream.ReceiveNext();
             _rb.velocity = (Vector3) stream.ReceiveNext();
@@ -421,6 +438,33 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     }
 
     #endregion
+
+    public void IGotShot(object damage)
+    {
+        photonView.RPC("IGotShotRPC", RpcTarget.All, (object)damage);
+    }
+
+    [PunRPC]
+    private void IGotShotRPC(float damage)
+    {
+        Health -= (float)damage;
+    }
+
+    [PunRPC]
+    private void SetMyColor()
+    {
+        if (photonView.IsMine && PhotonNetwork.IsMasterClient)
+        {
+            playerRenderer.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
+            playerRenderer.UpdateGIMaterials();
+        }
+        else
+        {
+            playerRenderer.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
+            playerRenderer.UpdateGIMaterials();
+        }
+        Debug.LogFormat("Set my color called by {0}", photonView);
+    }
     
     #region RPCCalls
     
