@@ -265,8 +265,8 @@ namespace VoltageSource
             if (data == null)
                 return;
 
-            Instantiate(gunPrefabs[(int) data[0]], (Vector3)data[1],Quaternion.identity);
-            Instantiate(gunPrefabs[(int) data[2]], (Vector3)data[3],Quaternion.identity);
+            Instantiate(gunPrefabs[(int) data[0]], (Vector3)data[1] + (0.5f * Vector3.up),Quaternion.identity);
+            Instantiate(gunPrefabs[(int) data[2]], (Vector3)data[3] + (0.5f * Vector3.up),Quaternion.identity);
         }
 
         private void PlayerDied(object[] data = null)
