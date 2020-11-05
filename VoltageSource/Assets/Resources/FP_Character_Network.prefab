@@ -440,6 +440,9 @@ MonoBehaviour:
   - {fileID: 5805035139915440950}
   - {fileID: 2797611469075162474}
   - {fileID: 8305197374414508465}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -598,15 +601,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2845375458518170203, guid: 19b630f0d04326342a4894e441f46062, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0070001483
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2845375458518170203, guid: 19b630f0d04326342a4894e441f46062, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.08899999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2845375458518170203, guid: 19b630f0d04326342a4894e441f46062, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.43600014
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2845375458518170203, guid: 19b630f0d04326342a4894e441f46062, type: 3}
       propertyPath: m_LocalRotation.x
@@ -643,6 +646,10 @@ PrefabInstance:
     - target: {fileID: 3186047473292845281, guid: 19b630f0d04326342a4894e441f46062, type: 3}
       propertyPath: m_Name
       value: pistol
+      objectReference: {fileID: 0}
+    - target: {fileID: 3186047473292845281, guid: 19b630f0d04326342a4894e441f46062, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19b630f0d04326342a4894e441f46062, type: 3}

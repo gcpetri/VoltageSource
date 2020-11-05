@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 678, y: 492}
   m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 1278
+  controlID: 1971
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_MinSize: {x: 402, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 1279
+  controlID: 1972
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_MinSize: {x: 402, y: 221}
   m_MaxSize: {x: 8002, y: 4021}
   vertical: 0
-  controlID: 1280
+  controlID: 1973
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -220,7 +220,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: b623feff1824feff5028feff6c28feff8828feff3640feff9840feffd444fefff444feff1445feffac45feff9849feff0650fefff853feffa055feff0e56feff703fffffd23fffff0a44ffff2644ffff4244ffff02b1ffff64b1ffff9cb5ffffb8b5ffffd4b5ffff70c0ffffd2c0ffff0ac5ffff26c5ffff42c5ffff3adeffff8edfffff82eaffff0af1ffffe6f4ffff48f5ffff80f9ffff9cf9ffffa6f9ffff2afbffff629500001c9600004e96000036d1010076d201005ce601009ce70100
+      m_ExpandedIDs: b623feff1824feff5028feff6c28feff8828feff3640feff9840feffd444fefff444feff1445feffac45feff9849feff0650fefff853feffa055feff0e56feff703fffffd23fffff0a44ffff2644ffff4244ffffaa67ffff0c68ffff6069ffff7269ffff8e69ffff02b1ffff64b1ffff9cb5ffffb8b5ffffd4b5ffff70c0ffffd2c0ffff0ac5ffff26c5ffff42c5ffff08d3ffff6ad3ffffa2d7ffffbed7ffffdad7ffff3adeffff8edfffff82eaffff0af1ffffe6f4ffff48f5ffff80f9ffff9cf9ffffa6f9ffff2afbffff629500001c9600004e96000036d1010076d201005ce601009ce70100
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -263,8 +263,8 @@ MonoBehaviour:
     y: 0
     width: 711.2
     height: 460
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 2}
@@ -294,7 +294,7 @@ MonoBehaviour:
     x: 347.2
     y: 73.6
     width: 709.2
-    height: 435.8
+    height: 439
   m_ViewDataDictionary: {fileID: 0}
   m_ShowContextualTools: 0
   m_WindowGUID: 793afd4c78ecf0f46b0bff6826e0c2e6
@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Position:
     m_Target: {x: -194.24637, y: -61.549824, z: 38.05398}
     speed: 2
-    m_Value: {x: -194.24637, y: -61.549824, z: 38.05398}
+    m_Value: {x: -0.4409446, y: 0.82625204, z: 0.42039943}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -358,11 +358,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.18607159, y: 0.58173364, z: -0.13885619, w: -0.7795417}
     speed: 2
-    m_Value: {x: -0.18607132, y: 0.5817328, z: -0.138856, w: -0.77954054}
+    m_Value: {x: 0.3307141, y: 0.04725524, z: -0.016583847, w: 0.9424013}
   m_Size:
     m_Target: 75.375725
     speed: 2
-    m_Value: 75.375725
+    m_Value: 3.3563342
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -380,8 +380,8 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: -0.18607159, y: 0.58173364, z: -0.13885619, w: -0.7795417}
-  m_LastSceneViewOrtho: 0
+  m_LastSceneViewRotation: {x: 0.013969497, y: 0.9849506, z: -0.14282134, w: 0.096338235}
+  m_LastSceneViewOrtho: 1
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
   m_SceneVisActive: 1
@@ -452,20 +452,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes/Game Scenes
+    - Assets/Resources
     m_Globs: []
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes/Game Scenes
+  - Assets/Resources
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\Users\Erik\Documents\VoltageSource\VoltageSource\VoltageSource
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 138}
-    m_SelectedIDs: 344d0000
-    m_LastClickedID: 19764
+    m_SelectedIDs: b6510000
+    m_LastClickedID: 20918
     m_ExpandedIDs: 00000000204d0000224d0000244d0000264d0000284d00002a4d00002c4d00002e4d0000304d0000324d0000344d0000364d0000384d00003a4d00003c4d00003e4d0000404d0000424d0000b851000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
