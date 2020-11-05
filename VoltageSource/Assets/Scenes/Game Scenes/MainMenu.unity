@@ -2099,6 +2099,14 @@ MonoBehaviour:
   settingsPanel: {fileID: 186865398}
   volumeSlider: {fileID: 1842650215}
   privateGameToggle: {fileID: 827149461}
+  PlayerOneRenderer: {fileID: 0}
+  PlayerTwoRenderer: {fileID: 0}
+  playerOneButtonSelection: []
+  playerTwoButtonSelection: []
+  playerOneButtonColors: []
+  playerTwoButtonColors: []
+  playerOneColorPicker: {fileID: 0}
+  playerTwoColorPicker: {fileID: 0}
   _playerOneTeamChoice: 0
   _playerTwoTeamChoice: 0
   anim: {fileID: 1174283923}
@@ -4366,10 +4374,10 @@ MonoBehaviour:
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Game Title
+  m_Text: Duel Voltage
 --- !u!222 &1236643475
 CanvasRenderer:
   m_ObjectHideFlags: 0
