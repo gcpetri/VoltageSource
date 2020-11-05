@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace VoltageSource
 {
-    public class PhotonLauncher : MonoBehaviourPunCallbacks
+    public class PhotonLauncher : MonoBehaviourPunCallbacks, IPunObservable
     {
         public string gameVersion = "1";
         public static PhotonLauncher Instance;
@@ -221,6 +221,21 @@ namespace VoltageSource
         {
             SceneManager.LoadScene(MainMenuIndex);
             base.OnLeftRoom();
+        }
+        
+        public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+        {
+
+            if (stream.IsWriting)
+            {
+                stream.SendNext((object)playerOneColor);
+                stream.SendNext((object)playerTwoColor);
+            }
+            else
+            {
+                playerOneColor = (Color) stream.ReceiveNext();
+                playerTwoColor = (Color) stream.ReceiveNext();
+            }
         }
 
         #endregion
