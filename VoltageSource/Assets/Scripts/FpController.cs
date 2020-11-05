@@ -308,7 +308,10 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
     private void Awake()
     {
-        photonView.RPC("SetMyColor", RpcTarget.All);   
+        if (photonView.IsMine && PhotonNetwork.IsMasterClient) 
+        {
+            photonView.RPC("SetMyColor", RpcTarget.All);   
+        }
     }
 
     #region Movement/Camera Methods
@@ -465,6 +468,13 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         
         playerRenderer.UpdateGIMaterials();
         Debug.LogFormat("Set my color called by {0}, my color is {1}", photonView, playerRenderer.material.color);
+        
+        Debug.Log("-----------------------------");
+        Debug.LogFormat("On pvID: {0}, player one stored color: {1}, player two stored color: {2}",
+        photonView.ViewID,
+        PhotonLauncher.Instance.GetPlayerOneColor(),
+        PhotonLauncher.Instance.GetPlayerTwoColor()
+        );
     }
     
     #region RPCCalls
