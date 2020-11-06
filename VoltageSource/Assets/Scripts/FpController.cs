@@ -424,8 +424,6 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         else
         {
             this.Health = (float) stream.ReceiveNext();
-            if (!_rb)
-                return;
             _rb.position = (Vector3) stream.ReceiveNext();
             _rb.rotation = (Quaternion) stream.ReceiveNext();
             _rb.velocity = (Vector3) stream.ReceiveNext();
