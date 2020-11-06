@@ -281,6 +281,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
                 stack.cameraStack.Add(_currentGunInfo.GetCamera().GetComponent<Camera>());
             if (_currentGunScriptable.gunIndex == 0)
             {
+                currentGun.transform.localRotation = Quaternion.Euler(-90.0f, -90.0f, 0.0f);
                 UIGamePauseMenuGuns[0].SetActive(true);
                 UIGamePauseMenuGuns[1].SetActive(false);
                 UIGamePauseMenuGuns[2].SetActive(false);
@@ -288,6 +289,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
                 UIGamePauseMenuGuns[4].SetActive(false);
             } else if (_currentGunScriptable.gunIndex == 1)
             {
+                currentGun.transform.localRotation = Quaternion.Euler(-90.0f, 90.0f, -180.0f);
                 UIGamePauseMenuGuns[0].SetActive(false);
                 UIGamePauseMenuGuns[1].SetActive(true);
                 UIGamePauseMenuGuns[2].SetActive(false);
@@ -295,6 +297,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
                 UIGamePauseMenuGuns[4].SetActive(false);
             } else if (_currentGunScriptable.gunIndex == 2)
             {
+                currentGun.transform.localRotation = Quaternion.Euler(-90.0f, 90.0f, -180.0f);
                 UIGamePauseMenuGuns[0].SetActive(false);
                 UIGamePauseMenuGuns[1].SetActive(false);
                 UIGamePauseMenuGuns[2].SetActive(true);
@@ -303,6 +306,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             }
             else if (_currentGunScriptable.gunIndex == 3)
             {
+                currentGun.transform.localRotation = Quaternion.Euler(-90.0f, -90.0f, -180.0f);
                 UIGamePauseMenuGuns[0].SetActive(false);
                 UIGamePauseMenuGuns[1].SetActive(false);
                 UIGamePauseMenuGuns[2].SetActive(false);
