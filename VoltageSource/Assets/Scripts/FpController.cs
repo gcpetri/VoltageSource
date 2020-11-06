@@ -40,6 +40,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     private Vector3 _velocity; // Local
     private bool _isGrounded; // Local
     private Vector3 _groundCheckPosition = Vector3.zero;
+    public float gravityConst;
     #endregion
 
     #region Player Health Varaibles
@@ -91,6 +92,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     private float _nextTimeToFire;
     private float _fireRate = 1f;
     private GunScript _currentGunInfo; // Reference
+    private GunsScriptable _currentGunScriptable;
     [SerializeField] private GameObject gunRotationPoint;
     #endregion
 
@@ -108,6 +110,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     [SerializeField] private GameObject UiGameObject; // Reference 
     private PhotonPlayerUI playerUI;
     private bool isPaused = false;
+    [SerializeField] public GameObject[] UIGamePauseMenuGuns;
 
     #endregion
 
@@ -127,6 +130,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     [SerializeField] private GameObject sniperRef;
     [SerializeField] private GameObject assualtRef;
     [SerializeField] private GameObject shotgunRef;
+    public Transform GunPosition;
     
     #endregion
 
@@ -142,7 +146,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             UiGameObject.SetActive(true);
             
         }
-        
+        UIGamePauseMenuGuns[4].SetActive(false);
+        UIGamePauseMenuGuns[0].SetActive(true);
         
         _rb = GetComponent<Rigidbody>();
         Health = _maxHealth;
@@ -169,6 +174,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         {
             _currentGunInfo = currentGun.GetComponent<GunScript>();
             _currentGunInfo.SetOwner(this);
+            _currentGunScriptable = _currentGunInfo.gunData;
             _fireRate = _currentGunInfo.GetFireRate();
         }
         
@@ -236,6 +242,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             if (Physics.Raycast(ray, out _pickUpHit, pickupDistance, pickupMask))
             {
                 GameObject newGun = _pickUpHit.transform.gameObject;
+                Destroy(currentGun);
+                SwitchGun(newGun);
                 
             }
         }
@@ -254,7 +262,54 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
     private void SwitchGun(GameObject obj)
     {
-        
+        //obj.transform.parent = GunPosition.transform;
+        obj.transform.localPosition = GunPosition.transform.position;
+        obj.transform.parent = gunRotationPoint.transform;
+        currentGun = obj;
+        // Gun Initilization 
+        if (currentGun)
+        {
+            _currentGunInfo = currentGun.GetComponent<GunScript>();
+            _currentGunScriptable = _currentGunInfo.gunData;
+            _currentGunInfo.SetOwner(this);
+            _currentGunScriptable = _currentGunInfo.gunData;
+            _fireRate = _currentGunInfo.GetFireRate();
+            currentGun.layer = 12;
+            var stack = fpsCamera.GetUniversalAdditionalCameraData();
+            stack.cameraStack.RemoveAt(1);
+            if (stack != null)
+                stack.cameraStack.Add(_currentGunInfo.GetCamera().GetComponent<Camera>());
+            if (_currentGunScriptable.gunIndex == 0)
+            {
+                UIGamePauseMenuGuns[0].SetActive(true);
+                UIGamePauseMenuGuns[1].SetActive(false);
+                UIGamePauseMenuGuns[2].SetActive(false);
+                UIGamePauseMenuGuns[3].SetActive(false);
+                UIGamePauseMenuGuns[4].SetActive(false);
+            } else if (_currentGunScriptable.gunIndex == 1)
+            {
+                UIGamePauseMenuGuns[0].SetActive(false);
+                UIGamePauseMenuGuns[1].SetActive(true);
+                UIGamePauseMenuGuns[2].SetActive(false);
+                UIGamePauseMenuGuns[3].SetActive(false);
+                UIGamePauseMenuGuns[4].SetActive(false);
+            } else if (_currentGunScriptable.gunIndex == 2)
+            {
+                UIGamePauseMenuGuns[0].SetActive(false);
+                UIGamePauseMenuGuns[1].SetActive(false);
+                UIGamePauseMenuGuns[2].SetActive(true);
+                UIGamePauseMenuGuns[3].SetActive(false);
+                UIGamePauseMenuGuns[4].SetActive(false);
+            }
+            else if (_currentGunScriptable.gunIndex == 3)
+            {
+                UIGamePauseMenuGuns[0].SetActive(false);
+                UIGamePauseMenuGuns[1].SetActive(false);
+                UIGamePauseMenuGuns[2].SetActive(false);
+                UIGamePauseMenuGuns[3].SetActive(true);
+                UIGamePauseMenuGuns[4].SetActive(false);
+            }
+        }
     }
 
     [PunRPC]
@@ -300,7 +355,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
         if (Input.GetButtonDown("Jump") && _isGrounded) // Checks if jumps and runs appropriate code
         {
-            _velocity.y = Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
+            _velocity.y = Mathf.Sqrt(jumpHeight * -2f * (Physics.gravity.y + gravityConst));
             anim.SetTrigger(_animParams[1].name);
             RaiseEventOptions eventOptions = RaiseEventOptions.Default;
             eventOptions.CachingOption = EventCaching.AddToRoomCache;

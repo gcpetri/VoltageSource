@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(Animator))]
 public class GunScript : MonoBehaviour
 {
-    [SerializeField] private GunsScriptable gunData;
+    [SerializeField] public GunsScriptable gunData;
     private float _nextTimeToFire = 0f;
     private MeshRenderer _meshRenderer;
     private MeshFilter _meshFilter;

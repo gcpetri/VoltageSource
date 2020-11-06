@@ -14,4 +14,5 @@ public class GunsScriptable : ScriptableObject
     public float reloadTime;
     public GameObject bulletPrefab;
     public float spreadAngle;
+    public int gunIndex;
 }
