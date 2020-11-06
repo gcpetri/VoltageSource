@@ -357,9 +357,6 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         {
             _velocity.y = Mathf.Sqrt(jumpHeight * -2f * (Physics.gravity.y + gravityConst));
             anim.SetTrigger(_animParams[1].name);
-            RaiseEventOptions eventOptions = RaiseEventOptions.Default;
-            eventOptions.CachingOption = EventCaching.AddToRoomCache;
-            PhotonNetwork.RaiseEvent((byte) EventManager.EventCodes.Test, null, eventOptions, SendOptions.SendReliable);
         }
     }
 
@@ -480,9 +477,6 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         }else if (eventCode == (byte) EventManager.EventCodes.EndPreRound)
         {
             _isPreRound = false;
-        }else if (eventCode == (byte) EventManager.EventCodes.Test)
-        {
-            Debug.Log("Got cached event");
         }
     }
 

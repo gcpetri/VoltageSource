@@ -120,6 +120,14 @@ PrefabInstance:
       propertyPath: photonAnimatorView
       value: 
       objectReference: {fileID: 6533883640686371543}
+    - target: {fileID: 4632938646592457157, guid: 9c9439ee2310e13478bd80a61493dbdf, type: 3}
+      propertyPath: gunCamera
+      value: 
+      objectReference: {fileID: 1933731628726533239}
+    - target: {fileID: 4632938646592457157, guid: 9c9439ee2310e13478bd80a61493dbdf, type: 3}
+      propertyPath: sphereCollider
+      value: 
+      objectReference: {fileID: 9076989662994196110}
     - target: {fileID: 4745228655908231637, guid: 9c9439ee2310e13478bd80a61493dbdf, type: 3}
       propertyPath: m_RootOrder
       value: 3

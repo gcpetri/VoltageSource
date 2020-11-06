@@ -10079,10 +10079,10 @@ MonoBehaviour:
   reloadSound: {fileID: 8300000, guid: 87825692a171b9041bd27f3fa435841d, type: 3}
   cameraIdle: {fileID: 7441513103107963462}
   cameraAim: {fileID: 869031324768417012}
-  camera: {fileID: 5194491251154411409}
+  gunCamera: {fileID: 5194491251154411409}
   fpController: {fileID: 0}
   rotatingSpeed: 100
-  collider: {fileID: 5866813603516997549}
+  sphereCollider: {fileID: 5866813603516997549}
   photonAnimatorView: {fileID: 2432300799098015987}
 --- !u!82 &8087343176166319789
 AudioSource:

@@ -29,18 +29,18 @@ public class GunScript : MonoBehaviour
     private Transform cameraIdle;
 
     [SerializeField] private Transform cameraAim;
-    [SerializeField] private GameObject camera;
+    [SerializeField] private GameObject gunCamera;
     [SerializeField] private FpController fpController;
-    private int ownerPhotonID;
+    private int _ownerPhotonID;
 
 
     [SerializeField] private float rotatingSpeed = 200f;
     private bool _hasAnOwner = false;
-    [SerializeField] private SphereCollider collider;
+    [SerializeField] private SphereCollider sphereCollider;
     private Transform _thisTransform;
     [SerializeField] private PhotonAnimatorView photonAnimatorView;
 
-    private float spreadRatio;
+    private float _spreadRatio;
     private PhotonView ownerPhotonView = null;
     private PhotonView _photonView;
 
@@ -57,6 +57,7 @@ public class GunScript : MonoBehaviour
             gunAnimator.SetBool(_aimingID, value);
             _isAiming = value;
         } 
+        
     }
     
     private void Start()
@@ -71,12 +72,6 @@ public class GunScript : MonoBehaviour
         
         // Gun start with max ammo by default
         _currentAmmo = gunData.maxAmmo;
-
-        #if DEBUG
-            Debug.LogFormat("Animator exists: {0} on {1}", (gunAnimator != null), gameObject.name);
-            Debug.LogFormat("GunData exists: {0} on {1}", (gunData != null), gameObject.name);
-            Debug.LogFormat("AudioSource exists: {0} on {1}", (audioSource != null), gameObject.name);
-        #endif
         if (audioSource)
         {
             audioSource.volume = PlayerPrefs.GetFloat("VolumeValue");
@@ -84,8 +79,8 @@ public class GunScript : MonoBehaviour
 
         if (_hasAnOwner)
         {
-            collider.enabled = false;
-            spreadRatio = gunData.spreadAngle / this.fpController.fpsCamera.fieldOfView;
+            sphereCollider.enabled = false;
+            _spreadRatio = gunData.spreadAngle / fpController.fpsCamera.fieldOfView;
         }
 
         if (gunAnimator)
@@ -114,7 +109,7 @@ public class GunScript : MonoBehaviour
             return false;
         }
         
-        spread = spreadRatio * Random.insideUnitCircle;
+        spread = _spreadRatio * Random.insideUnitCircle;
         r = fpController.fpsCamera.ViewportPointToRay((Vector3.one * 0.5f) + (Vector3) spread);
         hitpos = r.origin + r.direction * 200f;
         _currentAmmo--;
@@ -133,14 +128,18 @@ public class GunScript : MonoBehaviour
     /// </summary>
     public void SharedActions() // This calls the info that should be shared with all players
     {
-        _gunParticleSystem.Play(); // tells data, but doens't have location
-        audioSource.PlayOneShot(firingSound);
+        if(_gunParticleSystem) // Works on multiplayer because of shared actions 
+            _gunParticleSystem.Play(); // tells data, but doens't have location
+        
+        if(firingSound) // Play the gunshot sound for the character (doesn't work on multiplayer right now)
+            audioSource.PlayOneShot(firingSound);
+        
         var instantiateBullet = Instantiate(gunData.bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.transform.rotation);
-        Debug.LogFormat("Called ShareActions() on object {0} with photonView {1}", gameObject.name, ownerPhotonID);
+        //Debug.LogFormat("Called ShareActions() on object {0} with photonView {1}", gameObject.name, _ownerPhotonID);
         BulletScript bulletScript = instantiateBullet.GetComponent<BulletScript>();
         bulletScript.damage = gunData.damage;
         instantiateBullet.GetComponent<Rigidbody>().velocity = r.direction * gunData.bulletSpeed;
-        bulletScript.Owner = ownerPhotonID;
+        bulletScript.Owner = _ownerPhotonID;
         Destroy(instantiateBullet, Mathf.Clamp(gunData.range / (gunData.bulletSpeed), 0f, 10f));
     }
     
@@ -172,37 +171,37 @@ public class GunScript : MonoBehaviour
 
     public void SetCameraIdlePos()
     {
-        if (!camera)
+        if (!gunCamera)
         {
             Debug.LogWarning("Missing camera reference");
             return;
         }
             
         
-        camera.transform.position = cameraIdle.position;
+        gunCamera.transform.position = cameraIdle.position;
     }
 
     public void SetCameraAimPose()
     {
-        if (!camera)
+        if (!gunCamera)
         {
             Debug.LogWarning("Missing camera reference");
             return;
         }
         
-        camera.transform.position = cameraAim.position;
+        gunCamera.transform.position = cameraAim.position;
     }
 
     public GameObject GetCamera()
     {
-        return camera;
+        return gunCamera;
     }
 
     public void SetOwner(FpController obj)
     {
         fpController = obj;
         _hasAnOwner = true;
-        collider.enabled = false;
+        sphereCollider.enabled = false;
         gameObject.layer = LayerMask.NameToLayer("Gun");
         if (gunAnimator)
         {
@@ -210,8 +209,8 @@ public class GunScript : MonoBehaviour
         }
 
         photonAnimatorView.enabled = true;
-        ownerPhotonID = obj.photonView.ViewID;
-        spreadRatio = gunData.spreadAngle / this.fpController.fpsCamera.fieldOfView;
+        _ownerPhotonID = obj.photonView.ViewID;
+        _spreadRatio = gunData.spreadAngle / this.fpController.fpsCamera.fieldOfView;
         ownerPhotonView = obj.photonView;
     }
 

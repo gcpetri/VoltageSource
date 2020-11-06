@@ -26,17 +26,18 @@ namespace VoltageSource
         private CanvasGroup _canvasGroup;
         private Vector3 _targetPosition;
         #endregion
-        [SerializeField] private GameObject MissionUI;
-        [SerializeField] private GameObject GameUI;
-        [SerializeField] private GameObject PauseUI;
-        [SerializeField] private GameObject InfoUI;
-        [SerializeField] private GameObject TimerUI;
-        [SerializeField] private TMP_Text InfoText;
-        [SerializeField] private TMP_Text TimerText;
-        [SerializeField] public GameObject MiniMap;
         
-        private bool isPaused = false;
-        private float currentTime = 10f;
+        [SerializeField] private GameObject missionUI;
+        [SerializeField] private GameObject gameUI;
+        [SerializeField] private GameObject pauseUI;
+        [SerializeField] private GameObject infoUI;
+        [SerializeField] private GameObject timerUI;
+        [SerializeField] private TMP_Text infoText;
+        [SerializeField] private TMP_Text timerText;
+        [SerializeField] public GameObject miniMap;
+        
+        private bool _isPaused = false;
+        private float _currentTime = 10f;
 
         public void SetTarget(FpController targetR)
         {
@@ -61,8 +62,8 @@ namespace VoltageSource
             if(_target)
                 _maxHealth = _target.Health;
             
-            InfoUI.SetActive(true);
-            InfoText.text = "Pre-round";
+            infoUI.SetActive(true);
+            infoText.text = "Pre-round";
         }
         
         // Update is called once per frame
@@ -82,13 +83,13 @@ namespace VoltageSource
                     : (_maxHealth - healthDiff) / 100f;
             }
 
-            if (TimerUI.activeSelf)
+            if (timerUI.activeSelf)
             {
-                currentTime -= Time.deltaTime;
-                TimerText.text = Mathf.Clamp((float)Math.Round(currentTime, 2), 0, 100).ToString() + " secs";
+                _currentTime -= Time.deltaTime;
+                timerText.text = Mathf.Clamp((float)Math.Round(_currentTime, 2), 0, 100).ToString() + " secs";
             }
 
-            MiniMap.SetActive(Input.GetKey(KeyCode.Tab));
+            miniMap.SetActive(Input.GetKey(KeyCode.Tab));
         }
 
         private void LateUpdate()
@@ -120,18 +121,18 @@ namespace VoltageSource
 
         public bool TogglePause()
         {
-            isPaused = isPaused != true;
+            _isPaused = _isPaused != true;
             Cursor.lockState = Cursor.lockState == CursorLockMode.Confined ? CursorLockMode.Locked : CursorLockMode.Confined;
-            if (isPaused)
+            if (_isPaused)
             {
-                PauseUI.SetActive(true);
+                pauseUI.SetActive(true);
             }
             else
             {
-                PauseUI.SetActive(false);
+                pauseUI.SetActive(false);
             }
 
-            return isPaused;
+            return _isPaused;
         }
 
         public void OnEvent(EventData photonEvent)
@@ -140,31 +141,31 @@ namespace VoltageSource
 
             if (eventCode == (byte) EventManager.EventCodes.PlayerDied)
             {
-                PauseUI.SetActive(false);
-                GameUI.SetActive(false);
-                InfoUI.SetActive(true);
-                TimerUI.SetActive(true);
-                currentTime = GameManager.Instance.endRoundTimer;
-                InfoText.text = "Round Over";
+                pauseUI.SetActive(false);
+                gameUI.SetActive(false);
+                infoUI.SetActive(true);
+                timerUI.SetActive(true);
+                _currentTime = GameManager.Instance.endRoundTimer;
+                infoText.text = "Round Over";
             }
             else if (eventCode == (byte) EventManager.EventCodes.StartPreRound)
             {
-                PauseUI.SetActive(false);
-                GameUI.SetActive(true);
-                InfoUI.SetActive(true);
-                TimerUI.SetActive(true);
-                MissionUI.SetActive(true);
-                currentTime = GameManager.Instance.preRoundTimer;
-                InfoText.text = "Pre-Round";
+                pauseUI.SetActive(false);
+                gameUI.SetActive(true);
+                infoUI.SetActive(true);
+                timerUI.SetActive(true);
+                missionUI.SetActive(true);
+                _currentTime = GameManager.Instance.preRoundTimer;
+                infoText.text = "Pre-Round";
             }
             else if (eventCode == (byte) EventManager.EventCodes.StartRound)
             {
-                PauseUI.SetActive(false);
-                GameUI.SetActive(true);
-                InfoUI.SetActive(false);
-                TimerUI.SetActive(false);
-                MissionUI.SetActive(false);
-                InfoText.text = "";
+                pauseUI.SetActive(false);
+                gameUI.SetActive(true);
+                infoUI.SetActive(false);
+                timerUI.SetActive(false);
+                missionUI.SetActive(false);
+                infoText.text = "";
             }
         }
         
@@ -187,11 +188,11 @@ namespace VoltageSource
         {
             if (stream.IsWriting)
             {
-                stream.SendNext((float) currentTime);
+                stream.SendNext((float) _currentTime);
             }
             else
             {
-                currentTime = (float) stream.ReceiveNext();
+                _currentTime = (float) stream.ReceiveNext();
             }
         }
     }
