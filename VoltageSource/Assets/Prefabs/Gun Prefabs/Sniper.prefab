@@ -10070,7 +10070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c88726d842bf7d2428e8873447d84e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunData: {fileID: 11400000, guid: c00e1d369e1d2e24298265c7f5c4fa59, type: 2}
+  gunData: {fileID: 11400000, guid: 446cd1542ba8ceb4691f69a27420bcd9, type: 2}
   bulletSpawnPoint: {fileID: 2823990508164678895}
   gunAnimator: {fileID: 8964787537746132690}
   _gunParticleSystem: {fileID: 255035050540280059}
