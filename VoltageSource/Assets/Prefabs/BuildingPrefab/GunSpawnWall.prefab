@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6138324599143097154}
   - component: {fileID: 4300597645021414722}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,12 +24,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6180679654358828692}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: -1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 2.08, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8655814700646679338}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &4300597645021414722
 Light:
@@ -42,9 +42,9 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_Intensity: 400
-  m_Range: 2.6
+  m_Color: {r: 0.9622642, g: 0.31228194, b: 0.31228194, a: 1}
+  m_Intensity: 20
+  m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 8655814700646679351}
   - component: {fileID: 8655814700646679350}
   - component: {fileID: 8655814700646679339}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GunSpawnWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,8 +122,9 @@ Transform:
   m_GameObject: {fileID: 8655814700646679349}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 1.25, z: 0.01}
   m_Children:
+  - {fileID: 2870051905253612744}
   - {fileID: 6138324599143097154}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -418,6 +419,54 @@ Animation:
   m_Animation: {fileID: 7400000, guid: ca5d71eb287ad4c4ca73e50a07fb0df1, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: ca5d71eb287ad4c4ca73e50a07fb0df1, type: 2}
+  - {fileID: 7400000, guid: 761e792944bef564ebffe7373d6ac4e7, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!1 &8767787847875853824
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2870051905253612744}
+  - component: {fileID: 2061148601774980844}
+  m_Layer: 8
+  m_Name: GunSpawnWallPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2870051905253612744
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8767787847875853824}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 2.2, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8655814700646679338}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 106.66667, z: 0}
+--- !u!111 &2061148601774980844
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8767787847875853824}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 761e792944bef564ebffe7373d6ac4e7, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 761e792944bef564ebffe7373d6ac4e7, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0

@@ -26,11 +26,18 @@ namespace VoltageSource
 
         // Gun Spawning
         public GameObject gunWallPrefab;
+        public Transform[] blueGunSpawns;
+        public Transform[] yellowGunSpawns;
+        private int[] numGunSpawnsPerSeg = { 3, 5, 9, 14, 20 }; // Increments: seg 5 (closest to player) has 6, seg 1 (farthest) has 3
+        private int blueGunSpawnRange = 20;
+        private int yellowGunSpawnRange = 20;
+        private GameObject yW, bW, yG, bG;
+
         public int BlueSegments = 5;
         public int YellowSegments = 5;
-        public float BlueTerrScale = 75.0f;
-        public float minGunSpawnTime = 15.0f;
-        public float maxGunSpawnTime = 45.0f;
+        //public float BlueTerrScale = 75.0f;
+        public float minGunSpawnTime = 25.0f;
+        public float maxGunSpawnTime = 35.0f;
         //
 
         [SerializeField]private Material transparentMaterial;
@@ -104,15 +111,18 @@ namespace VoltageSource
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                var gunIndexB = UnityEngine.Random.Range(0, gunPrefabs.Length); // Get random index between what guns exist
-                var blueRangeHorizontal = UnityEngine.Random.Range(-75.0f, BlueTerrScale);
-                Vector3 blueSpawnPos = new Vector3(blueRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
+                int gunIndexB = UnityEngine.Random.Range(0, gunPrefabs.Length); // Get random index between what guns exist
+                //var blueRangeHorizontal = UnityEngine.Random.Range(-75.0f, BlueTerrScale);
+                //Vector3 blueSpawnPos = new Vector3(blueRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
+                int blueSpawnPos = UnityEngine.Random.Range(0, blueGunSpawnRange);
 
                 int gunIndexY = UnityEngine.Random.Range(0, 3);
-                float yellowRangeHorizontal = UnityEngine.Random.Range(BlueTerrScale, 75.0f);
-                Vector3 YellowSpawnPos = new Vector3(yellowRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
+                //float yellowRangeHorizontal = UnityEngine.Random.Range(BlueTerrScale, 75.0f);
+                //Vector3 YellowSpawnPos = new Vector3(yellowRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
+                int yellowSpawnPos = UnityEngine.Random.Range(0, yellowGunSpawnRange);
 
-                object[] content = {gunIndexB, blueSpawnPos, gunIndexY, YellowSpawnPos};
+                object[] content = {gunIndexB, blueSpawnPos, gunIndexY, yellowSpawnPos};
+               
                 PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.SpawnGun, content, raiseEventOptions, SendOptions.SendReliable);
                 
                 Debug.Log("Gun Spawn Called");
@@ -127,47 +137,71 @@ namespace VoltageSource
             GunSpawn();
         }
         
-        // determines the territory range for spawning 
+        // determines the territory range for gun spawning 
         private void SpawnLocations(int BlueSegments)
         {
             switch(BlueSegments)
             {
                 case 10:
-                    BlueTerrScale = 75.0f;
+                    //BlueTerrScale = 75.0f;
+                    blueGunSpawnRange = numGunSpawnsPerSeg[4];
+                    yellowGunSpawnRange = 0;
                     break;
                 case 9:
-                    BlueTerrScale = 60.0f;
+                    //BlueTerrScale = 60.0f;
+                    blueGunSpawnRange = numGunSpawnsPerSeg[4];
+                    yellowGunSpawnRange = numGunSpawnsPerSeg[0];
                     break;
                 case 8:
-                    BlueTerrScale = 45.0f;
+                    //BlueTerrScale = 45.0f;
+                    blueGunSpawnRange = numGunSpawnsPerSeg[4];
+                    yellowGunSpawnRange = numGunSpawnsPerSeg[1];
                     break;
                 case 7:
-                    BlueTerrScale = 30.0f;
+                    //BlueTerrScale = 30.0f;
+                    blueGunSpawnRange = numGunSpawnsPerSeg[4];
+                    yellowGunSpawnRange = numGunSpawnsPerSeg[2];
                     break;
                 case 6:
-                    BlueTerrScale = 15.0f;
+                    //BlueTerrScale = 15.0f;
+                    blueGunSpawnRange = numGunSpawnsPerSeg[4];
+                    yellowGunSpawnRange = numGunSpawnsPerSeg[3];
                     break;
                 // even   Blue Losing below   ///  Blue Winning above
                 case 5:
-                    BlueTerrScale = 0.0f;
+                    //BlueTerrScale = 0.0f;
+                    blueGunSpawnRange = numGunSpawnsPerSeg[4];
+                    yellowGunSpawnRange = numGunSpawnsPerSeg[4];
                     break;
                 case 4:
-                    BlueTerrScale = -15.0f;
+                    //BlueTerrScale = -15.0f;
+                    blueGunSpawnRange = numGunSpawnsPerSeg[3];
+                    yellowGunSpawnRange = numGunSpawnsPerSeg[4];
                     break;
                 case 3:
-                    BlueTerrScale = -30.0f;
+                    //BlueTerrScale = -30.0f;
+                    blueGunSpawnRange = numGunSpawnsPerSeg[2];
+                    yellowGunSpawnRange = numGunSpawnsPerSeg[4];
                     break;
                 case 2:
-                    BlueTerrScale = -45.0f;
+                    //BlueTerrScale = -45.0f;
+                    blueGunSpawnRange = numGunSpawnsPerSeg[1];
+                    yellowGunSpawnRange = numGunSpawnsPerSeg[4];
                     break;
                 case 1:
-                    BlueTerrScale = -60.0f;
+                    //BlueTerrScale = -60.0f;
+                    blueGunSpawnRange = numGunSpawnsPerSeg[0];
+                    yellowGunSpawnRange = numGunSpawnsPerSeg[4];
                     break;
                 case 0:
-                    BlueTerrScale = -75.0f;
+                    //BlueTerrScale = -75.0f;
+                    blueGunSpawnRange = 0;
+                    yellowGunSpawnRange = numGunSpawnsPerSeg[4];
                     break;
                 default:
-                    BlueTerrScale = 0.0f;
+                    //BlueTerrScale = 0.0f;
+                    blueGunSpawnRange = numGunSpawnsPerSeg[4];
+                    yellowGunSpawnRange = numGunSpawnsPerSeg[4];
                     break;
             }
         }
@@ -264,9 +298,25 @@ namespace VoltageSource
         {
             if (data == null)
                 return;
-
-            Instantiate(gunPrefabs[(int) data[0]], (Vector3)data[1] + (0.5f * Vector3.up),Quaternion.identity);
-            Instantiate(gunPrefabs[(int) data[2]], (Vector3)data[3] + (0.5f * Vector3.up),Quaternion.identity);
+            if (yW)
+            {
+                Destroy(yW);
+                Destroy(bW);
+            }
+            if (yG)
+                Destroy(yG);
+            if (bG)
+                Destroy(bG);
+            //Instantiate(gunPrefabs[(int) data[0]], (Vector3)data[1] + (0.5f * Vector3.up),Quaternion.identity);
+            //Instantiate(gunPrefabs[(int) data[2]], (Vector3)data[3] + (0.5f * Vector3.up),Quaternion.identity);
+            bW = Instantiate(gunWallPrefab, blueGunSpawns[(int)data[1]]) as GameObject;
+            yW = Instantiate(gunWallPrefab, yellowGunSpawns[(int)data[3]]) as GameObject;
+            bG = Instantiate(gunPrefabs[(int)data[0]], bW.transform) as GameObject;
+            bG.transform.localPosition += 2.3f * Vector3.up + -1f * Vector3.forward;
+            bG.transform.localRotation = Quaternion.identity;
+            yG = Instantiate(gunPrefabs[(int)data[2]], yW.transform) as GameObject;
+            yG.transform.localPosition += 2.3f * Vector3.up + -1f* Vector3.forward;
+            yG.transform.localRotation = Quaternion.identity;
         }
 
         private void PlayerDied(object[] data = null)
