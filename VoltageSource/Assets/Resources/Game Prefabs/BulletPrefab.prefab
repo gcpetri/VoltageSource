@@ -112,12 +112,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0569936d185d8de4e83c82e5575e6ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _decal: {fileID: 6422438104018985247, guid: 8e6e8dca1e500e643abdd3d7b6975bf5, type: 3}
+  decal: {fileID: 6422438104018985247, guid: 8e6e8dca1e500e643abdd3d7b6975bf5, type: 3}
   damage: 0
   layermask:
     serializedVersion: 2
     m_Bits: 768
-  Owner: 0
+  owner: 0
+  lifeTime: 0
 --- !u!96 &293351998642826724
 TrailRenderer:
   serializedVersion: 2

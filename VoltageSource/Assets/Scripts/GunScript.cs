@@ -33,8 +33,7 @@ public class GunScript : MonoBehaviour
     [SerializeField] private FpController fpController;
     private int _ownerPhotonID;
 
-
-    [SerializeField] private float rotatingSpeed = 200f;
+    
     private bool _hasAnOwner = false;
     [SerializeField] private SphereCollider sphereCollider;
     private Transform _thisTransform;
@@ -42,13 +41,17 @@ public class GunScript : MonoBehaviour
 
     private float _spreadRatio;
     private PhotonView ownerPhotonView = null;
-    private PhotonView _photonView;
 
     private int _reloadingID;
     private int _aimingID;
     private int _shootingID;
     private int _rotatingID;
     private bool _isAiming = false;
+    
+    private Vector2 _spread;
+    private Ray _ray;
+    private Vector3 _hitpos;
+    
     public bool isAiming
     {
         get => _isAiming;
@@ -64,7 +67,6 @@ public class GunScript : MonoBehaviour
     {
         gunAnimator = GetComponent<Animator>();
         _thisTransform = transform;
-        _photonView = GetComponent<PhotonView>();
         if (photonAnimatorView)
         {
             photonAnimatorView.enabled = false;
@@ -81,6 +83,11 @@ public class GunScript : MonoBehaviour
         {
             sphereCollider.enabled = false;
             _spreadRatio = gunData.spreadAngle / fpController.fpsCamera.fieldOfView;
+            gameObject.layer = LayerMask.NameToLayer("Gun");
+            if (gunAnimator)
+            {
+                gunAnimator.SetBool(_rotatingID, false);
+            }
         }
 
         if (gunAnimator)
@@ -92,10 +99,7 @@ public class GunScript : MonoBehaviour
             gunAnimator.SetBool(_rotatingID, true);
         }
     }
-
-    private Vector2 spread;
-    private Ray r;
-    private Vector3 hitpos;
+    
     
     public bool Shoot() // This just now call local changes to the script
     {
@@ -109,9 +113,9 @@ public class GunScript : MonoBehaviour
             return false;
         }
         
-        spread = _spreadRatio * Random.insideUnitCircle;
-        r = fpController.fpsCamera.ViewportPointToRay((Vector3.one * 0.5f) + (Vector3) spread);
-        hitpos = r.origin + r.direction * 200f;
+        _spread = _spreadRatio * Random.insideUnitCircle;
+        _ray = fpController.fpsCamera.ViewportPointToRay((Vector3.one * 0.5f) + (Vector3) _spread);
+        _hitpos = _ray.origin + _ray.direction * 200f;
         _currentAmmo--;
         gunAnimator.SetBool(_shootingID,true);
 
@@ -134,13 +138,13 @@ public class GunScript : MonoBehaviour
         if(firingSound) // Play the gunshot sound for the character (doesn't work on multiplayer right now)
             audioSource.PlayOneShot(firingSound);
         
-        var instantiateBullet = Instantiate(gunData.bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.transform.rotation);
+        var instantiateBullet = Instantiate(gunData.bulletPrefab, bulletSpawnPoint.position, transform.rotation);
         //Debug.LogFormat("Called ShareActions() on object {0} with photonView {1}", gameObject.name, _ownerPhotonID);
         BulletScript bulletScript = instantiateBullet.GetComponent<BulletScript>();
         bulletScript.damage = gunData.damage;
-        instantiateBullet.GetComponent<Rigidbody>().velocity = r.direction * gunData.bulletSpeed;
-        bulletScript.Owner = _ownerPhotonID;
-        Destroy(instantiateBullet, Mathf.Clamp(gunData.range / (gunData.bulletSpeed), 0f, 10f));
+        instantiateBullet.GetComponent<Rigidbody>().velocity = _ray.direction * gunData.bulletSpeed;
+        bulletScript.owner = _ownerPhotonID;
+        bulletScript.lifeTime = Mathf.Clamp(gunData.range / (gunData.bulletSpeed), 0f, 10f);
     }
     
     

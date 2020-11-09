@@ -6,18 +6,20 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    [SerializeField] private GameObject _decal;
+    [SerializeField] private GameObject decal;
     [HideInInspector] public float damage;
     private Rigidbody _rb;
     private Vector3 _lastPosition;
     [SerializeField] private LayerMask layermask;
-    [HideInInspector] public int Owner;
+    [HideInInspector] public int owner;
+    [HideInInspector] public float lifeTime;
     private RaycastHit _hit;
 
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _lastPosition = transform.position;
+        Destroy(this, lifeTime);
     }
     
     private void LateUpdate()
@@ -31,22 +33,20 @@ public class BulletScript : MonoBehaviour
             if (_hit.collider.CompareTag("Player"))
             {
                 var val = _hit.collider.GetComponent<PhotonView>().ViewID;
-                if (val == Owner)
+                if (val == owner)
                     return;
                             
                 _hit.collider.gameObject.GetComponent<FpController>().SendMessage("IGotShot", damage, SendMessageOptions.DontRequireReceiver);
-                //_hit.collider.GetComponent<FpController>().Health = _hit.collider.GetComponent<FpController>().Health - damage; 
             }
             else
             {
-                GameObject impact = GameObject.Instantiate(_decal, transform.position, Quaternion.identity);
+                GameObject impact = Instantiate(decal, transform.position, Quaternion.identity);
                 impact.transform.position = _hit.point + (_hit.normal * 0.01f);
                 impact.transform.rotation = Quaternion.FromToRotation(-Vector3.forward, _hit.normal);
                 impact.transform.localScale = impact.transform.lossyScale * 0.25f;
                 Destroy(impact, 5f);
             }
             gameObject.SetActive(false);
-            _lastPosition = transform.position;
             Destroy(this);
         }
 
