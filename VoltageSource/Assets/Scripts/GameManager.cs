@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using ExitGames.Client.Photon;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
@@ -38,7 +39,16 @@ namespace VoltageSource
         //public float BlueTerrScale = 75.0f;
         public float minGunSpawnTime = 25.0f;
         public float maxGunSpawnTime = 35.0f;
-        //
+
+        // End of Round UI
+        public GameObject EndofRoundEmpty;
+        [SerializeField] public GameObject[] UIEndofRound;
+        // End of Game UI
+        public GameObject EndofGameEmpty;
+        public GameObject EndofGameCuties;
+        public GameObject[] EndofGameCutieModels;
+        public Text GameWinner;
+        [SerializeField] public Animator[] UIEndofGameCutes;
 
         [SerializeField]private Material transparentMaterial;
 
@@ -281,7 +291,7 @@ namespace VoltageSource
                     break;
                 case (byte)EventManager.EventCodes.StartRound: StartRound();
                     break;
-                case (byte)EventManager.EventCodes.EndRound: EndRound();
+                case (byte)EventManager.EventCodes.EndRound: EndRound(data);
                     break;
                 case (byte)EventManager.EventCodes.StartPreRound: StartPreRound();
                     break;
@@ -326,7 +336,8 @@ namespace VoltageSource
                 Debug.LogError("Data needed for PlayerDied is missing");
                 return;
             }
-
+            int Btemp = BlueSegments;
+            int Ytemp = YellowSegments;
             // 0 photonViewID of the player that died
             if (PhotonView.Find((int) data[0]).gameObject == _playerOne)
             {
@@ -348,16 +359,42 @@ namespace VoltageSource
             {
                 return;
             }
-            
-            PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.EndRound, null, raiseEventOptions, SendOptions.SendReliable);
+            object[] content = { Btemp, BlueSegments, Ytemp, YellowSegments };
+            PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.EndRound, content, raiseEventOptions, SendOptions.SendReliable);
         }
         
-        private void EndRound(object[] data = null)
+        private void EndRound(object[] data)
         {
             Debug.Log("Round ended");
 
+            EndofRoundEmpty.SetActive(true); // Ui map
             StartCoroutine(IEndRound());
-            
+            if ((int)data[0] != (int)data[1] && (int)data[1] <= 5)
+            {
+                for (int i = (int)data[1] + 5; i < 10; i++)
+                {
+                    UIEndofRound[i].SetActive(false);
+                }
+                UIEndofRound[(int)data[1]].SetActive(true);
+                Animation anim = UIEndofRound[(int)data[1]+5].GetComponent<Animation>();
+                if ((int)data[0] < (int)data[1])
+                    anim.Play("uihide");
+                else
+                    anim.Play("uishow");
+            }
+            if ((int)data[2] != (int)data[3] && (int)data[3] <= 5)
+            {
+                for (int i = (int)data[1]; i < 5; i++)
+                {
+                    UIEndofRound[i].SetActive(false);
+                }
+                UIEndofRound[(int)data[3]].SetActive(true);
+                Animation anim = UIEndofRound[(int)data[3]].GetComponent<Animation>();
+                if ((int)data[2] < (int)data[3])
+                    anim.Play("uihide");
+                else
+                    anim.Play("uishow");
+            }
             if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
                 return;
             StopCoroutine(SpawnGunAfterTime());
@@ -439,27 +476,29 @@ namespace VoltageSource
         private void BlueTeamIncrement()
         {
             blueTeamDeaths++;
-            Debug.Log(blueTeamDeaths);
-            if (blueTeamDeaths >= 5)
+            if (BlueSegments <= 5)
+                BlueSegments++;
+            YellowSegments--;
+            Debug.Log(BlueSegments);
+            if (YellowSegments <= 0)
             {
                 EndGame();
                 return;
             }
-            BlueSegments++;
-            YellowSegments--;
         }
 
         private void YellowTeamIncrement()
         {
             yellowTeamDeaths++;
-            Debug.Log(yellowTeamDeaths);
-            if (yellowTeamDeaths >= 5)
+            BlueSegments--;
+            if (YellowSegments <= 5)
+                YellowSegments++;
+            Debug.Log(YellowSegments);
+            if (BlueSegments<= 0)
             {
                 EndGame();
                 return;
             }
-            BlueSegments--;
-            YellowSegments++;
         }
 
         private void EndGame()
@@ -468,10 +507,25 @@ namespace VoltageSource
                 return;
             Debug.Log("EndGame() Called");
             StopCoroutine(SpawnGunAfterTime());
+            EndofGameCuties.SetActive(true);
+            EndofGameEmpty.SetActive(true);
+            if (BlueSegments <= 0)
+            {
+                // Need game winner name
+                GameWinner.text = "Blue Won!";
+                //EndofGameCutieModels[0];
+            } else if (YellowSegments <= 0)
+            {
+                GameWinner.text = "Yellow Won!";
+            }
+            // Need character colors
+            UIEndofGameCutes[0].SetBool(UIEndofGameCutes[0].parameters[2].name, true);
+            UIEndofGameCutes[1].SetBool(UIEndofGameCutes[1].parameters[3].name, true);
         }
 
         private void StartPreRound()
         {
+            EndofRoundEmpty.SetActive(false);
             StartCoroutine(PreRound());
         }
 
