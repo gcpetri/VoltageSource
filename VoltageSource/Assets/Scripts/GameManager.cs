@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using ExitGames.Client.Photon;
+using JetBrains.Annotations;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
@@ -15,8 +16,8 @@ namespace VoltageSource
         public static GameManager Instance;
         public GameObject playerPrefab;
 
-        [SerializeField] private Transform yellowTeamSpawn;
-        [SerializeField] private Transform blueTeamSpawn;
+        [SerializeField] [CanBeNull] private Transform yellowTeamSpawn;
+        [SerializeField] [CanBeNull] private Transform blueTeamSpawn;
 
         [SerializeField] private int blueTeamDeaths = 0;
         [SerializeField] private int yellowTeamDeaths = 0;
@@ -30,12 +31,12 @@ namespace VoltageSource
         public Transform[] blueGunSpawns;
         public Transform[] yellowGunSpawns;
         private int[] numGunSpawnsPerSeg = { 3, 5, 9, 14, 20 }; // Increments: seg 5 (closest to player) has 6, seg 1 (farthest) has 3
-        private int blueGunSpawnRange = 20;
-        private int yellowGunSpawnRange = 20;
-        private GameObject yW, bW, yG, bG;
+        private int _blueGunSpawnRange = 20;
+        private int _yellowGunSpawnRange = 20;
+        private GameObject _yW, _bW, _yG, _bG; // Not very descriptive, not sure what they could be used for from the outset 
 
-        public int BlueSegments = 5;
-        public int YellowSegments = 5;
+        public int blueSegments = 5;
+        public int yellowSegments = 5;
         //public float BlueTerrScale = 75.0f;
         public float minGunSpawnTime = 25.0f;
         public float maxGunSpawnTime = 35.0f;
@@ -59,8 +60,11 @@ namespace VoltageSource
         private GameObject _playerOne;
         private GameObject _playerTwo;
         
+        private IEnumerator _gunSpawnEnumerator;
+
         private void Start()
         {
+            _gunSpawnEnumerator = SpawnGunAfterTime();
             PhotonNetwork.AddCallbackTarget(this);
             Instance = this;
             if (playerPrefab == null)
@@ -91,11 +95,17 @@ namespace VoltageSource
 
         private void SpawnPlayers()
         {
+            if ((blueTeamSpawn is null) || (yellowTeamSpawn is null))
+            {
+                Debug.LogError("SpawnPlayers() called, missing blueTeamSpawn and/or yellowTeamSpawn");
+                return;
+            }
+
             if (PhotonNetwork.IsMasterClient)
             {
                  _playerOne = PhotonNetwork.Instantiate(playerPrefab.name,
                     TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.position : yellowTeamSpawn.position,
-                    TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation, 0);
+                    TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation);
                  
                  _playerOne.GetComponent<FpController>().SetMyColor();
                  
@@ -104,35 +114,35 @@ namespace VoltageSource
             {
                  _playerTwo = PhotonNetwork.Instantiate(playerPrefab.name,
                     TeamManagerScript.Instance.PlayerTwoTeam == 0 ? blueTeamSpawn.position : yellowTeamSpawn.position,
-                    TeamManagerScript.Instance.PlayerTwoTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation, 0);
+                    TeamManagerScript.Instance.PlayerTwoTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation);
                  
                  _playerOne.GetComponent<FpController>().SetMyColor();
             }
         }
 
         #region Gun Spawn
-        // spawns the guns at random time with inumerator
-        public void SpawnRandomLocation()
+        // spawns the guns at random time with Enumerator 
+        private void SpawnRandomLocation()
         {
-            StartCoroutine(SpawnGunAfterTime());
+            StartCoroutine(_gunSpawnEnumerator);
         }
         // gun spawn function
-        public void GunSpawn()
+        private void GunSpawn()
         {
             if (PhotonNetwork.IsMasterClient)
             {
                 int gunIndexB = UnityEngine.Random.Range(0, gunPrefabs.Length); // Get random index between what guns exist
                 //var blueRangeHorizontal = UnityEngine.Random.Range(-75.0f, BlueTerrScale);
                 //Vector3 blueSpawnPos = new Vector3(blueRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
-                int blueSpawnPos = UnityEngine.Random.Range(0, blueGunSpawnRange);
+                int blueSpawnPos = UnityEngine.Random.Range(0, _blueGunSpawnRange);
 
                 int gunIndexY = UnityEngine.Random.Range(0, 3);
                 //float yellowRangeHorizontal = UnityEngine.Random.Range(BlueTerrScale, 75.0f);
                 //Vector3 YellowSpawnPos = new Vector3(yellowRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
-                int yellowSpawnPos = UnityEngine.Random.Range(0, yellowGunSpawnRange);
+                int yellowSpawnPos = UnityEngine.Random.Range(0, _yellowGunSpawnRange);
 
-                object[] content = {gunIndexB, blueSpawnPos, gunIndexY, yellowSpawnPos};
-               
+                var content = new object[] {gunIndexB, blueSpawnPos, gunIndexY, yellowSpawnPos};
+
                 PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.SpawnGun, content, raiseEventOptions, SendOptions.SendReliable);
                 
                 Debug.Log("Gun Spawn Called");
@@ -148,70 +158,70 @@ namespace VoltageSource
         }
         
         // determines the territory range for gun spawning 
-        private void SpawnLocations(int BlueSegments)
+        private void SpawnLocations(int blueSegs)
         {
-            switch(BlueSegments)
+            switch(blueSegs)
             {
                 case 10:
                     //BlueTerrScale = 75.0f;
-                    blueGunSpawnRange = numGunSpawnsPerSeg[4];
-                    yellowGunSpawnRange = 0;
+                    _blueGunSpawnRange = numGunSpawnsPerSeg[4];
+                    _yellowGunSpawnRange = 0;
                     break;
                 case 9:
                     //BlueTerrScale = 60.0f;
-                    blueGunSpawnRange = numGunSpawnsPerSeg[4];
-                    yellowGunSpawnRange = numGunSpawnsPerSeg[0];
+                    _blueGunSpawnRange = numGunSpawnsPerSeg[4];
+                    _yellowGunSpawnRange = numGunSpawnsPerSeg[0];
                     break;
                 case 8:
                     //BlueTerrScale = 45.0f;
-                    blueGunSpawnRange = numGunSpawnsPerSeg[4];
-                    yellowGunSpawnRange = numGunSpawnsPerSeg[1];
+                    _blueGunSpawnRange = numGunSpawnsPerSeg[4];
+                    _yellowGunSpawnRange = numGunSpawnsPerSeg[1];
                     break;
                 case 7:
                     //BlueTerrScale = 30.0f;
-                    blueGunSpawnRange = numGunSpawnsPerSeg[4];
-                    yellowGunSpawnRange = numGunSpawnsPerSeg[2];
+                    _blueGunSpawnRange = numGunSpawnsPerSeg[4];
+                    _yellowGunSpawnRange = numGunSpawnsPerSeg[2];
                     break;
                 case 6:
                     //BlueTerrScale = 15.0f;
-                    blueGunSpawnRange = numGunSpawnsPerSeg[4];
-                    yellowGunSpawnRange = numGunSpawnsPerSeg[3];
+                    _blueGunSpawnRange = numGunSpawnsPerSeg[4];
+                    _yellowGunSpawnRange = numGunSpawnsPerSeg[3];
                     break;
                 // even   Blue Losing below   ///  Blue Winning above
                 case 5:
                     //BlueTerrScale = 0.0f;
-                    blueGunSpawnRange = numGunSpawnsPerSeg[4];
-                    yellowGunSpawnRange = numGunSpawnsPerSeg[4];
+                    _blueGunSpawnRange = numGunSpawnsPerSeg[4];
+                    _yellowGunSpawnRange = numGunSpawnsPerSeg[4];
                     break;
                 case 4:
                     //BlueTerrScale = -15.0f;
-                    blueGunSpawnRange = numGunSpawnsPerSeg[3];
-                    yellowGunSpawnRange = numGunSpawnsPerSeg[4];
+                    _blueGunSpawnRange = numGunSpawnsPerSeg[3];
+                    _yellowGunSpawnRange = numGunSpawnsPerSeg[4];
                     break;
                 case 3:
                     //BlueTerrScale = -30.0f;
-                    blueGunSpawnRange = numGunSpawnsPerSeg[2];
-                    yellowGunSpawnRange = numGunSpawnsPerSeg[4];
+                    _blueGunSpawnRange = numGunSpawnsPerSeg[2];
+                    _yellowGunSpawnRange = numGunSpawnsPerSeg[4];
                     break;
                 case 2:
                     //BlueTerrScale = -45.0f;
-                    blueGunSpawnRange = numGunSpawnsPerSeg[1];
-                    yellowGunSpawnRange = numGunSpawnsPerSeg[4];
+                    _blueGunSpawnRange = numGunSpawnsPerSeg[1];
+                    _yellowGunSpawnRange = numGunSpawnsPerSeg[4];
                     break;
                 case 1:
                     //BlueTerrScale = -60.0f;
-                    blueGunSpawnRange = numGunSpawnsPerSeg[0];
-                    yellowGunSpawnRange = numGunSpawnsPerSeg[4];
+                    _blueGunSpawnRange = numGunSpawnsPerSeg[0];
+                    _yellowGunSpawnRange = numGunSpawnsPerSeg[4];
                     break;
                 case 0:
                     //BlueTerrScale = -75.0f;
-                    blueGunSpawnRange = 0;
-                    yellowGunSpawnRange = numGunSpawnsPerSeg[4];
+                    _blueGunSpawnRange = 0;
+                    _yellowGunSpawnRange = numGunSpawnsPerSeg[4];
                     break;
                 default:
                     //BlueTerrScale = 0.0f;
-                    blueGunSpawnRange = numGunSpawnsPerSeg[4];
-                    yellowGunSpawnRange = numGunSpawnsPerSeg[4];
+                    _blueGunSpawnRange = numGunSpawnsPerSeg[4];
+                    _yellowGunSpawnRange = numGunSpawnsPerSeg[4];
                     break;
             }
         }
@@ -308,25 +318,25 @@ namespace VoltageSource
         {
             if (data == null)
                 return;
-            if (yW)
+            if (_yW)
             {
-                Destroy(yW);
-                Destroy(bW);
+                Destroy(_yW);
+                Destroy(_bW);
             }
-            if (yG)
-                Destroy(yG);
-            if (bG)
-                Destroy(bG);
+            if (_yG)
+                Destroy(_yG);
+            if (_bG)
+                Destroy(_bG);
             //Instantiate(gunPrefabs[(int) data[0]], (Vector3)data[1] + (0.5f * Vector3.up),Quaternion.identity);
             //Instantiate(gunPrefabs[(int) data[2]], (Vector3)data[3] + (0.5f * Vector3.up),Quaternion.identity);
-            bW = Instantiate(gunWallPrefab, blueGunSpawns[(int)data[1]]) as GameObject;
-            yW = Instantiate(gunWallPrefab, yellowGunSpawns[(int)data[3]]) as GameObject;
-            bG = Instantiate(gunPrefabs[(int)data[0]], bW.transform) as GameObject;
-            bG.transform.localPosition += 2.3f * Vector3.up + -1f * Vector3.forward;
-            bG.transform.localRotation = Quaternion.identity;
-            yG = Instantiate(gunPrefabs[(int)data[2]], yW.transform) as GameObject;
-            yG.transform.localPosition += 2.3f * Vector3.up + -1f* Vector3.forward;
-            yG.transform.localRotation = Quaternion.identity;
+            _bW = Instantiate(gunWallPrefab, blueGunSpawns[(int)data[1]]) as GameObject;
+            _yW = Instantiate(gunWallPrefab, yellowGunSpawns[(int)data[3]]) as GameObject;
+            _bG = Instantiate(gunPrefabs[(int)data[0]], _bW.transform) as GameObject;
+            _bG.transform.localPosition += 2.3f * Vector3.up + -1f * Vector3.forward;
+            _bG.transform.localRotation = Quaternion.identity;
+            _yG = Instantiate(gunPrefabs[(int)data[2]], _yW.transform) as GameObject;
+            _yG.transform.localPosition += 2.3f * Vector3.up + -1f* Vector3.forward;
+            _yG.transform.localRotation = Quaternion.identity;
         }
 
         private void PlayerDied(object[] data = null)
@@ -461,7 +471,7 @@ namespace VoltageSource
         {
             if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
                 return;
-            SpawnLocations(BlueSegments);
+            SpawnLocations(blueSegments);
             GunSpawn();
             SpawnRandomLocation();
             Debug.Log("Round started");

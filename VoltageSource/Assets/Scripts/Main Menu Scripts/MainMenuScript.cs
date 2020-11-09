@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
+using JetBrains.Annotations;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -336,6 +337,11 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
     
     private void TeamSelectP2(int value)
     {
+        if (!playerOne || !playerTwo)
+        {
+            
+        }
+        
         _playerTwoTeamChoice = value;
         if (_playerTwoTeamChoice == 0)
         {
