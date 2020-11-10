@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CharacterColorChoices : MonoBehaviour
 {
-    public
-        static Color Yellow = new Color(0.849746f, 0.9056604f, 0.39644f, 1),
+    private 
+         static Color Yellow = new Color(0.849746f, 0.9056604f, 0.39644f, 1),
         Red = new Color(1, 0, 0, 1),
         Green = new Color(0, 0.8679245f, 0.119f, 1),
         Purple = new Color(0.8362575f, 0, 1, 1),
@@ -16,4 +16,19 @@ public class CharacterColorChoices : MonoBehaviour
         Maroon = new Color(0.5283019f, 0.0966f, 0.0966f, 1),
         White = new Color(1,1,1,1),
         Blue = new Color(0.0194375f, 0.3716098f, 0.8584906f, 1);
+
+    public static Color[] ColorChoices =
+    {
+        Yellow,
+        Red,
+        Green,
+        Purple,
+        Magenta,
+        Black,
+        Orange,
+        Aqua,
+        Maroon,
+        White,
+        Blue
+    };
 }

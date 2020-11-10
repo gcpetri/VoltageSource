@@ -21,7 +21,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     #region Networking Variables
 
     private PhotonView _photonView;
-    private bool _isPreRound = false;
+    private bool _isPreRound = true;
 
 
     #endregion
@@ -29,7 +29,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     #region Character Movement Variables
     // Contains all the variables used from FP_movement 
     [Header("Character Movement Variables")]
-    private CharacterController _cController; // Reference
+    [SerializeField]private CharacterController _cController; // Reference
     [Tooltip("Controls the speed at which the player moves")]
     [SerializeField] private float playerSpeed = 12f; // Local
     [Tooltip("The height at which the player can jump")]
@@ -135,11 +135,19 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
     #endregion
 
+    private Color[] colorChoices = new Color[11];
+
     private void Start()
     {
+        _cController = GetComponent<CharacterController>();
+        for (int i = 0; i < 11; i++)
+        {
+            colorChoices[i] = CharacterColorChoices.ColorChoices[i];
+        }
+        
         Cursor.lockState = CursorLockMode.Locked;
         _photonView = GetComponent<PhotonView>(); // Need to get this value to do networking
-        _cController = GetComponent<CharacterController>();
+        
         if (photonView.IsMine)
         {
             fpsCamera.enabled = true;
@@ -400,12 +408,6 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             anim.SetTrigger(_animParams[1].name);
         }
     }
-
-    private void Awake()
-    {
-        
-    }
-
     #region Movement/Camera Methods
 
         /// <summary>
@@ -451,7 +453,10 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-
+        if (!photonView.IsMine)
+            return;
+        
+        
         if (stream.IsWriting)
         {
             stream.SendNext(Health);
@@ -550,9 +555,16 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         Health -= (float)damage;
     }
 
-    
-    public void SetMyColor()
+
+    public void SetMyColor(int colorIndex)
     {
+        
+    }
+    
+    [PunRPC]
+    public void RPCColorChange()
+    {
+        /*
         if (photonView.IsMine && photonView.name == PhotonLauncher.Instance.GetOtherPlayerName()) // This means you are the second player
         {
             playerRenderer.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
@@ -572,6 +584,9 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         PhotonLauncher.Instance.GetPlayerOneColor(),
         PhotonLauncher.Instance.GetPlayerTwoColor()
         );
+        */
+        
+        
     }
     
     #region RPCCalls

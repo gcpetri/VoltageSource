@@ -109,17 +109,14 @@ namespace VoltageSource
                  _playerOne = PhotonNetwork.Instantiate(playerPrefab.name,
                     TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.position : yellowTeamSpawn.position,
                     TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation);
-                 
-                 _playerOne.GetComponent<FpController>().SetMyColor();
-                 
+
             }
             else
             {
                  _playerTwo = PhotonNetwork.Instantiate(playerPrefab.name,
                     TeamManagerScript.Instance.PlayerTwoTeam == 0 ? blueTeamSpawn.position : yellowTeamSpawn.position,
                     TeamManagerScript.Instance.PlayerTwoTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation);
-                 
-                 _playerOne.GetComponent<FpController>().SetMyColor();
+
             }
         }
 
@@ -557,28 +554,28 @@ namespace VoltageSource
                 if (TeamManagerScript.Instance.PlayerOneTeam == 0) // player one is blue
                 {
                     GameWinner.text = PhotonLauncher.Instance.GetOtherPlayerName(); // player two name
-                    playerRender1.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
-                    playerRender2.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
+                    playerRender1.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+                    playerRender2.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
                 }
                 else // player one is yellow
                 {
                     GameWinner.text = PhotonLauncher.Instance.GetHostName(); // player one (host) name
-                    playerRender1.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
-                    playerRender2.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
+                    playerRender1.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+                    playerRender2.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
                 }
             } else if (YellowSegments <= 0) // Blue Won
             {
                 if (TeamManagerScript.Instance.PlayerOneTeam == 0) // player one is blue
                 {
                     GameWinner.text = PhotonLauncher.Instance.GetHostName(); // player one (host) name
-                    playerRender1.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
-                    playerRender2.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
+                    playerRender1.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+                    playerRender2.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
                 }
                 else // player one is yellow
                 {
                     GameWinner.text = PhotonLauncher.Instance.GetOtherPlayerName(); // player two name
-                    playerRender1.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
-                    playerRender2.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
+                    playerRender1.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+                    playerRender2.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
                 }
             }
             playerRender1.UpdateGIMaterials();

@@ -77,14 +77,14 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/TeamManagerScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/EventManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/NamePlateScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterColorChoices.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/FpController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/BulletScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GunScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CharacterColorChoices.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/FpController.cs" />
       </list>
     </option>
   </component>
@@ -182,6 +182,7 @@
       <workItem from="1604611445420" duration="1630000" />
       <workItem from="1604624165414" duration="4438000" />
       <workItem from="1604883165137" duration="5365000" />
+      <workItem from="1605046746841" duration="1049000" />
     </task>
     <servers />
   </component>

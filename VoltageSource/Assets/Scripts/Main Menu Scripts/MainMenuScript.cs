@@ -59,8 +59,8 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
     private int playerOneColorIndex = 0;
     private int playerTwoColorIndex = 0;
     
-    private Color currentPlayerOneColor = CharacterColorChoices.Yellow;
-    private Color currentPlayerTwoColor = CharacterColorChoices.Yellow;
+    private Color currentPlayerOneColor = CharacterColorChoices.ColorChoices[0];
+    private Color currentPlayerTwoColor = CharacterColorChoices.ColorChoices[0];
     
     [SerializeField]
     private int _playerOneTeamChoice;
@@ -88,17 +88,10 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         _joinRoomName = null;
         _createRoomName = null;
         
-        ColorChoices[0] = CharacterColorChoices.Yellow;
-        ColorChoices[1] = CharacterColorChoices.Red;
-        ColorChoices[2] = CharacterColorChoices.Green;
-        ColorChoices[3] = CharacterColorChoices.Purple;
-        ColorChoices[4] = CharacterColorChoices.Magenta;
-        ColorChoices[5] = CharacterColorChoices.Black;
-        ColorChoices[6] = CharacterColorChoices.Blue;
-        ColorChoices[7] = CharacterColorChoices.Orange;
-        ColorChoices[8] = CharacterColorChoices.Aqua;
-        ColorChoices[9] = CharacterColorChoices.Maroon;
-        ColorChoices[10] = CharacterColorChoices.White;
+        for (int i = 0; i < 11; i++)
+        {
+            ColorChoices[i] = CharacterColorChoices.ColorChoices[i];
+        }
 
         if (volumeSlider == null)
         {
@@ -110,17 +103,10 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
     public void UpdateColors()
     {
-        ColorChoices[0] = CharacterColorChoices.Yellow;
-        ColorChoices[1] = CharacterColorChoices.Red;
-        ColorChoices[2] = CharacterColorChoices.Green;
-        ColorChoices[3] = CharacterColorChoices.Purple;
-        ColorChoices[4] = CharacterColorChoices.Magenta;
-        ColorChoices[5] = CharacterColorChoices.Black;
-        ColorChoices[6] = CharacterColorChoices.Blue;
-        ColorChoices[7] = CharacterColorChoices.Orange;
-        ColorChoices[8] = CharacterColorChoices.Aqua;
-        ColorChoices[9] = CharacterColorChoices.Maroon;
-        ColorChoices[10] = CharacterColorChoices.White;
+        for (int i = 0; i < 11; i++)
+        {
+            ColorChoices[i] = CharacterColorChoices.ColorChoices[i];
+        }
 
         if (playerOneColorPicker && playerTwoColorPicker) // this means we are in the main menu scene instead of team select scene
         {
@@ -239,10 +225,7 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
                 
             }
 
-            Color one = ColorChoices[playerOneColorIndex];
-            Color two = ColorChoices[playerTwoColorIndex];
-            
-            PhotonLauncher.Instance.SetPlayerColors(one,two);
+            PhotonLauncher.Instance.SetPlayerColors(playerOneColorIndex,playerTwoColorIndex);
             
             TeamManagerScript.Instance.PlayerOneTeam = _playerOneTeamChoice;
             TeamManagerScript.Instance.PlayerTwoTeam = _playerTwoTeamChoice;
@@ -470,25 +453,6 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
 
             PlayerOneRenderer.UpdateGIMaterials();
             PlayerTwoRenderer.UpdateGIMaterials();
-            
-            // if ((int)data[0] != -1)
-            // {
-            //     int playerOneColorIndex = (int) data[0];
-            //     PlayerOneRenderer.material.color = ColorChoices[playerOneColorIndex];
-            //     currentPlayerOneColor = ColorChoices[playerOneColorIndex];
-            //     PlayerOneRenderer.UpdateGIMaterials();
-            // }
-            //
-            // if ((int)data[1] != -1)
-            // {
-            //     int playerTwoColorIndex = (int) data[1];
-            //     PlayerTwoRenderer.material.color = ColorChoices[playerTwoColorIndex];
-            //     currentPlayerTwoColor = ColorChoices[playerTwoColorIndex];
-            //     PlayerTwoRenderer.UpdateGIMaterials();          
-            // }
-            // Debug.LogFormat("Player one color changed to : {0}", currentPlayerOneColor);
-            // Debug.LogFormat("Player two color changed to : {0}", currentPlayerTwoColor);
-            //
         }
     }
 

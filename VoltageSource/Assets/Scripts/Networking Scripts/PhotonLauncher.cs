@@ -16,8 +16,8 @@ namespace VoltageSource
         public string gameVersion = "1";
         public static PhotonLauncher Instance;
 
-        private Color playerOneColor;
-        private Color playerTwoColor;
+        private int playerOneColorIndex;
+        private int playerTwoColorIndex;
 
         #region Private Serializable Fields
 
@@ -149,25 +149,21 @@ namespace VoltageSource
             return true;
         }
 
-        public void SetPlayerColors(Color playerOne, Color playerTwo)
+        public void SetPlayerColors(int playerOneIndex, int playerTwoIndex)
         {
-            playerOneColor = playerOne;
-            playerTwoColor = playerTwo;
-            Debug.LogFormat("Color set for p1: {0}", playerOne);
-            Debug.LogFormat("Color set for p2: {0}", playerTwo);
-            Debug.LogFormat("Color set for p1: {0}", playerOneColor);
-            Debug.LogFormat("Color set for p2: {0}", playerTwoColor);
+            playerOneColorIndex = playerOneIndex;
+            playerTwoColorIndex = playerTwoIndex;
         }
 
-        public Color GetPlayerOneColor()
+        public int GetPlayerOneColor()
         {
-            Debug.LogFormat("Player one color: {0}", playerOneColor);
-            return playerOneColor;
+            Debug.LogFormat("Player one color: {0}", playerOneColorIndex);
+            return playerOneColorIndex;
         }
-        public Color GetPlayerTwoColor()
+        public int GetPlayerTwoColor()
         {
-            Debug.LogFormat("Player two color: {0}", playerTwoColor);
-            return playerTwoColor;
+            Debug.LogFormat("Player two color: {0}", playerTwoColorIndex);
+            return playerTwoColorIndex;
         }
         
         #region MonoBehaviourPunCallBacks CallBacks
@@ -227,13 +223,13 @@ namespace VoltageSource
         {
             if (stream.IsWriting)
             {
-                stream.SendNext((object)playerOneColor);
-                stream.SendNext((object)playerTwoColor);
+                stream.SendNext((object)playerOneColorIndex);
+                stream.SendNext((object)playerTwoColorIndex);
             }
             else
             {
-                playerOneColor = (Color) stream.ReceiveNext();
-                playerTwoColor = (Color) stream.ReceiveNext();
+                playerOneColorIndex = (int) stream.ReceiveNext();
+                playerTwoColorIndex = (int) stream.ReceiveNext();
             }
         }
 

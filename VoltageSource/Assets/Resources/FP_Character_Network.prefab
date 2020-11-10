@@ -473,6 +473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d80c5dd7e10cab84ca580c7cb59c73d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cController: {fileID: 1791268988159633228}
   playerSpeed: 12
   jumpHeight: 2
   groundMask:
