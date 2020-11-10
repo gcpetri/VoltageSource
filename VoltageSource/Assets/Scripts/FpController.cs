@@ -153,7 +153,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             fpsCamera.enabled = true;
             localAudioListener.enabled = true;
             UiGameObject.SetActive(true);
-
+            SetMyColor();
         }
         UIGamePauseMenuGuns[4].SetActive(false);
         UIGamePauseMenuGuns[0].SetActive(true);
@@ -549,17 +549,24 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         photonView.RPC("IGotShotRPC", RpcTarget.All, (object)damage);
     }
 
+    public void SetMyColor()
+    {
+        photonView.RPC("RPCColorChange", RpcTarget.AllBuffered);
+    }
+    
+    
+    
+    #region RPCCalls
+    
     [PunRPC]
-    private void IGotShotRPC(float damage)
+    private void RPCSetPos()
     {
-        Health -= (float)damage;
+        transform.position = teleportLocation.position;
+        transform.rotation = teleportLocation.rotation;
+        _rb.position = teleportLocation.position;
+        _rb.rotation = teleportLocation.rotation;
     }
-
-
-    public void SetMyColor(int colorIndex)
-    {
-        
-    }
+    
     
     [PunRPC]
     public void RPCColorChange()
@@ -585,22 +592,24 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         PhotonLauncher.Instance.GetPlayerTwoColor()
         );
         */
-        
-        
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            playerRenderer.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
+        }else
+        {
+            playerRenderer.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+        }
+
+        playerRenderer.UpdateGIMaterials();
     }
-    
-    #region RPCCalls
     
     [PunRPC]
-    private void RPCSetPos()
+    private void IGotShotRPC(float damage)
     {
-        transform.position = teleportLocation.position;
-        transform.rotation = teleportLocation.rotation;
-        _rb.position = teleportLocation.position;
-        _rb.rotation = teleportLocation.rotation;
-        
+        Health -= (float)damage;
     }
-
+    
     #endregion
 
 }

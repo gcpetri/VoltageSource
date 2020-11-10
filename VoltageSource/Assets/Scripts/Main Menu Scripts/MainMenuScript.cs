@@ -397,7 +397,7 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         playerTwoButtonSelection[ColorIndex - 1].GraphicUpdateComplete();
         
         object[] content = new object[] {playerOneColorIndex, playerTwoColorIndex}; 
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All}; 
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All, CachingOption = EventCaching.AddToRoomCache}; 
         PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.ChangeCharacterColor, content, raiseEventOptions, SendOptions.SendReliable);
         
     }
