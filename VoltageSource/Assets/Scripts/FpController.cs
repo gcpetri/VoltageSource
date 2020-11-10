@@ -190,19 +190,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         var stack = fpsCamera.GetUniversalAdditionalCameraData();
         if (stack != null)
             stack.cameraStack.Add(_currentGunInfo.GetCamera().GetComponent<Camera>());
-
-        /*
-        #if DEBUG_VARIABLES
-         // Checks to see if all required dependicies exists
-         Debug.LogFormat("PhotonView exists: {0} on {1}", photonView, gameObject.name);
-         Debug.LogFormat("CharacterController exists: {0} on {1}", (_cController), gameObject.name);
-         Debug.LogFormat("CurrentGun exists: {0} on {1}", (currentGun), gameObject.name);
-         Debug.LogFormat("Animator exists: {0} on {1}", (anim), gameObject.name);
-         Debug.LogFormat("Camera exists: {0} on {1}", (fpsCamera), gameObject.name);
-         Debug.LogFormat("LocalAudioListener exists: {0} on {1}", (localAudioListener), gameObject.name);
-         Debug.LogFormat("CurrentGunScript exists: {0} on {1}", (_currentGunInfo), gameObject.name);
-        #endif
-        */
+        
     }
     private void PauseGame()
     {
@@ -339,6 +327,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     }
     public void SetGun(int i)
     {
+
+        currentGun.layer = LayerMask.NameToLayer("Pickup");
         FPguns[i].SetActive(true);
         UIGamePauseMenuGuns[i].SetActive(true);
         _currentGunInfo = FPguns[i].GetComponent<GunScript>();
@@ -346,6 +336,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         _currentGunInfo.SetOwner(this);
         _currentGunScriptable = _currentGunInfo.gunData;
         _fireRate = _currentGunInfo.GetFireRate();
+        currentGun = FPguns[i];
         var stack = fpsCamera.GetUniversalAdditionalCameraData();
         stack.cameraStack.RemoveAt(1);
         if (stack != null)
@@ -358,6 +349,9 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
                 UIGamePauseMenuGuns[j].SetActive(false);
             }
         }
+        if (!photonView.IsMine)
+            return;
+        currentGun.layer = LayerMask.NameToLayer("Gun");
     }
     #endregion
 
@@ -592,15 +586,41 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         PhotonLauncher.Instance.GetPlayerTwoColor()
         );
         */
+        
+        Debug.LogFormat("On pvID: {0}, player one stored color: {1}, player two stored color: {2}",
+            photonView.ViewID,
+            PhotonLauncher.Instance.GetPlayerOneColor(),
+            PhotonLauncher.Instance.GetPlayerTwoColor()
+        );
 
         if (PhotonNetwork.IsMasterClient)
         {
-            playerRenderer.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
-        }else
-        {
-            playerRenderer.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+            if (PhotonNetwork.IsMasterClient)
+            {
+                if (photonView.IsMine)
+                {
+                    playerRenderer.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
+                }else if (!photonView.IsMine)
+                {
+                    playerRenderer.material.color =
+                        CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+                }
+            }
+            else
+            {
+                if(photonView.IsMine)
+                {
+                    playerRenderer.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+                }else if (!photonView.IsMine)
+                {
+                    playerRenderer.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
+                }
+            }
+            
+            
+             
         }
-
+        
         playerRenderer.UpdateGIMaterials();
     }
     

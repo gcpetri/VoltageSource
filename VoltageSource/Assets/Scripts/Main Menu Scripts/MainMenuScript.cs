@@ -224,12 +224,10 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
                 Debug.LogError("Not enough players in the game");
                 
             }
-
-            PhotonLauncher.Instance.SetPlayerColors(playerOneColorIndex,playerTwoColorIndex);
-            
+             
             TeamManagerScript.Instance.PlayerOneTeam = _playerOneTeamChoice;
             TeamManagerScript.Instance.PlayerTwoTeam = _playerTwoTeamChoice;
-        
+            
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
             PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.MatchStart, null, raiseEventOptions, SendOptions.SendReliable);
             // Get info regarding who is on what team then start the game based on that and update teammanager
@@ -450,7 +448,9 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
             
             PlayerOneRenderer.material.color = ColorChoices[playerOneColorIndex];
             PlayerTwoRenderer.material.color = ColorChoices[playerTwoColorIndex];
-
+            
+            PhotonLauncher.Instance.SetPlayerColors(playerOneColorIndex, playerTwoColorIndex);
+            
             PlayerOneRenderer.UpdateGIMaterials();
             PlayerTwoRenderer.UpdateGIMaterials();
         }
