@@ -346,8 +346,8 @@ namespace VoltageSource
                 Debug.LogError("Data needed for PlayerDied is missing");
                 return;
             }
-            int Btemp = BlueSegments;
-            int Ytemp = YellowSegments;
+            int Btemp = blueTeamDeaths;
+            int Ytemp = yellowTeamDeaths;
             // 0 photonViewID of the player that died
             if (PhotonView.Find((int) data[0]).gameObject == _playerOne)
             {
@@ -369,7 +369,7 @@ namespace VoltageSource
             {
                 return;
             }
-            object[] content = { Btemp, BlueSegments, Ytemp, YellowSegments };
+            object[] content = { Btemp, blueTeamDeaths, Ytemp, yellowTeamDeaths };
             PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.EndRound, content, raiseEventOptions, SendOptions.SendReliable);
         }
         
@@ -380,56 +380,41 @@ namespace VoltageSource
                 return;
             EndofRoundEmpty.SetActive(true); // Ui map
             StartCoroutine(IEndRound());
-            // blue segments
+            for (int i = 0; i < 10; i++)
+                UIEndofRound[i].SetActive(false);
+            // blue UI segments
             if ((int)data[0] != (int)data[1] && (int)data[1] < 5)
             {
                 for (int i = (int)data[1] + 5; i < 10; i++)
                 {
-                    UIEndofRound[i].SetActive(false);
+                    UIEndofRound[(int)data[i]].SetActive(true);
                 }
-                UIEndofRound[(int)data[1] + 5].SetActive(true);
-                Animation anim = UIEndofRound[(int)data[1] + 5].GetComponent<Animation>();
-                if ((int)data[0] < (int)data[1])
-                {
-                    anim.Play("uishow");
-                    StartCoroutine(IEndRoundUI());
-                }
-                else
-                {
-                    anim.Play("uihide");
-                    StartCoroutine(IEndRoundUI());
-                    UIEndofRound[(int)data[1] + 5].SetActive(false);
-                }
+                UIEndofRound[(int)data[0] + 5].SetActive(true);
+                UIEndofRound[(int)data[0] + 5].GetComponent<Animation>().Play();
+                StartCoroutine(IEndRoundUI(UIEndofRound[(int)data[0] + 5]));
+                StopCoroutine(IEndRoundUI(UIEndofRound[(int)data[0] + 5]));
             }
-            // yellow segments
+            // yellow UI segments
             if ((int)data[2] != (int)data[3] && (int)data[3] < 5)
             {
                 for (int i = (int)data[3]; i < 5; i++)
                 {
-                    UIEndofRound[i].SetActive(false);
+                    UIEndofRound[(int)data[i]].SetActive(true);
                 }
-                UIEndofRound[(int)data[3]].SetActive(true);
-                Animation anim = UIEndofRound[(int)data[3]].GetComponent<Animation>();
-                if ((int)data[2] < (int)data[3])
-                {
-                    anim.Play("uishow");
-                    StartCoroutine(IEndRoundUI());
-                }
-                else
-                {
-                    anim.Play("uihide");
-                    StartCoroutine(IEndRoundUI());
-                    UIEndofRound[(int)data[3]].SetActive(false);
-                }
+                UIEndofRound[(int)data[2]].SetActive(true);
+                UIEndofRound[(int)data[2]].GetComponent<Animation>().Play();
+                StartCoroutine(IEndRoundUI(UIEndofRound[(int)data[2]]));
+                StopCoroutine(IEndRoundUI(UIEndofRound[(int)data[2]]));
             }
             StopCoroutine(SpawnGunAfterTime());
             // Based on # of segments for each player, apply the appropriate actions to the level
             // Change level's pickups to either enabled or disabled and set appropriate materials to level cover and properties 
 
         }
-        private IEnumerator IEndRoundUI()
+        private IEnumerator IEndRoundUI(GameObject ui)
         {
             yield return new WaitForSeconds(3.2f);
+            ui.SetActive(false);
         }
         private IEnumerator IEndRound()
         {
@@ -505,12 +490,9 @@ namespace VoltageSource
         private void BlueTeamIncrement()
         {
             blueTeamDeaths++;
-            if (BlueSegments < 5)
-                BlueSegments++;
-            else
-                YellowSegments--;
+            BlueSegments--;
             Debug.Log(BlueSegments);
-            if (YellowSegments <= 0)
+            if (blueTeamDeaths <= 5)
             {
                 EndGame();
                 return;
@@ -520,12 +502,9 @@ namespace VoltageSource
         private void YellowTeamIncrement()
         {
             yellowTeamDeaths++;
-            if (YellowSegments < 5)
-                YellowSegments++;
-            else
-                BlueSegments--;
+            YellowSegments--;
             Debug.Log(YellowSegments);
-            if (BlueSegments<= 0)
+            if (yellowTeamDeaths <= 0)
             {
                 EndGame();
                 return;
@@ -549,7 +528,7 @@ namespace VoltageSource
                 stack1.cameraStack.Add(EndofGameCuties.GetComponent<Camera>());
             if (stack2 != null)
                 stack2.cameraStack.Add(EndofGameCuties.GetComponent<Camera>());
-            if (BlueSegments <= 0) // Yellow Won
+            if (blueTeamDeaths >= 5) // Yellow Won
             {
                 if (TeamManagerScript.Instance.PlayerOneTeam == 0) // player one is blue
                 {
@@ -563,7 +542,7 @@ namespace VoltageSource
                     playerRender1.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
                     playerRender2.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
                 }
-            } else if (YellowSegments <= 0) // Blue Won
+            } else if (yellowTeamDeaths >= 5) // Blue Won
             {
                 if (TeamManagerScript.Instance.PlayerOneTeam == 0) // player one is blue
                 {

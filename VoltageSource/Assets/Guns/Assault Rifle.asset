@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae264f022a2156b49b744a3af1adc0a4, type: 3}
   m_Name: Assault Rifle
   m_EditorClassIdentifier: 
-  damage: 24
+  damage: 20
   range: 68
   firerate: 5
   maxAmmo: 30

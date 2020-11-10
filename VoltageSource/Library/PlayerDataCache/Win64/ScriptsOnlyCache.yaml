@@ -92,7 +92,6 @@ ScriptsOnlyBuild:
     - UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset
     - UnityEngine.Rendering.Universal.WhiteBalance
     Unity.Rider.Editor.dll:
-    - Packages.Rider.Editor.RiderScriptEditorData
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.TextMeshPro.dll:
     - TMPro.TMP_Dropdown
@@ -102,13 +101,6 @@ ScriptsOnlyBuild:
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
     - TMPro.TextMeshProUGUI
-    UnityEditor.Graphs.dll:
-    - UnityEditor.Graphs.AnimationBlendTree.Graph
-    - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
-    - UnityEditor.Graphs.AnimationStateMachine.Graph
-    - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -531,7 +523,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 18066}
     - Class: 114
-      Script: {instanceID: 42538}
+      Script: {instanceID: 33504}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1728,7 +1720,7 @@ ScriptsOnlyBuild:
     className: PhotonTransformView
   - hash:
       serializedVersion: 2
-      Hash: 18e442b011bb2d3d983816370ae5b6f7
+      Hash: 36fa3e2d1e1b68d7fe6cdc549d372739
     assemblyName: Assembly-CSharp.dll
     namespaceName: VoltageSource
     className: GameManager
@@ -1740,7 +1732,7 @@ ScriptsOnlyBuild:
     className: CurrentRoomPropertiesListedInLobbyProperty
   - hash:
       serializedVersion: 2
-      Hash: e3879e7c5a2e9b231b4a0711776ac168
+      Hash: e8ce5fdc7ca57045a2dc2c4a9fb97c57
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: FpController
@@ -1872,7 +1864,7 @@ ScriptsOnlyBuild:
     className: RegionListCell
   - hash:
       serializedVersion: 2
-      Hash: 841dc188931bc2ffcffb087f2dfe339b
+      Hash: 0dc5fff0e6f49c6db9a1b70028bf4068
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GunScript
@@ -2130,7 +2122,7 @@ ScriptsOnlyBuild:
     className: AppVersionProperty
   - hash:
       serializedVersion: 2
-      Hash: 8fe6c59dcc9e34ac4db5226747c02d38
+      Hash: d7caa0721f7801c5d6e79eece9f2efbf
     assemblyName: Assembly-CSharp.dll
     namespaceName: VoltageSource
     className: PhotonPlayerUI
@@ -2496,7 +2488,7 @@ ScriptsOnlyBuild:
     className: PhotonTeamsManager
   - hash:
       serializedVersion: 2
-      Hash: 0e96be4953fcb0533a8501420957347d
+      Hash: 4e25d7a67803b241802c5b25ff24f26f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BulletScript
@@ -2955,4 +2947,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/Game Scenes/MainMenu.unity
   - Assets/Scenes/Game Scenes/TeamSelectScene.unity
   - Assets/Scenes/Game Scenes/Arena.unity
-  playerPath: D:/Users/Erik/Desktop/VoltageSourceBuilds/VoltageSource.exe
+  playerPath: C:/Users/gcpet/Desktop/VS2/VoltageSource.exe

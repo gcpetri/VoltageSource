@@ -162,7 +162,7 @@ Animator:
   m_GameObject: {fileID: 432294350098099755}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 965e9b1249cb088458ac1d9f1a482112, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -377,7 +377,7 @@ Animator:
   m_GameObject: {fileID: 990446295355165361}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 965e9b1249cb088458ac1d9f1a482112, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -547,7 +547,7 @@ Animator:
   m_GameObject: {fileID: 1454174233605098046}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 965e9b1249cb088458ac1d9f1a482112, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -881,7 +881,7 @@ Animator:
   m_GameObject: {fileID: 2151889874290408850}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 965e9b1249cb088458ac1d9f1a482112, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1165,7 +1165,7 @@ Animator:
   m_GameObject: {fileID: 2365827371150898136}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 965e9b1249cb088458ac1d9f1a482112, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1929,7 +1929,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Damage: 79
+  m_Text: 'Damage: 53
 
     Range: 13
 
@@ -2527,7 +2527,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Damage: 80
+  m_Text: 'Damage: 65
 
     Range: 71
 
@@ -3086,7 +3086,7 @@ Animator:
   m_GameObject: {fileID: 7357852440003114990}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 965e9b1249cb088458ac1d9f1a482112, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3257,7 +3257,7 @@ Animator:
   m_GameObject: {fileID: 7653998032520368122}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 965e9b1249cb088458ac1d9f1a482112, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3344,7 +3344,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Damage: 24
+  m_Text: 'Damage: 14
 
     Range: 19
 
@@ -3567,7 +3567,7 @@ Animator:
   m_GameObject: {fileID: 8056500969782207119}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 965e9b1249cb088458ac1d9f1a482112, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3662,7 +3662,7 @@ Animator:
   m_GameObject: {fileID: 8251740351327951391}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 965e9b1249cb088458ac1d9f1a482112, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3901,7 +3901,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Damage: 26
+  m_Text: 'Damage: 20
 
     Range: 39
 
@@ -4283,7 +4283,7 @@ Animator:
   m_GameObject: {fileID: 9146582921221237248}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 965e9b1249cb088458ac1d9f1a482112, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

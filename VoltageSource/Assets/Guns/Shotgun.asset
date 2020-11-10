@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae264f022a2156b49b744a3af1adc0a4, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
-  damage: 67
+  damage: 53
   range: 24
   firerate: 2
   maxAmmo: 10
