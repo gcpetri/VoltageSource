@@ -332,7 +332,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     public void SetGun(int i)
     {
         FPguns[i].SetActive(true);
-        UIGamePauseMenuGuns[i].SetActive(false);
+        UIGamePauseMenuGuns[i].SetActive(true);
         _currentGunInfo = FPguns[i].GetComponent<GunScript>();
         _currentGunScriptable = _currentGunInfo.gunData;
         _currentGunInfo.SetOwner(this);

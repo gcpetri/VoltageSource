@@ -5069,7 +5069,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7222951770905603888}
   m_LocalRotation: {x: 0.7070985, y: -0.0034394856, z: -0.0034394856, w: 0.7070985}
-  m_LocalPosition: {x: -0.022, y: 0, z: 0.014}
+  m_LocalPosition: {x: -0.037593983, y: 0, z: 0.014}
   m_LocalScale: {x: 0.5266991, y: 0.15534464, z: 1.250019}
   m_Children: []
   m_Father: {fileID: 8241975325697636078}
@@ -10081,7 +10081,6 @@ MonoBehaviour:
   cameraAim: {fileID: 869031324768417012}
   gunCamera: {fileID: 5194491251154411409}
   fpController: {fileID: 0}
-  rotatingSpeed: 100
   sphereCollider: {fileID: 5866813603516997549}
   photonAnimatorView: {fileID: 2432300799098015987}
 --- !u!82 &8087343176166319789

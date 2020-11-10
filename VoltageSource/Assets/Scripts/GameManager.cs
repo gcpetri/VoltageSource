@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.Rendering.Universal;
 
 
 namespace VoltageSource
@@ -51,7 +52,7 @@ namespace VoltageSource
         public GameObject EndofGameCuties;
         public GameObject[] EndofGameCutieModels;
         public Text GameWinner;
-        [SerializeField] public Animator[] UIEndofGameCutes;
+        [SerializeField] public Animator[] EndofGameCutiesAnimators;
 
         [SerializeField]private Material transparentMaterial;
 
@@ -541,23 +542,50 @@ namespace VoltageSource
             Debug.Log("EndGame() Called");
             StopCoroutine(SpawnGunAfterTime());
             EndofGameEmpty.SetActive(true);
-            
+            Camera fpsCamera1 = _playerOne.GetComponent<FpController>().fpsCamera;
+            Camera fpsCamera2 = _playerTwo.GetComponent<FpController>().fpsCamera;
+            var stack1 = fpsCamera1.GetUniversalAdditionalCameraData();
+            var stack2 = fpsCamera2.GetUniversalAdditionalCameraData();
+            stack1.cameraStack.RemoveAt(1);
+            stack2.cameraStack.RemoveAt(1);
+            if (stack1 != null)
+                stack1.cameraStack.Add(EndofGameCuties.GetComponent<Camera>());
+            if (stack2 != null)
+                stack2.cameraStack.Add(EndofGameCuties.GetComponent<Camera>());
             if (BlueSegments <= 0) // Yellow Won
             {
-                GameWinner.text = PhotonLauncher.Instance.GetHostName();
-                playerRender1.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
-                playerRender2.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
+                if (TeamManagerScript.Instance.PlayerOneTeam == 0) // player one is blue
+                {
+                    GameWinner.text = PhotonLauncher.Instance.GetOtherPlayerName(); // player two name
+                    playerRender1.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
+                    playerRender2.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
+                }
+                else // player one is yellow
+                {
+                    GameWinner.text = PhotonLauncher.Instance.GetHostName(); // player one (host) name
+                    playerRender1.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
+                    playerRender2.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
+                }
             } else if (YellowSegments <= 0) // Blue Won
             {
-                GameWinner.text = PhotonLauncher.Instance.GetOtherPlayerName();
-                playerRender1.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
-                playerRender2.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
+                if (TeamManagerScript.Instance.PlayerOneTeam == 0) // player one is blue
+                {
+                    GameWinner.text = PhotonLauncher.Instance.GetHostName(); // player one (host) name
+                    playerRender1.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
+                    playerRender2.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
+                }
+                else // player one is yellow
+                {
+                    GameWinner.text = PhotonLauncher.Instance.GetOtherPlayerName(); // player two name
+                    playerRender1.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
+                    playerRender2.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
+                }
             }
             playerRender1.UpdateGIMaterials();
             playerRender2.UpdateGIMaterials();
             // set their dancing and dying animation
-            UIEndofGameCutes[0].SetBool(UIEndofGameCutes[0].parameters[2].name, true);
-            UIEndofGameCutes[1].SetBool(UIEndofGameCutes[1].parameters[3].name, true);
+            EndofGameCutiesAnimators[0].SetBool(EndofGameCutiesAnimators[0].parameters[2].name, true);
+            EndofGameCutiesAnimators[1].SetBool(EndofGameCutiesAnimators[1].parameters[3].name, true);
             EndofGameCuties.SetActive(true);
         }
 
