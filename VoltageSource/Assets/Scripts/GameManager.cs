@@ -35,8 +35,8 @@ namespace VoltageSource
         private int _yellowGunSpawnRange = 20;
         private GameObject _yW, _bW, _yG, _bG; // Not very descriptive, not sure what they could be used for from the outset 
 
-        public int blueSegments = 5;
-        public int yellowSegments = 5;
+        public int BlueSegments = 5;
+        public int YellowSegments = 5;
         //public float BlueTerrScale = 75.0f;
         public float minGunSpawnTime = 25.0f;
         public float maxGunSpawnTime = 35.0f;
@@ -44,6 +44,8 @@ namespace VoltageSource
         // End of Round UI
         public GameObject EndofRoundEmpty;
         [SerializeField] public GameObject[] UIEndofRound;
+        public Renderer playerRender1;
+        public Renderer playerRender2;
         // End of Game UI
         public GameObject EndofGameEmpty;
         public GameObject EndofGameCuties;
@@ -376,43 +378,61 @@ namespace VoltageSource
         private void EndRound(object[] data)
         {
             Debug.Log("Round ended");
-
+            if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
+                return;
             EndofRoundEmpty.SetActive(true); // Ui map
             StartCoroutine(IEndRound());
-            if ((int)data[0] != (int)data[1] && (int)data[1] <= 5)
+            // blue segments
+            if ((int)data[0] != (int)data[1] && (int)data[1] < 5)
             {
                 for (int i = (int)data[1] + 5; i < 10; i++)
                 {
                     UIEndofRound[i].SetActive(false);
                 }
-                UIEndofRound[(int)data[1]].SetActive(true);
-                Animation anim = UIEndofRound[(int)data[1]+5].GetComponent<Animation>();
+                UIEndofRound[(int)data[1] + 5].SetActive(true);
+                Animation anim = UIEndofRound[(int)data[1] + 5].GetComponent<Animation>();
                 if ((int)data[0] < (int)data[1])
-                    anim.Play("uihide");
-                else
+                {
                     anim.Play("uishow");
+                    StartCoroutine(IEndRoundUI());
+                }
+                else
+                {
+                    anim.Play("uihide");
+                    StartCoroutine(IEndRoundUI());
+                    UIEndofRound[(int)data[1] + 5].SetActive(false);
+                }
             }
-            if ((int)data[2] != (int)data[3] && (int)data[3] <= 5)
+            // yellow segments
+            if ((int)data[2] != (int)data[3] && (int)data[3] < 5)
             {
-                for (int i = (int)data[1]; i < 5; i++)
+                for (int i = (int)data[3]; i < 5; i++)
                 {
                     UIEndofRound[i].SetActive(false);
                 }
                 UIEndofRound[(int)data[3]].SetActive(true);
                 Animation anim = UIEndofRound[(int)data[3]].GetComponent<Animation>();
                 if ((int)data[2] < (int)data[3])
-                    anim.Play("uihide");
-                else
+                {
                     anim.Play("uishow");
+                    StartCoroutine(IEndRoundUI());
+                }
+                else
+                {
+                    anim.Play("uihide");
+                    StartCoroutine(IEndRoundUI());
+                    UIEndofRound[(int)data[3]].SetActive(false);
+                }
             }
-            if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
-                return;
             StopCoroutine(SpawnGunAfterTime());
-            // Based on # of kills for each player, apply the appropriate actions to the level
+            // Based on # of segments for each player, apply the appropriate actions to the level
             // Change level's pickups to either enabled or disabled and set appropriate materials to level cover and properties 
 
         }
-
+        private IEnumerator IEndRoundUI()
+        {
+            yield return new WaitForSeconds(3.2f);
+        }
         private IEnumerator IEndRound()
         {
             yield return new WaitForSeconds(endRoundTimer);
@@ -471,7 +491,8 @@ namespace VoltageSource
         {
             if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
                 return;
-            SpawnLocations(blueSegments);
+            EndofRoundEmpty.SetActive(false);
+            SpawnLocations(BlueSegments);
             GunSpawn();
             SpawnRandomLocation();
             Debug.Log("Round started");
@@ -486,9 +507,10 @@ namespace VoltageSource
         private void BlueTeamIncrement()
         {
             blueTeamDeaths++;
-            if (BlueSegments <= 5)
+            if (BlueSegments < 5)
                 BlueSegments++;
-            YellowSegments--;
+            else
+                YellowSegments--;
             Debug.Log(BlueSegments);
             if (YellowSegments <= 0)
             {
@@ -500,9 +522,10 @@ namespace VoltageSource
         private void YellowTeamIncrement()
         {
             yellowTeamDeaths++;
-            BlueSegments--;
-            if (YellowSegments <= 5)
+            if (YellowSegments < 5)
                 YellowSegments++;
+            else
+                BlueSegments--;
             Debug.Log(YellowSegments);
             if (BlueSegments<= 0)
             {
@@ -517,20 +540,25 @@ namespace VoltageSource
                 return;
             Debug.Log("EndGame() Called");
             StopCoroutine(SpawnGunAfterTime());
-            EndofGameCuties.SetActive(true);
             EndofGameEmpty.SetActive(true);
-            if (BlueSegments <= 0)
+            
+            if (BlueSegments <= 0) // Yellow Won
             {
-                // Need game winner name
-                GameWinner.text = "Blue Won!";
-                //EndofGameCutieModels[0];
-            } else if (YellowSegments <= 0)
+                GameWinner.text = PhotonLauncher.Instance.GetHostName();
+                playerRender1.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
+                playerRender2.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
+            } else if (YellowSegments <= 0) // Blue Won
             {
-                GameWinner.text = "Yellow Won!";
+                GameWinner.text = PhotonLauncher.Instance.GetOtherPlayerName();
+                playerRender1.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
+                playerRender2.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
             }
-            // Need character colors
+            playerRender1.UpdateGIMaterials();
+            playerRender2.UpdateGIMaterials();
+            // set their dancing and dying animation
             UIEndofGameCutes[0].SetBool(UIEndofGameCutes[0].parameters[2].name, true);
             UIEndofGameCutes[1].SetBool(UIEndofGameCutes[1].parameters[3].name, true);
+            EndofGameCuties.SetActive(true);
         }
 
         private void StartPreRound()
