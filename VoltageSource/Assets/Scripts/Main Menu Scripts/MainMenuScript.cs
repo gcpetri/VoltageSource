@@ -346,7 +346,7 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         int playerOneValue = playerOne.value;
         string name = playerOne.gameObject.name;
         object[] content = new object[] {playerOneValue, name}; // Array contains the target position and the IDs of the selected units
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All, CachingOption = EventCaching.AddToRoomCache}; // You would have to set the Receivers to All in order to receive this event on the local client as well
         PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.ChangeTeamSelection, content, raiseEventOptions, SendOptions.SendReliable);
     }
     
@@ -355,7 +355,7 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         int playerTwoValue = playerTwo.value;
         string name = playerTwo.gameObject.name;
         object[] content = new object[] {playerTwoValue, name}; // Array contains the target position and the IDs of the selected units
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All, CachingOption = EventCaching.AddToRoomCache }; // You would have to set the Receivers to All in order to receive this event on the local client as well
         PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.ChangeTeamSelection, content, raiseEventOptions, SendOptions.SendReliable);
     }
 

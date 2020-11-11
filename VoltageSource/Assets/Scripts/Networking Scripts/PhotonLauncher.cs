@@ -33,7 +33,8 @@ namespace VoltageSource
         
         private bool _isConnecting;
         private bool _isPrivate = true; // changes based on the toggle
-        
+
+
         private void Awake()
         {
             PhotonNetwork.AutomaticallySyncScene = true;
