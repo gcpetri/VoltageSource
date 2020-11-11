@@ -33,6 +33,7 @@ namespace VoltageSource
         
         private bool _isConnecting;
         private bool _isPrivate = true; // changes based on the toggle
+        
         private void Awake()
         {
             PhotonNetwork.AutomaticallySyncScene = true;
@@ -165,7 +166,8 @@ namespace VoltageSource
             //Debug.LogFormat("Player two color: {0}", playerTwoColorIndex);
             return playerTwoColorIndex;
         }
-        
+
+   
         #region MonoBehaviourPunCallBacks CallBacks
 
         public override void OnConnectedToMaster()
@@ -218,7 +220,8 @@ namespace VoltageSource
             SceneManager.LoadScene(MainMenuIndex);
             base.OnLeftRoom();
         }
-        
+
+      
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             if (stream.IsWriting)

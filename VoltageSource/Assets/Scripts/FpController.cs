@@ -580,20 +580,31 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         );
 
         
-        if (photonView.name == PhotonLauncher.Instance.GetHostName())
+        if (photonView.IsMine && photonView.ViewID == 1001)
         {
             playerRenderer.material.color =
                 CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
             
             Debug.LogFormat("Playerone color called on id: {0} color: {1} ", photonView.ViewID, PhotonLauncher.Instance.GetPlayerOneColor());
         }
-        else
+        else if(photonView.IsMine && photonView.ViewID == 2001)
         {
             playerRenderer.material.color =
                 CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
             
-            Debug.LogFormat("Playerone color called on id: {0} color: {1} ", photonView.ViewID, PhotonLauncher.Instance.GetPlayerTwoColor());
-        }   
+            Debug.LogFormat("Playertwo color called on id: {0} color: {1} ", photonView.ViewID, PhotonLauncher.Instance.GetPlayerTwoColor());
+        }
+
+
+        if (!photonView.IsMine && photonView.ViewID == 1001)
+        {
+            playerRenderer.material.color =
+                CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
+        }else if (!photonView.IsMine && photonView.ViewID == 2001)
+        {
+            playerRenderer.material.color =
+                CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+        }
         
         playerRenderer.UpdateGIMaterials();
     }
