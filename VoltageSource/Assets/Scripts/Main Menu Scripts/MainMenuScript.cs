@@ -450,6 +450,8 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
             
             PlayerOneRenderer.material.color = ColorChoices[playerOneColorIndex];
             PlayerTwoRenderer.material.color = ColorChoices[playerTwoColorIndex];
+            
+            PhotonLauncher.Instance.SetPlayerColors(playerOneColorIndex, playerTwoColorIndex);
 
             PlayerOneRenderer.UpdateGIMaterials();
             PlayerTwoRenderer.UpdateGIMaterials();

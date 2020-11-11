@@ -157,12 +157,12 @@ namespace VoltageSource
 
         public int GetPlayerOneColor()
         {
-            Debug.LogFormat("Player one color: {0}", playerOneColorIndex);
+            //Debug.LogFormat("Player one color: {0}", playerOneColorIndex);
             return playerOneColorIndex;
         }
         public int GetPlayerTwoColor()
         {
-            Debug.LogFormat("Player two color: {0}", playerTwoColorIndex);
+            //Debug.LogFormat("Player two color: {0}", playerTwoColorIndex);
             return playerTwoColorIndex;
         }
         

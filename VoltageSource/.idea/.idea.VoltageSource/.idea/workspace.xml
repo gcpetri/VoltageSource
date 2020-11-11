@@ -81,10 +81,10 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/BulletScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GunScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CharacterColorChoices.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FpController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
       </list>
     </option>
   </component>
@@ -184,6 +184,7 @@
       <workItem from="1604883165137" duration="5365000" />
       <workItem from="1605046746841" duration="1140000" />
       <workItem from="1605048614574" duration="762000" />
+      <workItem from="1605053098345" duration="2325000" />
     </task>
     <servers />
   </component>

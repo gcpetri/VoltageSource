@@ -153,8 +153,9 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             fpsCamera.enabled = true;
             localAudioListener.enabled = true;
             UiGameObject.SetActive(true);
-            SetMyColor();
         }
+        SetMyColor();
+        
         UIGamePauseMenuGuns[4].SetActive(false);
         UIGamePauseMenuGuns[0].SetActive(true);
 
@@ -571,36 +572,29 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     [PunRPC]
     public void RPCColorChange()
     {
-        /*
-        if (photonView.IsMine && photonView.name == PhotonLauncher.Instance.GetOtherPlayerName()) // This means you are the second player
-        {
-            playerRenderer.material.color = PhotonLauncher.Instance.GetPlayerTwoColor();
-            Debug.LogFormat("Set my color called by {0} in condition 1", photonView);
-        }else if (photonView.IsMine && PhotonNetwork.IsMasterClient)
-        {
-            playerRenderer.material.color = PhotonLauncher.Instance.GetPlayerOneColor();
-            Debug.LogFormat("Set my color called by {0} in condition 2", photonView);
-        }
-        
-        playerRenderer.UpdateGIMaterials();
-        Debug.LogFormat("Set my color called by {0}, my color is {1}", photonView, playerRenderer.material.color);
-        
-        Debug.Log("-----------------------------");
+
         Debug.LogFormat("On pvID: {0}, player one stored color: {1}, player two stored color: {2}",
-        photonView.ViewID,
-        PhotonLauncher.Instance.GetPlayerOneColor(),
-        PhotonLauncher.Instance.GetPlayerTwoColor()
+            photonView.ViewID,
+            PhotonLauncher.Instance.GetPlayerOneColor(),
+            PhotonLauncher.Instance.GetPlayerTwoColor()
         );
-        */
 
-        if (PhotonNetwork.IsMasterClient)
+        
+        if (photonView.name == PhotonLauncher.Instance.GetHostName())
         {
-            playerRenderer.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
-        }else
-        {
-            playerRenderer.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+            playerRenderer.material.color =
+                CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
+            
+            Debug.LogFormat("Playerone color called on id: {0} color: {1} ", photonView.ViewID, PhotonLauncher.Instance.GetPlayerOneColor());
         }
-
+        else
+        {
+            playerRenderer.material.color =
+                CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+            
+            Debug.LogFormat("Playerone color called on id: {0} color: {1} ", photonView.ViewID, PhotonLauncher.Instance.GetPlayerTwoColor());
+        }   
+        
         playerRenderer.UpdateGIMaterials();
     }
     
