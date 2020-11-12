@@ -25,7 +25,7 @@ namespace VoltageSource
 
         public GameObject[] blueTeamSide;
         public GameObject[] yellowTeamSide;
-        public GameObject[] gunPrefabs;
+        public GameObject[] gunPrefabs; // 0 = pistol, 1 = assault rifle, 2 = shotgun, 3 = sniper
 
         // Gun Spawning
         public GameObject gunWallPrefab;
@@ -62,12 +62,10 @@ namespace VoltageSource
 
         private GameObject _playerOne;
         private GameObject _playerTwo;
-        
-        private IEnumerator _gunSpawnEnumerator;
+       
 
         private void Start()
         {
-            _gunSpawnEnumerator = SpawnGunAfterTime();
             PhotonNetwork.AddCallbackTarget(this);
             Instance = this;
             if (playerPrefab == null)
@@ -124,11 +122,12 @@ namespace VoltageSource
         // spawns the guns at random time with Enumerator 
         private void SpawnRandomLocation()
         {
-            StartCoroutine(_gunSpawnEnumerator);
+            StartCoroutine(SpawnGunAfterTime());
         }
         // gun spawn function
         private void GunSpawn()
         {
+            StopCoroutine(SpawnGunAfterTime());
             if (PhotonNetwork.IsMasterClient)
             {
                 int gunIndexB = UnityEngine.Random.Range(0, gunPrefabs.Length); // Get random index between what guns exist
@@ -147,83 +146,94 @@ namespace VoltageSource
                 
                 Debug.Log("Gun Spawn Called");
             }
+            SpawnRandomLocation();
         }
         
         // spawns the gun prefabs over time
         IEnumerator SpawnGunAfterTime()
         {
             float spawnTime = UnityEngine.Random.Range(minGunSpawnTime, maxGunSpawnTime);
-            yield return new WaitForSeconds(spawnTime);
+            yield return new WaitForSeconds(spawnTime - 4.0f);
+            Renderer yW_Renderer = _yW.GetComponent<Renderer>();
+            Renderer bW_Renderer = _bW.GetComponent<Renderer>();
+            yW_Renderer.enabled = false;
+            bW_Renderer.enabled = false;
+            yield return new WaitForSeconds(0.25f);
+            yW_Renderer.enabled = true;
+            bW_Renderer.enabled = true;
+            yield return new WaitForSeconds(0.25f);
+            yW_Renderer.enabled = false;
+            bW_Renderer.enabled = false;
+            yield return new WaitForSeconds(0.25f);
+            yW_Renderer.enabled = true;
+            bW_Renderer.enabled = true;
+            yield return new WaitForSeconds(0.25f); // 1 second
+            yW_Renderer.enabled = false;
+            bW_Renderer.enabled = false;
+            yield return new WaitForSeconds(0.2f);
+            yW_Renderer.enabled = true;
+            bW_Renderer.enabled = true;
+            yield return new WaitForSeconds(0.2f);
+            yW_Renderer.enabled = false;
+            bW_Renderer.enabled = false;
+            yield return new WaitForSeconds(0.2f);
+            yW_Renderer.enabled = true;
+            bW_Renderer.enabled = true;
+            yield return new WaitForSeconds(0.2f);
+            yW_Renderer.enabled = false;
+            bW_Renderer.enabled = false;
+            yield return new WaitForSeconds(0.2f); // 2 second
+            yW_Renderer.enabled = true;
+            bW_Renderer.enabled = true;
+            yield return new WaitForSeconds(0.2f);
+            yW_Renderer.enabled = false;
+            bW_Renderer.enabled = false;
+            yield return new WaitForSeconds(0.2f);
+            yW_Renderer.enabled = true;
+            bW_Renderer.enabled = true;
+            yield return new WaitForSeconds(0.15f);
+            yW_Renderer.enabled = false;
+            bW_Renderer.enabled = false;
+            yield return new WaitForSeconds(0.15f);
+            yW_Renderer.enabled = true;
+            bW_Renderer.enabled = true;
+            yield return new WaitForSeconds(0.15f);
+            yW_Renderer.enabled = false;
+            bW_Renderer.enabled = false;
+            yield return new WaitForSeconds(0.15f); // 3 second
+            yW_Renderer.enabled = true;
+            bW_Renderer.enabled = true;
+            yield return new WaitForSeconds(0.15f);
+            yW_Renderer.enabled = false;
+            bW_Renderer.enabled = false;
+            yield return new WaitForSeconds(0.15f);
+            yW_Renderer.enabled = true;
+            bW_Renderer.enabled = true;
+            yield return new WaitForSeconds(0.15f);
+            yW_Renderer.enabled = false;
+            bW_Renderer.enabled = false;
+            yield return new WaitForSeconds(0.15f);
+            yW_Renderer.enabled = true;
+            bW_Renderer.enabled = true;
+            yield return new WaitForSeconds(0.1f);
+            yW_Renderer.enabled = false;
+            bW_Renderer.enabled = false;
+            yield return new WaitForSeconds(0.1f);
+            yW_Renderer.enabled = true;
+            bW_Renderer.enabled = true;
+            yield return new WaitForSeconds(0.1f);
+            yW_Renderer.enabled = false;
+            bW_Renderer.enabled = false;
+            yield return new WaitForSeconds(0.1f);
+            yW_Renderer.enabled = true;
+            bW_Renderer.enabled = true;
+            yield return new WaitForSeconds(0.1f);
+            yW_Renderer.enabled = false;
+            bW_Renderer.enabled = false;
+            yield return new WaitForSeconds(0.1f); // 4 seconds
+            yW_Renderer.enabled = true;
+            bW_Renderer.enabled = true;
             GunSpawn();
-        }
-        
-        // determines the territory range for gun spawning 
-        private void SpawnLocations(int blueSegs)
-        {
-            switch(blueSegs)
-            {
-                case 10:
-                    //BlueTerrScale = 75.0f;
-                    _blueGunSpawnRange = numGunSpawnsPerSeg[4];
-                    _yellowGunSpawnRange = 0;
-                    break;
-                case 9:
-                    //BlueTerrScale = 60.0f;
-                    _blueGunSpawnRange = numGunSpawnsPerSeg[4];
-                    _yellowGunSpawnRange = numGunSpawnsPerSeg[0];
-                    break;
-                case 8:
-                    //BlueTerrScale = 45.0f;
-                    _blueGunSpawnRange = numGunSpawnsPerSeg[4];
-                    _yellowGunSpawnRange = numGunSpawnsPerSeg[1];
-                    break;
-                case 7:
-                    //BlueTerrScale = 30.0f;
-                    _blueGunSpawnRange = numGunSpawnsPerSeg[4];
-                    _yellowGunSpawnRange = numGunSpawnsPerSeg[2];
-                    break;
-                case 6:
-                    //BlueTerrScale = 15.0f;
-                    _blueGunSpawnRange = numGunSpawnsPerSeg[4];
-                    _yellowGunSpawnRange = numGunSpawnsPerSeg[3];
-                    break;
-                // even   Blue Losing below   ///  Blue Winning above
-                case 5:
-                    //BlueTerrScale = 0.0f;
-                    _blueGunSpawnRange = numGunSpawnsPerSeg[4];
-                    _yellowGunSpawnRange = numGunSpawnsPerSeg[4];
-                    break;
-                case 4:
-                    //BlueTerrScale = -15.0f;
-                    _blueGunSpawnRange = numGunSpawnsPerSeg[3];
-                    _yellowGunSpawnRange = numGunSpawnsPerSeg[4];
-                    break;
-                case 3:
-                    //BlueTerrScale = -30.0f;
-                    _blueGunSpawnRange = numGunSpawnsPerSeg[2];
-                    _yellowGunSpawnRange = numGunSpawnsPerSeg[4];
-                    break;
-                case 2:
-                    //BlueTerrScale = -45.0f;
-                    _blueGunSpawnRange = numGunSpawnsPerSeg[1];
-                    _yellowGunSpawnRange = numGunSpawnsPerSeg[4];
-                    break;
-                case 1:
-                    //BlueTerrScale = -60.0f;
-                    _blueGunSpawnRange = numGunSpawnsPerSeg[0];
-                    _yellowGunSpawnRange = numGunSpawnsPerSeg[4];
-                    break;
-                case 0:
-                    //BlueTerrScale = -75.0f;
-                    _blueGunSpawnRange = 0;
-                    _yellowGunSpawnRange = numGunSpawnsPerSeg[4];
-                    break;
-                default:
-                    //BlueTerrScale = 0.0f;
-                    _blueGunSpawnRange = numGunSpawnsPerSeg[4];
-                    _yellowGunSpawnRange = numGunSpawnsPerSeg[4];
-                    break;
-            }
         }
         #endregion
 
@@ -314,7 +324,7 @@ namespace VoltageSource
             
         }
 
-        private void SpawnGun(object[] data = null)
+        private void SpawnGun(object[] data)
         {
             if (data == null)
                 return;
@@ -327,16 +337,20 @@ namespace VoltageSource
                 Destroy(_yG);
             if (_bG)
                 Destroy(_bG);
-            //Instantiate(gunPrefabs[(int) data[0]], (Vector3)data[1] + (0.5f * Vector3.up),Quaternion.identity);
-            //Instantiate(gunPrefabs[(int) data[2]], (Vector3)data[3] + (0.5f * Vector3.up),Quaternion.identity);
             _bW = Instantiate(gunWallPrefab, blueGunSpawns[(int)data[1]]) as GameObject;
             _yW = Instantiate(gunWallPrefab, yellowGunSpawns[(int)data[3]]) as GameObject;
             _bG = Instantiate(gunPrefabs[(int)data[0]], _bW.transform) as GameObject;
             _bG.transform.localPosition += 2.3f * Vector3.up + -1f * Vector3.forward;
-            _bG.transform.localRotation = Quaternion.identity;
+            if ((int)data[0] == 0) // rotate the pistol
+                _bG.transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
+            else if ((int)data[0] == 3) // rotate the sniper
+                _bG.transform.Rotate(new Vector3(90.0f, 90.0f, 90.0f));
             _yG = Instantiate(gunPrefabs[(int)data[2]], _yW.transform) as GameObject;
             _yG.transform.localPosition += 2.3f * Vector3.up + -1f* Vector3.forward;
-            _yG.transform.localRotation = Quaternion.identity;
+            if ((int)data[2] == 0) // rotate the pistol
+                _yG.transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
+            else if ((int)data[2] == 3) // rotate the sniper
+                _yG.transform.Rotate(new Vector3(90.0f, 90.0f, 90.0f));
         }
 
         private void PlayerDied(object[] data = null)
@@ -475,9 +489,8 @@ namespace VoltageSource
             if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
                 return;
             EndofRoundEmpty.SetActive(false);
-            SpawnLocations(BlueSegments);
+            //SpawnLocations(BlueSegments);
             GunSpawn();
-            SpawnRandomLocation();
             Debug.Log("Round started");
         }
         
@@ -524,6 +537,7 @@ namespace VoltageSource
             var stack2 = fpsCamera2.GetUniversalAdditionalCameraData();
             stack1.cameraStack.RemoveAt(1);
             stack2.cameraStack.RemoveAt(1);
+            Debug.Log(fpsCamera1.GetUniversalAdditionalCameraData().cameraStack.ToString());
             if (stack1 != null)
                 stack1.cameraStack.Add(EndofGameCuties.GetComponent<Camera>());
             if (stack2 != null)
@@ -534,12 +548,12 @@ namespace VoltageSource
                 {
                     GameWinner.text = PhotonLauncher.Instance.GetOtherPlayerName(); // player two name
                     playerRender1.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
-                    playerRender2.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+                    playerRender2.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
                 }
                 else // player one is yellow
                 {
                     GameWinner.text = PhotonLauncher.Instance.GetHostName(); // player one (host) name
-                    playerRender1.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+                    playerRender1.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
                     playerRender2.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
                 }
             } else if (yellowTeamDeaths >= 5) // Blue Won
@@ -547,14 +561,14 @@ namespace VoltageSource
                 if (TeamManagerScript.Instance.PlayerOneTeam == 0) // player one is blue
                 {
                     GameWinner.text = PhotonLauncher.Instance.GetHostName(); // player one (host) name
-                    playerRender1.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+                    playerRender1.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
                     playerRender2.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
                 }
                 else // player one is yellow
                 {
                     GameWinner.text = PhotonLauncher.Instance.GetOtherPlayerName(); // player two name
                     playerRender1.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
-                    playerRender2.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+                    playerRender2.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
                 }
             }
             playerRender1.UpdateGIMaterials();

@@ -273,74 +273,17 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     }
 
     #region GunPickUps Methods
-    // method that actually picks up a gun but rotation isn't mutable
-    private void SwitchGun(GameObject obj)
-    {
-        obj.transform.localPosition = GunPosition.transform.position;
-        obj.transform.parent = gunRotationPoint.transform;
-        currentGun = obj;
-        // Gun Initilization 
-        
-        if (currentGun)
-        {
-            _currentGunInfo = currentGun.GetComponent<GunScript>();
-            _currentGunScriptable = _currentGunInfo.gunData;
-            _currentGunInfo.SetOwner(this);
-            _currentGunScriptable = _currentGunInfo.gunData;
-            _fireRate = _currentGunInfo.GetFireRate();
-            currentGun.layer = 12;
-            var stack = fpsCamera.GetUniversalAdditionalCameraData();
-            stack.cameraStack.RemoveAt(1);
-            if (stack != null)
-                stack.cameraStack.Add(_currentGunInfo.GetCamera().GetComponent<Camera>());
-            if (_currentGunScriptable.gunIndex == 0)
-            {
-                //currentGun.transform.localRotation = Quaternion.Euler(-90.0f, -90.0f, 0.0f);
-                UIGamePauseMenuGuns[0].SetActive(true);
-                UIGamePauseMenuGuns[1].SetActive(false);
-                UIGamePauseMenuGuns[2].SetActive(false);
-                UIGamePauseMenuGuns[3].SetActive(false);
-                UIGamePauseMenuGuns[4].SetActive(false);
-            } else if (_currentGunScriptable.gunIndex == 1)
-            {
-                //currentGun.transform.localRotation = Quaternion.Euler(-90.0f, 90.0f, -180.0f);
-                UIGamePauseMenuGuns[0].SetActive(false);
-                UIGamePauseMenuGuns[1].SetActive(true);
-                UIGamePauseMenuGuns[2].SetActive(false);
-                UIGamePauseMenuGuns[3].SetActive(false);
-                UIGamePauseMenuGuns[4].SetActive(false);
-            } else if (_currentGunScriptable.gunIndex == 2)
-            {
-                //currentGun.transform.localRotation = Quaternion.Euler(-90.0f, 90.0f, -180.0f);
-                UIGamePauseMenuGuns[0].SetActive(false);
-                UIGamePauseMenuGuns[1].SetActive(false);
-                UIGamePauseMenuGuns[2].SetActive(true);
-                UIGamePauseMenuGuns[3].SetActive(false);
-                UIGamePauseMenuGuns[4].SetActive(false);
-            }
-            else if (_currentGunScriptable.gunIndex == 3)
-            {
-                //currentGun.transform.localRotation = Quaternion.Euler(-90.0f, -90.0f, -180.0f);
-                UIGamePauseMenuGuns[0].SetActive(false);
-                UIGamePauseMenuGuns[1].SetActive(false);
-                UIGamePauseMenuGuns[2].SetActive(false);
-                UIGamePauseMenuGuns[3].SetActive(true);
-                UIGamePauseMenuGuns[4].SetActive(false);
-            }
-        }
-    }
-
     // method that switches already present guns in the FPcharacter
     private void SwitchGun2(GameObject obj)
     {
-        //_currentGunInfo = obj.GetComponent<GunScript>();
-        //_currentGunScriptable = _currentGunInfo.gunData;
-
+        //obj.GetComponent<Animator>().SetBool(obj.GetComponent<Animator>().parameters[2].name, false);
         SetGun(obj.GetComponent<GunScript>().gunData.gunIndex);
     }
     public void SetGun(int i)
     {
         FPguns[i].SetActive(true);
+        FPguns[i].layer = 12;
+        SetLayerRecursively(FPguns[i], 12);
         UIGamePauseMenuGuns[i].SetActive(true);
         _currentGunInfo = FPguns[i].GetComponent<GunScript>();
         _currentGunScriptable = _currentGunInfo.gunData;
@@ -356,8 +299,17 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             if (j != i)
             {
                 FPguns[j].SetActive(false);
+                FPguns[j].layer = 11;
+                SetLayerRecursively(FPguns[j], 11);
                 UIGamePauseMenuGuns[j].SetActive(false);
             }
+        }
+    }
+    public static void SetLayerRecursively(GameObject obj, int layerNumber)
+    {
+        foreach (Transform trans in obj.GetComponentsInChildren<Transform>(true))
+        {
+            trans.gameObject.layer = layerNumber;
         }
     }
     #endregion

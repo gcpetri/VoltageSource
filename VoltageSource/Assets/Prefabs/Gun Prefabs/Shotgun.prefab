@@ -123,7 +123,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 5120
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -5129,7 +5129,6 @@ MonoBehaviour:
   cameraAim: {fileID: 2772020401978590027}
   gunCamera: {fileID: 3771844105231421042}
   fpController: {fileID: 0}
-  rotatingSpeed: 100
   sphereCollider: {fileID: 5052589945754978839}
   photonAnimatorView: {fileID: 7631027700185079665}
 --- !u!82 &4288067213830736964

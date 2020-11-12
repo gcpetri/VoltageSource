@@ -114,7 +114,9 @@ public class GunScript : MonoBehaviour
         }
         
         _spread = _spreadRatio * Random.insideUnitCircle;
-        _ray = fpController.fpsCamera.ViewportPointToRay((Vector3.one * 0.5f) + (Vector3) _spread);
+        Vector3 vect = Vector3.one;
+        vect.x *= 0.5f; vect.y *= 0.505f; vect.z *= 0.5f; // Kinda Guess and Check (distance matters)
+        _ray = fpController.fpsCamera.ViewportPointToRay(vect + (Vector3) _spread);
         _hitpos = _ray.origin + _ray.direction * 200f;
         _currentAmmo--;
         gunAnimator.SetBool(_shootingID,true);
@@ -139,6 +141,8 @@ public class GunScript : MonoBehaviour
             audioSource.PlayOneShot(firingSound);
         
         var instantiateBullet = Instantiate(gunData.bulletPrefab, bulletSpawnPoint.position, transform.rotation);
+        if (gunData.gunIndex == 0)
+            instantiateBullet.transform.Rotate(new Vector3(0.0f, 90.0f, 90.0f));
         //Debug.LogFormat("Called ShareActions() on object {0} with photonView {1}", gameObject.name, _ownerPhotonID);
         BulletScript bulletScript = instantiateBullet.GetComponent<BulletScript>();
         bulletScript.damage = gunData.damage;

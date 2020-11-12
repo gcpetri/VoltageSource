@@ -4891,7 +4891,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 5120
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -10073,7 +10073,7 @@ MonoBehaviour:
   gunData: {fileID: 11400000, guid: 446cd1542ba8ceb4691f69a27420bcd9, type: 2}
   bulletSpawnPoint: {fileID: 2823990508164678895}
   gunAnimator: {fileID: 8964787537746132690}
-  _gunParticleSystem: {fileID: 255035050540280059}
+  _gunParticleSystem: {fileID: 4163606584070462597}
   firingSound: {fileID: 8300000, guid: b5b1b1669d42e6245bf8780d637adf6e, type: 3}
   audioSource: {fileID: 8087343176166319789}
   reloadSound: {fileID: 8300000, guid: 87825692a171b9041bd27f3fa435841d, type: 3}
