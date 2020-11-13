@@ -44,16 +44,12 @@ namespace VoltageSource
         // End of Round UI
         public GameObject EndofRoundEmpty;
         [SerializeField] public GameObject[] UIEndofRound;
-        public Renderer playerRender1;
-        public Renderer playerRender2;
-        // End of Game UI
-        public GameObject EndofGameEmpty;
-        public GameObject EndofGameCuties;
-        public GameObject[] EndofGameCutieModels;
-        public Text GameWinner;
-        [SerializeField] public Animator[] EndofGameCutiesAnimators;
 
         [SerializeField]private Material transparentMaterial;
+        // End of Game UI
+        public GameObject EndofGameUI;
+        public Text GameWinner;
+        public GameObject One;
 
         private RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
         public float preRoundTimer = 5f;
@@ -116,6 +112,49 @@ namespace VoltageSource
                  
             }
         }
+        #region Game End
+        // End the Game
+        private void EndtheGame()
+        {
+            if (!PhotonNetwork.IsMasterClient)
+                return;
+            StopCoroutine(SpawnGunAfterTime());
+            int[] data = { 0, 0 };
+            if (blueTeamDeaths >= 5) // Yellow Won
+            {
+                if (TeamManagerScript.Instance.PlayerOneTeam == 0) // player one is blue
+                {
+                    data[0] = PhotonLauncher.Instance.GetPlayerTwoColor();
+                    data[1] = PhotonLauncher.Instance.GetPlayerOneColor();
+                }
+                else // player one is yellow
+                {
+                    data[0] = PhotonLauncher.Instance.GetPlayerOneColor();
+                    data[1] = PhotonLauncher.Instance.GetPlayerTwoColor();
+                }
+            }
+            else if (yellowTeamDeaths >= 5) // Blue Won
+            {
+                if (TeamManagerScript.Instance.PlayerOneTeam == 0) // player one is blue
+                {
+                    data[0] = PhotonLauncher.Instance.GetPlayerOneColor();
+                    data[1] = PhotonLauncher.Instance.GetPlayerTwoColor();
+                }
+                else // player one is yellow
+                {
+                    data[0] = PhotonLauncher.Instance.GetPlayerTwoColor();
+                    data[1] = PhotonLauncher.Instance.GetPlayerOneColor();
+                }
+            }
+            if (data[0] == PhotonLauncher.Instance.GetPlayerOneColor())
+                GameWinner.text = PhotonLauncher.Instance.GetHostName(); // player one name
+            else
+                GameWinner.text = PhotonLauncher.Instance.GetOtherPlayerName(); // player two name
+            One.GetComponent<Animator>().SetBool(One.GetComponent<Animator>().parameters[0].name, true);
+            EndofGameUI.SetActive(true);
+            _playerOne.GetComponent<FpController>().EndtheGame(data);
+        }
+        #endregion
 
         #region Gun Spawn
         // spawns the guns at random time with Enumerator 
@@ -528,7 +567,7 @@ namespace VoltageSource
             Debug.Log(BlueSegments);
             if (blueTeamDeaths <= 5)
             {
-                EndGame();
+                EndtheGame();
                 return;
             }
         }
@@ -540,65 +579,16 @@ namespace VoltageSource
             Debug.Log(YellowSegments);
             if (yellowTeamDeaths <= 0)
             {
-                EndGame();
+                EndtheGame();
                 return;
             }
         }
-
+        /*
         private void EndGame()
         {
-            if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
-                return;
-            Debug.Log("EndGame() Called");
-            StopCoroutine(SpawnGunAfterTime());
-            EndofGameEmpty.SetActive(true);
-            Camera fpsCamera1 = _playerOne.GetComponent<FpController>().fpsCamera;
-            Camera fpsCamera2 = _playerTwo.GetComponent<FpController>().fpsCamera;
-            var stack1 = fpsCamera1.GetUniversalAdditionalCameraData();
-            var stack2 = fpsCamera2.GetUniversalAdditionalCameraData();
-            stack1.cameraStack.RemoveAt(1);
-            stack2.cameraStack.RemoveAt(1);
-            Debug.Log(fpsCamera1.GetUniversalAdditionalCameraData().cameraStack.ToString());
-            if (stack1 != null)
-                stack1.cameraStack.Add(EndofGameCuties.GetComponent<Camera>());
-            if (stack2 != null)
-                stack2.cameraStack.Add(EndofGameCuties.GetComponent<Camera>());
-            if (blueTeamDeaths >= 5) // Yellow Won
-            {
-                if (TeamManagerScript.Instance.PlayerOneTeam == 0) // player one is blue
-                {
-                    GameWinner.text = PhotonLauncher.Instance.GetOtherPlayerName(); // player two name
-                    playerRender1.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
-                    playerRender2.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
-                }
-                else // player one is yellow
-                {
-                    GameWinner.text = PhotonLauncher.Instance.GetHostName(); // player one (host) name
-                    playerRender1.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
-                    playerRender2.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
-                }
-            } else if (yellowTeamDeaths >= 5) // Blue Won
-            {
-                if (TeamManagerScript.Instance.PlayerOneTeam == 0) // player one is blue
-                {
-                    GameWinner.text = PhotonLauncher.Instance.GetHostName(); // player one (host) name
-                    playerRender1.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
-                    playerRender2.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
-                }
-                else // player one is yellow
-                {
-                    GameWinner.text = PhotonLauncher.Instance.GetOtherPlayerName(); // player two name
-                    playerRender1.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
-                    playerRender2.material.color = CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
-                }
-            }
-            playerRender1.UpdateGIMaterials();
-            playerRender2.UpdateGIMaterials();
-            // set their dancing and dying animation
-            EndofGameCutiesAnimators[0].SetBool(EndofGameCutiesAnimators[0].parameters[2].name, true);
-            EndofGameCutiesAnimators[1].SetBool(EndofGameCutiesAnimators[1].parameters[3].name, true);
-            EndofGameCuties.SetActive(true);
+            return;
         }
+        */
 
         private void StartPreRound()
         {

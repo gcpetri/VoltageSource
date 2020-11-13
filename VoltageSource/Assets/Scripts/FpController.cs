@@ -113,6 +113,11 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     private PhotonPlayerUI playerUI;
     private bool isPaused = false;
     [SerializeField] public GameObject[] UIGamePauseMenuGuns;
+    // End of Game UI
+    public GameObject EndofGameCuties;
+    public Renderer playerRender1;
+    public Renderer playerRender2;
+    [SerializeField] public Animator[] EndofGameCutiesAnimators;
 
     #endregion
 
@@ -288,6 +293,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         UIGamePauseMenuGuns[i].SetActive(true);
         _currentGunInfo = FPguns[i].GetComponent<GunScript>();
         _currentGunScriptable = _currentGunInfo.gunData;
+        _currentGunInfo._currentAmmo = _currentGunScriptable.maxAmmo;
         _currentGunInfo.SetOwner(this);
         _currentGunScriptable = _currentGunInfo.gunData;
         _fireRate = _currentGunInfo.GetFireRate();
@@ -507,6 +513,10 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     {
         photonView.RPC("RPCColorChange", RpcTarget.AllBuffered);
     }
+    public void EndtheGame(int[] data)
+    {
+        photonView.RPC("RPCEndGameColorChange", RpcTarget.All, (int[])data);
+    }
     
     
     
@@ -600,7 +610,25 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     {
         Health -= (float)damage;
     }
-    
+
+    [PunRPC]
+    private void RPCEndGameColorChange(int[] data)
+    {
+        var stack = fpsCamera.GetUniversalAdditionalCameraData();
+        stack.cameraStack.RemoveAt(1);
+        //Debug.Log(fpsCamera.GetUniversalAdditionalCameraData().cameraStack.ToString());
+        if (stack != null)
+            stack.cameraStack.Add(EndofGameCuties.GetComponent<Camera>()); 
+        playerRender1.material.color = CharacterColorChoices.ColorChoices[data[0]];
+        playerRender2.material.color = CharacterColorChoices.ColorChoices[data[1]];
+        playerRender1.UpdateGIMaterials();
+        playerRender2.UpdateGIMaterials();
+        // set their dancing and dying animation
+        EndofGameCutiesAnimators[0].SetBool(EndofGameCutiesAnimators[0].parameters[2].name, true);
+        EndofGameCutiesAnimators[1].SetBool(EndofGameCutiesAnimators[1].parameters[3].name, true);
+        EndofGameCuties.SetActive(true);
+    }
+
     #endregion
 
 }

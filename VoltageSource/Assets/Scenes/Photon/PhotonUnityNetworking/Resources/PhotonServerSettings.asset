@@ -54,6 +54,7 @@ MonoBehaviour:
   - IGotShotRPC
   - SetMyColor
   - RPCColorChange
+  - RPCEndGameColorChange
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
