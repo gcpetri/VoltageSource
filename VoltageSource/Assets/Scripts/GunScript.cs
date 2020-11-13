@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Animator))]
@@ -14,7 +15,7 @@ public class GunScript : MonoBehaviour
     private float _nextTimeToFire = 0f;
     private MeshRenderer _meshRenderer;
     private MeshFilter _meshFilter;
-    private int _currentAmmo = -1;
+    public int _currentAmmo = -1;
     private bool _isReloading = false;
     [SerializeField] private Transform bulletSpawnPoint;
     [SerializeField] private Animator gunAnimator;
@@ -31,6 +32,8 @@ public class GunScript : MonoBehaviour
     [SerializeField] private Transform cameraAim;
     [SerializeField] private GameObject gunCamera;
     [SerializeField] private FpController fpController;
+
+    [SerializeField] public Slider ammoSlider;
     private int _ownerPhotonID;
 
     
@@ -74,6 +77,8 @@ public class GunScript : MonoBehaviour
         
         // Gun start with max ammo by default
         _currentAmmo = gunData.maxAmmo;
+        ammoSlider.maxValue = gunData.maxAmmo;
+        ammoSlider.value = gunData.maxAmmo;
         if (audioSource)
         {
             audioSource.volume = PlayerPrefs.GetFloat("VolumeValue");
@@ -119,6 +124,8 @@ public class GunScript : MonoBehaviour
         _ray = fpController.fpsCamera.ViewportPointToRay(vect + (Vector3) _spread);
         _hitpos = _ray.origin + _ray.direction * 200f;
         _currentAmmo--;
+        ammoSlider.maxValue = gunData.maxAmmo;
+        ammoSlider.value -= 1;
         gunAnimator.SetBool(_shootingID,true);
 
         if (_currentAmmo <= 0)
@@ -164,6 +171,8 @@ public class GunScript : MonoBehaviour
         gunAnimator.SetBool(_reloadingID, false);
         yield return new WaitForSeconds(.25f);
         _currentAmmo = gunData.maxAmmo;
+        ammoSlider.maxValue = gunData.maxAmmo;
+        ammoSlider.value = ammoSlider.maxValue;
         _isReloading = false;
     }
 
