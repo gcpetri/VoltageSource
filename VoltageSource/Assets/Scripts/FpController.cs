@@ -515,10 +515,43 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     [PunRPC]
     private void RPCSetPos()
     {
+        /*
         transform.position = teleportLocation.position;
         transform.rotation = teleportLocation.rotation;
         _rb.position = teleportLocation.position;
         _rb.rotation = teleportLocation.rotation;
+        */
+        
+        if (photonView.IsMine && photonView.ViewID == 1001) // If This is player 1 and is player 1's character
+        {
+            transform.position = TeamManagerScript.Instance.PlayerOneTeam == 0 ? GameManager.Instance.blueTeamSpawn.position : GameManager.Instance.yellowTeamSpawn.position;
+            transform.rotation = TeamManagerScript.Instance.PlayerOneTeam == 0 ? GameManager.Instance.blueTeamSpawn.rotation : GameManager.Instance.yellowTeamSpawn.rotation;
+            _rb.position = TeamManagerScript.Instance.PlayerOneTeam == 0 ? GameManager.Instance.blueTeamSpawn.position : GameManager.Instance.yellowTeamSpawn.position;
+            _rb.rotation = TeamManagerScript.Instance.PlayerOneTeam == 0 ? GameManager.Instance.blueTeamSpawn.rotation : GameManager.Instance.yellowTeamSpawn.rotation;
+        }
+        else if(photonView.IsMine && photonView.ViewID == 2001) // If This is player 2 and is player 2's character
+        {
+            transform.position = TeamManagerScript.Instance.PlayerTwoTeam == 0 ? GameManager.Instance.blueTeamSpawn.position : GameManager.Instance.yellowTeamSpawn.position;
+            transform.rotation = TeamManagerScript.Instance.PlayerTwoTeam == 0 ? GameManager.Instance.blueTeamSpawn.rotation : GameManager.Instance.yellowTeamSpawn.rotation;
+            _rb.position = TeamManagerScript.Instance.PlayerTwoTeam == 0 ? GameManager.Instance.blueTeamSpawn.position : GameManager.Instance.yellowTeamSpawn.position;
+            _rb.rotation = TeamManagerScript.Instance.PlayerTwoTeam == 0 ? GameManager.Instance.blueTeamSpawn.rotation : GameManager.Instance.yellowTeamSpawn.rotation;
+        }
+
+
+        if (!photonView.IsMine && photonView.ViewID == 1001) // If This is player 1 and is player 2's character
+        {
+            transform.position = TeamManagerScript.Instance.PlayerOneTeam == 0 ? GameManager.Instance.blueTeamSpawn.position : GameManager.Instance.yellowTeamSpawn.position;
+            transform.rotation = TeamManagerScript.Instance.PlayerOneTeam == 0 ? GameManager.Instance.blueTeamSpawn.rotation : GameManager.Instance.yellowTeamSpawn.rotation;
+            _rb.position = TeamManagerScript.Instance.PlayerOneTeam == 0 ? GameManager.Instance.blueTeamSpawn.position : GameManager.Instance.yellowTeamSpawn.position;
+            _rb.rotation = TeamManagerScript.Instance.PlayerOneTeam == 0 ? GameManager.Instance.blueTeamSpawn.rotation : GameManager.Instance.yellowTeamSpawn.rotation;
+            
+        }else if (!photonView.IsMine && photonView.ViewID == 2001) // If This is player 2 and is player 1's character
+        {
+            transform.position = TeamManagerScript.Instance.PlayerTwoTeam == 0 ? GameManager.Instance.blueTeamSpawn.position : GameManager.Instance.yellowTeamSpawn.position;
+            transform.rotation = TeamManagerScript.Instance.PlayerTwoTeam == 0 ? GameManager.Instance.blueTeamSpawn.rotation : GameManager.Instance.yellowTeamSpawn.rotation;
+            _rb.position = TeamManagerScript.Instance.PlayerTwoTeam == 0 ? GameManager.Instance.blueTeamSpawn.position : GameManager.Instance.yellowTeamSpawn.position;
+            _rb.rotation = TeamManagerScript.Instance.PlayerTwoTeam == 0 ? GameManager.Instance.blueTeamSpawn.rotation : GameManager.Instance.yellowTeamSpawn.rotation;;
+        }
     }
     
     

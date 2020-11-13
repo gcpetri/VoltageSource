@@ -77,8 +77,12 @@ public class GunScript : MonoBehaviour
         
         // Gun start with max ammo by default
         _currentAmmo = gunData.maxAmmo;
-        ammoSlider.maxValue = gunData.maxAmmo;
-        ammoSlider.value = gunData.maxAmmo;
+        if (ammoSlider)
+        {
+            ammoSlider.maxValue = gunData.maxAmmo;
+            ammoSlider.value = gunData.maxAmmo;
+        }
+        
         if (audioSource)
         {
             audioSource.volume = PlayerPrefs.GetFloat("VolumeValue");

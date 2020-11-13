@@ -320,11 +320,7 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
     
     private void TeamSelectP2(int value)
     {
-        if (!playerOne || !playerTwo)
-        {
-            
-        }
-        
+
         _playerTwoTeamChoice = value;
         if (_playerTwoTeamChoice == 0)
         {
@@ -431,6 +427,10 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
             {
                 TeamSelectP2((int)data[0]);
             }
+            
+            TeamManagerScript.Instance.PlayerOneTeam = _playerOneTeamChoice;
+            TeamManagerScript.Instance.PlayerTwoTeam = _playerTwoTeamChoice;
+            
         }else if (eventCode == (byte)EventManager.EventCodes.MatchStart)
         {
             if (PhotonNetwork.IsMasterClient)

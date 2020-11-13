@@ -16,9 +16,8 @@ namespace VoltageSource
     {
         public static GameManager Instance;
         public GameObject playerPrefab;
-
-        [SerializeField] [CanBeNull] private Transform yellowTeamSpawn;
-        [SerializeField] [CanBeNull] private Transform blueTeamSpawn;
+        [CanBeNull] public Transform yellowTeamSpawn;
+        [CanBeNull] public Transform blueTeamSpawn;
 
         [SerializeField] private int blueTeamDeaths = 0;
         [SerializeField] private int yellowTeamDeaths = 0;
@@ -396,6 +395,7 @@ namespace VoltageSource
             StartCoroutine(IEndRound());
             for (int i = 0; i < 10; i++)
                 UIEndofRound[i].SetActive(false);
+            
             // blue UI segments
             if ((int)data[0] != (int)data[1] && (int)data[1] < 5)
             {
@@ -448,7 +448,25 @@ namespace VoltageSource
                     obj.material = transparentMaterial;
                 }
             }
+
+
+            if (_playerOne)
+            {
+                _playerOne.GetComponent<FpController>().SetPos(TeamManagerScript.Instance.PlayerOneTeam == 0
+                                ? blueTeamSpawn
+                                : yellowTeamSpawn);
+            }
             
+
+            if (_playerTwo)
+            {
+                _playerTwo.GetComponent<FpController>().SetPos(TeamManagerScript.Instance.PlayerTwoTeam == 0
+                                ? blueTeamSpawn
+                                : yellowTeamSpawn);
+            }
+            
+            
+            /*
             FpController fpsReference;
             
             if (_playerOne)
@@ -456,7 +474,7 @@ namespace VoltageSource
                 if (_playerOne.GetComponent<PhotonView>().IsMine)
                 {
                     fpsReference = _playerOne.GetComponent<FpController>();
-                                    fpsReference.SetPos(TeamManagerScript.Instance.PlayerTwoTeam == 0
+                                    fpsReference.SetPos(TeamManagerScript.Instance.PlayerOneTeam == 0
                                         ? blueTeamSpawn
                                         : yellowTeamSpawn);
                 }
@@ -474,6 +492,8 @@ namespace VoltageSource
                 }
             }
             
+            */
+            
             Debug.Log("End of EndRound event coroutine");
             if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
                 yield return null;
@@ -481,6 +501,7 @@ namespace VoltageSource
             
             PhotonNetwork.RaiseEvent((byte) EventManager.EventCodes.StartPreRound, null, raiseEventOptions,
                 SendOptions.SendReliable);
+                
         }
         
 
