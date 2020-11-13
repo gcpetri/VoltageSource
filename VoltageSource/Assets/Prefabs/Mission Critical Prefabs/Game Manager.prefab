@@ -46,10 +46,87 @@ MonoBehaviour:
   playerPrefab: {fileID: 1791268988159633231, guid: c779dbd021649e847a12f33f98a3983c, type: 3}
   yellowTeamSpawn: {fileID: 0}
   blueTeamSpawn: {fileID: 0}
-  blueTeamKills: 0
-  yellowTeamKills: 0
-  blueTeamSide: []
-  yellowTeamSide: []
+  blueTeamDeaths: 0
+  yellowTeamDeaths: 0
+  blueTeamSide:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  yellowTeamSide:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  gunPrefabs:
+  - {fileID: 3186047473292845281, guid: 19b630f0d04326342a4894e441f46062, type: 3}
+  - {fileID: 511953755098756494, guid: e9ae1d75da550874a994778eff0fc599, type: 3}
+  - {fileID: 4371801381835363661, guid: 145c57a3cbf99d84dbed7d21a8d9fceb, type: 3}
+  - {fileID: 8730984653395962964, guid: 8023e0dfb3367064596f92b209ffec88, type: 3}
+  gunWallPrefab: {fileID: 8655814700646679349, guid: e404ad00c0c5bf949aca8e85a22868bc, type: 3}
+  blueGunSpawns:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  yellowGunSpawns:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  BlueSegments: 5
+  YellowSegments: 5
+  minGunSpawnTime: 25
+  maxGunSpawnTime: 35
+  EndofRoundEmpty: {fileID: 0}
+  UIEndofRound:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   transparentMaterial: {fileID: 2100000, guid: 315ca04551f49d14fa95ce89fc9e012b, type: 2}
+  EndofGameUI: {fileID: 0}
+  GameWinner: {fileID: 0}
+  One: {fileID: 0}
   preRoundTimer: 5
   endRoundTimer: 10

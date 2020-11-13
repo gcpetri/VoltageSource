@@ -32,8 +32,6 @@ ScriptsOnlyBuild:
     - Photon.Pun.Demo.PunBasics.PlayerUI
     - Photon.Pun.Demo.SlotRacer.PlayerControl
     - Photon.Pun.Demo.SlotRacer.Utils.SplineWalker
-    PhotonUnityNetworking.Editor.dll:
-    - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.dll:
     - Photon.Pun.PhotonAnimatorView
     - Photon.Pun.PhotonRigidbodyView
@@ -530,7 +528,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 18066}
     - Class: 114
-      Script: {instanceID: 34072}
+      Script: {instanceID: 34212}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1727,7 +1725,7 @@ ScriptsOnlyBuild:
     className: PhotonTransformView
   - hash:
       serializedVersion: 2
-      Hash: 36fa3e2d1e1b68d7fe6cdc549d372739
+      Hash: f3806714763fe63c8ae28d93a886be84
     assemblyName: Assembly-CSharp.dll
     namespaceName: VoltageSource
     className: GameManager
@@ -1739,7 +1737,7 @@ ScriptsOnlyBuild:
     className: CurrentRoomPropertiesListedInLobbyProperty
   - hash:
       serializedVersion: 2
-      Hash: e8ce5fdc7ca57045a2dc2c4a9fb97c57
+      Hash: 650151515945c52d41fd062c561bc846
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: FpController

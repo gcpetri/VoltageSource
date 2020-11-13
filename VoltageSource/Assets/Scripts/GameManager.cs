@@ -30,34 +30,43 @@ namespace VoltageSource
         public GameObject gunWallPrefab;
         public Transform[] blueGunSpawns;
         public Transform[] yellowGunSpawns;
-        private int[] numGunSpawnsPerSeg = { 3, 5, 9, 14, 20 }; // Increments: seg 5 (closest to player) has 6, seg 1 (farthest) has 3
+
+        private int[]
+            numGunSpawnsPerSeg =
+                {3, 5, 9, 14, 20}; // Increments: seg 5 (closest to player) has 6, seg 1 (farthest) has 3
+
         private int _blueGunSpawnRange = 20;
         private int _yellowGunSpawnRange = 20;
-        private GameObject _yW, _bW, _yG, _bG; // Not very descriptive, not sure what they could be used for from the outset 
+
+        private GameObject
+            _yW, _bW, _yG, _bG; // Not very descriptive, not sure what they could be used for from the outset 
 
         public int BlueSegments = 5;
+
         public int YellowSegments = 5;
+
         //public float BlueTerrScale = 75.0f;
         public float minGunSpawnTime = 25.0f;
         public float maxGunSpawnTime = 35.0f;
 
         // End of Round UI
         public GameObject EndofRoundEmpty;
-        [SerializeField] public GameObject[] UIEndofRound;
+        [SerializeField] public GameObject[] UIEndofRound = new GameObject[10];
 
-        [SerializeField]private Material transparentMaterial;
+        [SerializeField] private Material transparentMaterial;
+
         // End of Game UI
         public GameObject EndofGameUI;
         public Text GameWinner;
         public GameObject One;
 
-        private RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
+        private RaiseEventOptions raiseEventOptions = new RaiseEventOptions {Receivers = ReceiverGroup.All};
         public float preRoundTimer = 5f;
         public float endRoundTimer = 10f;
 
         private GameObject _playerOne;
         private GameObject _playerTwo;
-       
+
 
         private void Start()
         {
@@ -79,8 +88,9 @@ namespace VoltageSource
             // Call pre-round event, on this event players cannot move but can look around but can't shoot. 
             if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
                 return;
-            
-            PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.StartPreRound, null, raiseEventOptions, SendOptions.SendReliable);
+
+            PhotonNetwork.RaiseEvent((byte) EventManager.EventCodes.StartPreRound, null, raiseEventOptions,
+                SendOptions.SendReliable);
         }
 
 
@@ -99,27 +109,29 @@ namespace VoltageSource
 
             if (PhotonNetwork.IsMasterClient)
             {
-                 _playerOne = PhotonNetwork.Instantiate(playerPrefab.name,
+                _playerOne = PhotonNetwork.Instantiate(playerPrefab.name,
                     TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.position : yellowTeamSpawn.position,
                     TeamManagerScript.Instance.PlayerOneTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation);
-                 
+
             }
             else
             {
-                 _playerTwo = PhotonNetwork.Instantiate(playerPrefab.name,
+                _playerTwo = PhotonNetwork.Instantiate(playerPrefab.name,
                     TeamManagerScript.Instance.PlayerTwoTeam == 0 ? blueTeamSpawn.position : yellowTeamSpawn.position,
                     TeamManagerScript.Instance.PlayerTwoTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation);
-                 
+
             }
         }
+
         #region Game End
+
         // End the Game
         private void EndtheGame()
         {
             if (!PhotonNetwork.IsMasterClient)
                 return;
             StopCoroutine(SpawnGunAfterTime());
-            int[] data = { 0, 0 };
+            int[] data = {0, 0};
             if (blueTeamDeaths >= 5) // Yellow Won
             {
                 if (TeamManagerScript.Instance.PlayerOneTeam == 0) // player one is blue
@@ -146,29 +158,35 @@ namespace VoltageSource
                     data[1] = PhotonLauncher.Instance.GetPlayerOneColor();
                 }
             }
+
             if (data[0] == PhotonLauncher.Instance.GetPlayerOneColor())
                 GameWinner.text = PhotonLauncher.Instance.GetHostName(); // player one name
             else
                 GameWinner.text = PhotonLauncher.Instance.GetOtherPlayerName(); // player two name
-            One.GetComponent<Animator>().SetBool(One.GetComponent<Animator>().parameters[0].name, true);
+
+            //One.GetComponent<Animator>().SetBool(One.GetComponent<Animator>().parameters[0].name, true);
             EndofGameUI.SetActive(true);
             _playerOne.GetComponent<FpController>().EndtheGame(data);
         }
+
         #endregion
 
         #region Gun Spawn
+
         // spawns the guns at random time with Enumerator 
         private void SpawnRandomLocation()
         {
             StartCoroutine(SpawnGunAfterTime());
         }
+
         // gun spawn function
         private void GunSpawn()
         {
             StopCoroutine(SpawnGunAfterTime());
             if (PhotonNetwork.IsMasterClient)
             {
-                int gunIndexB = UnityEngine.Random.Range(0, gunPrefabs.Length); // Get random index between what guns exist
+                int gunIndexB =
+                    UnityEngine.Random.Range(0, gunPrefabs.Length); // Get random index between what guns exist
                 //var blueRangeHorizontal = UnityEngine.Random.Range(-75.0f, BlueTerrScale);
                 //Vector3 blueSpawnPos = new Vector3(blueRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
                 int blueSpawnPos = UnityEngine.Random.Range(0, _blueGunSpawnRange);
@@ -180,99 +198,90 @@ namespace VoltageSource
 
                 var content = new object[] {gunIndexB, blueSpawnPos, gunIndexY, yellowSpawnPos};
 
-                PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.SpawnGun, content, raiseEventOptions, SendOptions.SendReliable);
-                
+                PhotonNetwork.RaiseEvent((byte) EventManager.EventCodes.SpawnGun, content, raiseEventOptions,
+                    SendOptions.SendReliable);
+
                 Debug.Log("Gun Spawn Called");
             }
+
             SpawnRandomLocation();
         }
-        
+
         // spawns the gun prefabs over time
         IEnumerator SpawnGunAfterTime()
         {
             float spawnTime = UnityEngine.Random.Range(minGunSpawnTime, maxGunSpawnTime);
             yield return new WaitForSeconds(spawnTime - 4.0f);
-            Renderer yW_Renderer = _yW.GetComponent<Renderer>();
-            Renderer bW_Renderer = _bW.GetComponent<Renderer>();
-            yW_Renderer.enabled = false;
-            bW_Renderer.enabled = false;
-            yield return new WaitForSeconds(0.25f);
-            yW_Renderer.enabled = true;
-            bW_Renderer.enabled = true;
-            yield return new WaitForSeconds(0.25f);
-            yW_Renderer.enabled = false;
-            bW_Renderer.enabled = false;
-            yield return new WaitForSeconds(0.25f);
-            yW_Renderer.enabled = true;
-            bW_Renderer.enabled = true;
-            yield return new WaitForSeconds(0.25f); // 1 second
-            yW_Renderer.enabled = false;
-            bW_Renderer.enabled = false;
-            yield return new WaitForSeconds(0.2f);
-            yW_Renderer.enabled = true;
-            bW_Renderer.enabled = true;
-            yield return new WaitForSeconds(0.2f);
-            yW_Renderer.enabled = false;
-            bW_Renderer.enabled = false;
-            yield return new WaitForSeconds(0.2f);
-            yW_Renderer.enabled = true;
-            bW_Renderer.enabled = true;
-            yield return new WaitForSeconds(0.2f);
-            yW_Renderer.enabled = false;
-            bW_Renderer.enabled = false;
-            yield return new WaitForSeconds(0.2f); // 2 second
-            yW_Renderer.enabled = true;
-            bW_Renderer.enabled = true;
-            yield return new WaitForSeconds(0.2f);
-            yW_Renderer.enabled = false;
-            bW_Renderer.enabled = false;
-            yield return new WaitForSeconds(0.2f);
-            yW_Renderer.enabled = true;
-            bW_Renderer.enabled = true;
-            yield return new WaitForSeconds(0.15f);
-            yW_Renderer.enabled = false;
-            bW_Renderer.enabled = false;
-            yield return new WaitForSeconds(0.15f);
-            yW_Renderer.enabled = true;
-            bW_Renderer.enabled = true;
-            yield return new WaitForSeconds(0.15f);
-            yW_Renderer.enabled = false;
-            bW_Renderer.enabled = false;
-            yield return new WaitForSeconds(0.15f); // 3 second
-            yW_Renderer.enabled = true;
-            bW_Renderer.enabled = true;
-            yield return new WaitForSeconds(0.15f);
-            yW_Renderer.enabled = false;
-            bW_Renderer.enabled = false;
-            yield return new WaitForSeconds(0.15f);
-            yW_Renderer.enabled = true;
-            bW_Renderer.enabled = true;
-            yield return new WaitForSeconds(0.15f);
-            yW_Renderer.enabled = false;
-            bW_Renderer.enabled = false;
-            yield return new WaitForSeconds(0.15f);
-            yW_Renderer.enabled = true;
-            bW_Renderer.enabled = true;
-            yield return new WaitForSeconds(0.1f);
-            yW_Renderer.enabled = false;
-            bW_Renderer.enabled = false;
-            yield return new WaitForSeconds(0.1f);
-            yW_Renderer.enabled = true;
-            bW_Renderer.enabled = true;
-            yield return new WaitForSeconds(0.1f);
-            yW_Renderer.enabled = false;
-            bW_Renderer.enabled = false;
-            yield return new WaitForSeconds(0.1f);
-            yW_Renderer.enabled = true;
-            bW_Renderer.enabled = true;
-            yield return new WaitForSeconds(0.1f);
-            yW_Renderer.enabled = false;
-            bW_Renderer.enabled = false;
-            yield return new WaitForSeconds(0.1f); // 4 seconds
-            yW_Renderer.enabled = true;
-            bW_Renderer.enabled = true;
+            if (_yW && _bW)
+            {
+                Renderer yW_Renderer = _yW.GetComponent<Renderer>();
+                Renderer bW_Renderer = _bW.GetComponent<Renderer>();
+                yW_Renderer.enabled = false;
+                bW_Renderer.enabled = false;
+                yield return new WaitForSeconds(0.25f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.25f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.25f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.25f); // 1 second
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.2f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.2f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.2f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.2f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.2f); // 2 second
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.2f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.2f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.15f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.15f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.15f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.15f); // 3 second
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.15f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.15f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.15f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.15f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.1f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.1f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.1f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.1f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.1f);
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+                yield return new WaitForSeconds(0.1f); // 4 seconds
+                ToggleRenderers(yW_Renderer, bW_Renderer);
+            }
+
             GunSpawn();
         }
+
+        private void ToggleRenderers(Renderer obj1, Renderer obj2)
+        {
+            if (_yW && _bW)
+            {
+                obj1.enabled = !obj1.enabled;
+                obj2.enabled = !obj2.enabled;
+            }
+        }
+
         #endregion
 
         #region Public Methods
@@ -375,6 +384,7 @@ namespace VoltageSource
                 Destroy(_yG);
             if (_bG)
                 Destroy(_bG);
+            
             _bW = Instantiate(gunWallPrefab, blueGunSpawns[(int)data[1]]) as GameObject;
             _yW = Instantiate(gunWallPrefab, yellowGunSpawns[(int)data[3]]) as GameObject;
             _bG = Instantiate(gunPrefabs[(int)data[0]], _bW.transform) as GameObject;
@@ -383,8 +393,10 @@ namespace VoltageSource
                 _bG.transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
             else if ((int)data[0] == 3) // rotate the sniper
                 _bG.transform.Rotate(new Vector3(90.0f, 90.0f, 90.0f));
+            
             _yG = Instantiate(gunPrefabs[(int)data[2]], _yW.transform) as GameObject;
             _yG.transform.localPosition += 2.3f * Vector3.up + -1f* Vector3.forward;
+            
             if ((int)data[2] == 0) // rotate the pistol
                 _yG.transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
             else if ((int)data[2] == 3) // rotate the sniper
@@ -428,37 +440,38 @@ namespace VoltageSource
         private void EndRound(object[] data)
         {
             Debug.Log("Round ended");
-            if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
-                return;
             EndofRoundEmpty.SetActive(true); // Ui map
             StartCoroutine(IEndRound());
             for (int i = 0; i < 10; i++)
                 UIEndofRound[i].SetActive(false);
             
             // blue UI segments
-            if ((int)data[0] != (int)data[1] && (int)data[1] < 5)
+            if (((int)data[0] != (int)data[1]) && (int)data[1] < 5) // This means net change in blueTeamDeaths
             {
-                for (int i = (int)data[1] + 5; i < 10; i++)
+                for (int i = (int)data[1] + 4; i >= 5; i--)
                 {
-                    UIEndofRound[(int)data[i]].SetActive(true);
+                    UIEndofRound[i].SetActive(true);
+                    StartCoroutine(IEndRoundUI(UIEndofRound[i]));
                 }
-                UIEndofRound[(int)data[0] + 5].SetActive(true);
-                UIEndofRound[(int)data[0] + 5].GetComponent<Animation>().Play();
-                StartCoroutine(IEndRoundUI(UIEndofRound[(int)data[0] + 5]));
-                StopCoroutine(IEndRoundUI(UIEndofRound[(int)data[0] + 5]));
+                //UIEndofRound[(int)data[0] + 5].SetActive(true);
+                //UIEndofRound[(int)data[0] + 5].GetComponent<Animation>().Play();
+                //StopCoroutine(IEndRoundUI(UIEndofRound[(int)data[0] + 5]));
             }
             // yellow UI segments
-            if ((int)data[2] != (int)data[3] && (int)data[3] < 5)
+            if ((int)data[2] != (int)data[3] && (int)data[3] < 5)// This means net change in yellowTeamDeaths
             {
-                for (int i = (int)data[3]; i < 5; i++)
+                for (int i = 5 - (int)data[3]; i < 5; i++)
                 {
-                    UIEndofRound[(int)data[i]].SetActive(true);
+                    UIEndofRound[i].SetActive(true);
+                    StartCoroutine(IEndRoundUI(UIEndofRound[i]));
                 }
-                UIEndofRound[(int)data[2]].SetActive(true);
-                UIEndofRound[(int)data[2]].GetComponent<Animation>().Play();
-                StartCoroutine(IEndRoundUI(UIEndofRound[(int)data[2]]));
-                StopCoroutine(IEndRoundUI(UIEndofRound[(int)data[2]]));
+                //UIEndofRound[(int)data[2]].SetActive(true);
+                //UIEndofRound[(int)data[2]].GetComponent<Animation>().Play();
+                //StopCoroutine(IEndRoundUI(UIEndofRound[(int)data[2]]));
             }
+            
+            if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
+                return;
             StopCoroutine(SpawnGunAfterTime());
             // Based on # of segments for each player, apply the appropriate actions to the level
             // Change level's pickups to either enabled or disabled and set appropriate materials to level cover and properties 
@@ -473,14 +486,14 @@ namespace VoltageSource
         {
             yield return new WaitForSeconds(endRoundTimer);
             // Spawn other stuff
-            for (int i = 0; i < yellowTeamDeaths; i++)
+            for (int i = 0; i < Mathf.Clamp(yellowTeamDeaths, 0, 5); i++)
             {
                 foreach (MeshRenderer obj in blueTeamSide[i].GetComponentsInChildren<MeshRenderer>())
                 {
                     obj.material = transparentMaterial;
                 }
             }
-            for (int i = 0; i < blueTeamDeaths; i++)
+            for (int i = 0; i < Mathf.Clamp(blueTeamDeaths, 0, 5); i++)
             {
                 foreach (MeshRenderer obj in yellowTeamSide[i].GetComponentsInChildren<MeshRenderer>())
                 {
@@ -565,7 +578,7 @@ namespace VoltageSource
             blueTeamDeaths++;
             BlueSegments--;
             Debug.Log(BlueSegments);
-            if (blueTeamDeaths <= 5)
+            if (blueTeamDeaths <= 0)
             {
                 EndtheGame();
                 return;
