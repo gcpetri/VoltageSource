@@ -70,7 +70,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
                 object[] content = { photonView.ViewID };
                 RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All };
                 PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.PlayerDied, content, raiseEventOptions, SendOptions.SendReliable);
-                SetDeath();
+                photonView.RPC("SetDeath", RpcTarget.AllBuffered);
             }
         }
     }
@@ -438,8 +438,13 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
     #endregion
     
-    private void SetDeath()
+    [PunRPC]
+    private void SetDeath(PhotonMessageInfo info)
     {
+        if (photonView.ViewID != info.photonView.ViewID)
+        {
+            return;
+        }
         anim.SetBool(_animParams[3].name, true);
         _isDead = true;
         Health = _maxHealth;
