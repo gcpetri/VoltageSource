@@ -55,6 +55,7 @@ MonoBehaviour:
   - SetMyColor
   - RPCColorChange
   - RPCEndGameColorChange
+  - SetDeath
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
