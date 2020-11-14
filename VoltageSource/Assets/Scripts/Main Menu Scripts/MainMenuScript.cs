@@ -230,6 +230,8 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
             TeamManagerScript.Instance.PlayerOneTeam = _playerOneTeamChoice;
             TeamManagerScript.Instance.PlayerTwoTeam = _playerTwoTeamChoice;
         
+            AudioManager.Instance.StopAudio();
+            
             RaiseEventOptions raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
             PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.MatchStart, null, raiseEventOptions, SendOptions.SendReliable);
             // Get info regarding who is on what team then start the game based on that and update teammanager

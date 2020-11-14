@@ -33,5 +33,11 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.SetFloat(VolumeKey, val);
         _audio.volume = PlayerPrefs.GetFloat(VolumeKey);
     }
+
+
+    public void StopAudio()
+    {
+        _audio.Stop();
+    }
     
 }

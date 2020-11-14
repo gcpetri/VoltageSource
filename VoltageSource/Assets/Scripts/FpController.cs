@@ -457,7 +457,6 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
     public void SetPos(Transform pos)
     {
-        teleportLocation = pos;
         photonView.RPC("RPCSetPos", RpcTarget.All);
     }
     
@@ -476,6 +475,9 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         byte eventCode = photonEvent.Code;
         if (eventCode == (byte)EventManager.EventCodes.StartPreRound)
         {
+            SetPos(null);
+            ResetHealth();
+            _currentGunInfo._currentAmmo = _currentGunInfo.gunData.maxAmmo;
             _isPreRound = true;
             currentGun.SetActive(true);
             if (anim)

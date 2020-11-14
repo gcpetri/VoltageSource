@@ -83,10 +83,10 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GunScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scenes/Photon/PhotonUnityNetworking/Code/Views/PhotonRigidbodyView.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FpController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/AudioManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
       </list>
     </option>
   </component>
@@ -192,7 +192,7 @@
       <workItem from="1605235630170" duration="2423000" />
       <workItem from="1605238254885" duration="165000" />
       <workItem from="1605300757661" duration="6483000" />
-      <workItem from="1605317377091" duration="991000" />
+      <workItem from="1605317377091" duration="2084000" />
     </task>
     <servers />
   </component>
