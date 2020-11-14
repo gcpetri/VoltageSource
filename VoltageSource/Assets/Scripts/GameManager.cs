@@ -67,6 +67,8 @@ namespace VoltageSource
         private GameObject _playerOne;
         private GameObject _playerTwo;
 
+        bool boolGameOver = false; // the game is over
+
 
         private void Start()
         {
@@ -91,6 +93,7 @@ namespace VoltageSource
 
             PhotonNetwork.RaiseEvent((byte) EventManager.EventCodes.StartPreRound, null, raiseEventOptions,
                 SendOptions.SendReliable);
+            boolGameOver = false;
         }
 
 
@@ -433,6 +436,7 @@ namespace VoltageSource
             {
                 return;
             }
+            if (boolGameOver) return;
             object[] content = { Btemp, blueTeamDeaths, Ytemp, yellowTeamDeaths };
             PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.EndRound, content, raiseEventOptions, SendOptions.SendReliable);
         }
@@ -585,6 +589,7 @@ namespace VoltageSource
             if (blueTeamDeaths <= 0)
             {
                 EndtheGame();
+                boolGameOver = true;
                 return;
             }
         }
@@ -597,6 +602,7 @@ namespace VoltageSource
             if (yellowTeamDeaths <= 0)
             {
                 EndtheGame();
+                boolGameOver = true;
                 return;
             }
         }
