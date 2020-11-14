@@ -444,28 +444,41 @@ namespace VoltageSource
             StartCoroutine(IEndRound());
             for (int i = 0; i < 10; i++)
                 UIEndofRound[i].SetActive(false);
-            
+
+            Animation a;
             // blue UI segments
-            if (((int)data[0] != (int)data[1]) && (int)data[1] < 5) // This means net change in blueTeamDeaths
+            if ((int)data[1] < 5) // This means net change in blueTeamDeaths
             {
                 for (int i = (int)data[1] + 4; i < 10; i++)
                 {
                     UIEndofRound[i].SetActive(true);
                 }
-                Animation a = UIEndofRound[(int)data[0] + 4].GetComponent<Animation>();
-                a.Play();
             }
             // yellow UI segments
-            if ((int)data[2] != (int)data[3] && (int)data[3] < 5)// This means net change in yellowTeamDeaths
+            if ((int)data[3] < 5)// This means net change in yellowTeamDeaths
             {
                 for (int i = (int)data[3]; i < 5; i++)
                 {
                     UIEndofRound[i].SetActive(true);
                 }
-                Animation a = UIEndofRound[(int)data[2]].GetComponent<Animation>();
-                a.Play();
+                if ((int)data[2] != (int)data[3])
+                {
+                    a = UIEndofRound[(int)data[2]].GetComponent<Animation>();
+                    a.Play();
+                    while (a.isPlaying)
+                        UIEndofRound[(int)data[2]].SetActive(true);
+                    UIEndofRound[(int)data[2]].SetActive(false);
+                }
+                if ((int)data[0] != (int)data[1])
+                {
+                    a = UIEndofRound[(int)data[0] + 4].GetComponent<Animation>();
+                    a.Play();
+                    while (a.isPlaying)
+                        UIEndofRound[(int)data[0] + 4].SetActive(true);
+                    UIEndofRound[(int)data[0] + 4].SetActive(false);
+                }
             }
-            
+
             if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
                 return;
             StopCoroutine(SpawnGunAfterTime());
