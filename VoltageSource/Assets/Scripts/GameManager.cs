@@ -448,26 +448,22 @@ namespace VoltageSource
             // blue UI segments
             if (((int)data[0] != (int)data[1]) && (int)data[1] < 5) // This means net change in blueTeamDeaths
             {
-                for (int i = (int)data[1] + 4; i >= 5; i--)
+                for (int i = (int)data[1] + 4; i < 10; i++)
                 {
                     UIEndofRound[i].SetActive(true);
-                    StartCoroutine(IEndRoundUI(UIEndofRound[i]));
                 }
-                //UIEndofRound[(int)data[0] + 5].SetActive(true);
-                //UIEndofRound[(int)data[0] + 5].GetComponent<Animation>().Play();
-                //StopCoroutine(IEndRoundUI(UIEndofRound[(int)data[0] + 5]));
+                Animation a = UIEndofRound[(int)data[0] + 4].GetComponent<Animation>();
+                a.Play();
             }
             // yellow UI segments
             if ((int)data[2] != (int)data[3] && (int)data[3] < 5)// This means net change in yellowTeamDeaths
             {
-                for (int i = 5 - (int)data[3]; i < 5; i++)
+                for (int i = (int)data[3]; i < 5; i++)
                 {
                     UIEndofRound[i].SetActive(true);
-                    StartCoroutine(IEndRoundUI(UIEndofRound[i]));
                 }
-                //UIEndofRound[(int)data[2]].SetActive(true);
-                //UIEndofRound[(int)data[2]].GetComponent<Animation>().Play();
-                //StopCoroutine(IEndRoundUI(UIEndofRound[(int)data[2]]));
+                Animation a = UIEndofRound[(int)data[2]].GetComponent<Animation>();
+                a.Play();
             }
             
             if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
@@ -476,11 +472,6 @@ namespace VoltageSource
             // Based on # of segments for each player, apply the appropriate actions to the level
             // Change level's pickups to either enabled or disabled and set appropriate materials to level cover and properties 
 
-        }
-        private IEnumerator IEndRoundUI(GameObject ui)
-        {
-            yield return new WaitForSeconds(3.2f);
-            ui.SetActive(false);
         }
         private IEnumerator IEndRound()
         {
