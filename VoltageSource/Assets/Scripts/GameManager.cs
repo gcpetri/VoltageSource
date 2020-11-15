@@ -133,9 +133,6 @@ namespace VoltageSource
         private void EndtheGame()
         {
             Debug.Log("EndtheGame() called");
-            if (!PhotonNetwork.IsMasterClient)
-                return;
-            StopCoroutine(SpawnGunAfterTime());
             int[] data = {0, 0};
             if (blueTeamDeaths >= 5) // Yellow Won
             {
@@ -168,12 +165,25 @@ namespace VoltageSource
                 GameWinner.text = PhotonLauncher.Instance.GetHostName(); // player one name
             else
                 GameWinner.text = PhotonLauncher.Instance.GetOtherPlayerName(); // player two name
-
-            //One.GetComponent<Animator>().SetBool(One.GetComponent<Animator>().parameters[0].name, true);
+            
+            
             EndofGameUI.SetActive(true);
-            _playerOne.GetComponent<FpController>().EndtheGame(data);
-        }
+            if(_playerOne)
+                _playerOne.GetComponent<FpController>().EndtheGame(data);
+            
+            if(_playerTwo)
+                _playerTwo.GetComponent<FpController>().EndtheGame(data);
+            
+            if (!PhotonNetwork.IsMasterClient)
+                return;
+            
+            StopCoroutine(SpawnGunAfterTime());
 
+            //One.GetComponent<Animator>().SetBool(One.GetComponent<Animator>().parameters[0].name, true)
+        }
+        
+        
+        
         #endregion
 
         #region Gun Spawn

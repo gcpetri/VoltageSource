@@ -662,6 +662,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         //Debug.Log(fpsCamera.GetUniversalAdditionalCameraData().cameraStack.ToString());
         if (stack != null)
             stack.cameraStack.Add(EndofGameCuties.GetComponent<Camera>()); 
+        
         playerRender1.material.color = CharacterColorChoices.ColorChoices[data[0]];
         playerRender2.material.color = CharacterColorChoices.ColorChoices[data[1]];
         playerRender1.UpdateGIMaterials();
