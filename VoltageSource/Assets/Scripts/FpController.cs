@@ -144,6 +144,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
     private Color[] colorChoices = new Color[11];
 
+    private bool _gameEnded = false;
+    
     private void Start()
     {
         _cController = GetComponent<CharacterController>();
@@ -219,20 +221,37 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     // Update is called once per frame
     private void Update()
     {
-        if (!photonView.IsMine || _isDead)
+        if (!photonView.IsMine)
+        {
+            if (_rb.velocity != Vector3.zero)
+            {
+                anim.SetBool(_animParams[0].name, true);
+            }else
+                anim.SetBool(_animParams[0].name, false);
+            
             return;
+        }
+            
 
-        if (_currentGunInfo)
-            _currentGunInfo.isAiming = Input.GetButton("Fire2");
-
+        
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            if (_gameEnded)
+                return;
+            
             PauseGame();
         }
 
+        if (_isDead)
+            return;
+        
+        if (_currentGunInfo)
+            _currentGunInfo.isAiming = Input.GetButton("Fire2");
+
+        
         _cController.Move(_velocity * Time.deltaTime); // This calls to move the character downward based on gravity
 
-        if (isPaused)
+        if (isPaused || _gameEnded)
             return;
 
         InputProcess();
@@ -352,14 +371,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
                 FPguns[i].SetActive(false);
             }
             FPguns[data].SetActive(true);
-        }
-        else if (info.photonView.ViewID == this.photonView.ViewID) // Player two made the call so update that copy's gun
-        {
-             for (int i = 0; i < 4; i++)
-             {
-                FPguns[i].SetActive(false);
-             }
-             FPguns[data].SetActive(true);
+            currentGun = FPguns[data];
         }
     }
     
@@ -506,7 +518,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             currentGun.SetActive(true);
             if (anim)
             {
-                anim.SetBool(_animParams[3].name, false);
+                anim.SetBool(_animParams[2].name, false);
             }
             AmmoSlider.maxValue = _currentGunScriptable.maxAmmo;
             AmmoSlider.value = _currentGunScriptable.maxAmmo;
@@ -547,6 +559,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     }
     public void EndtheGame(int[] data)
     {
+        _gameEnded = true;
         photonView.RPC("RPCEndGameColorChange", RpcTarget.All, (int[])data);
     }
     
