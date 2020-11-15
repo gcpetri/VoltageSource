@@ -95,7 +95,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     private GunScript _currentGunInfo; // Reference
     private GunsScriptable _currentGunScriptable;
     [SerializeField] private GameObject gunRotationPoint;
-    public GameObject[] FPguns;
+    [SerializeField] private GameObject[] FPguns;
     #endregion
 
     #region Animator Variables
@@ -118,6 +118,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     public Renderer playerRender1;
     public Renderer playerRender2;
     [SerializeField] public Animator[] EndofGameCutiesAnimators;
+    [SerializeField] public Slider AmmoSlider;
 
     #endregion
 
@@ -251,23 +252,18 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
                 _nextTimeToFire = Time.time + (1 / _fireRate);
             }
         }
-
         if (Input.GetKeyDown(KeyCode.E)) // Change this to interactable axis later
         {
             Ray ray = fpsCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out _pickUpHit, pickupDistance, pickupMask))
             {
                 GameObject newGun = _pickUpHit.transform.gameObject;
-                //_currentGunScriptable = _pickUpHit.transform.gameObject.GetComponent<GunScript>().gunData;
-                //Destroy(currentGun);
-                //SwitchGun(newGun);
+                currentGun.SetActive(false);
                 SwitchGun2(newGun);
                 Destroy(newGun);
             }
         }
-
         GroundCheck();
-
     }
 
     private void FixedUpdate()
@@ -282,8 +278,14 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     // method that switches already present guns in the FPcharacter
     private void SwitchGun2(GameObject obj)
     {
-        //obj.GetComponent<Animator>().SetBool(obj.GetComponent<Animator>().parameters[2].name, false);
         SetGun(obj.GetComponent<GunScript>().gunData.gunIndex);
+        int[] data = { -1, -1 };
+        if (PhotonNetwork.IsMasterClient)
+            data[0] = obj.GetComponent<GunScript>().gunData.gunIndex; // if player one switches the gun
+        else
+            data[1] = obj.GetComponent<GunScript>().gunData.gunIndex; // if player two switches the gun
+        photonView.RPC("SetPlayerGunRPC", RpcTarget.AllBuffered, (int[])data);
+
     }
     public void SetGun(int i)
     {
@@ -296,7 +298,11 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         _currentGunInfo._currentAmmo = _currentGunScriptable.maxAmmo;
         _currentGunInfo.SetOwner(this);
         _currentGunScriptable = _currentGunInfo.gunData;
+        currentGun = FPguns[i];
+        currentGun.SetActive(true);
         _fireRate = _currentGunInfo.GetFireRate();
+        AmmoSlider.maxValue = _currentGunScriptable.maxAmmo;
+        AmmoSlider.value = _currentGunScriptable.maxAmmo;
         var stack = fpsCamera.GetUniversalAdditionalCameraData();
         stack.cameraStack.RemoveAt(1);
         if (stack != null)
@@ -339,6 +345,33 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     {
         playerRenderer.material.color = tempColor;
         playerRenderer.UpdateGIMaterials();
+    }
+    // Added this to try to change the other player copy of gun
+    [PunRPC]
+    private void SetPlayerGunRPC(int[] data)
+    {
+        if (!photonView.IsMine && photonView.ViewID == 1001) // If This is player 1 and is player 2's character
+        {
+            if (data[1] != -1)
+            { // change player 1 copy
+                for (int i = 0; i < 4; i++)
+                {
+                    FPguns[i].SetActive(false);
+                }
+                FPguns[data[1]].SetActive(true);
+            }
+        }
+        else if (!photonView.IsMine && photonView.ViewID == 2001) // If This is player 2 and is player 1's character
+        {
+            if (data[0] != -1)
+            { // change player 1 copy
+                for (int i = 0; i < 4; i++)
+                {
+                    FPguns[i].SetActive(false);
+                }
+                FPguns[data[0]].SetActive(true);
+            }
+        }
     }
     
     /// <summary>
@@ -440,7 +473,9 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     
     [PunRPC]
     private void SetDeath(PhotonMessageInfo info)
-    {
+    { 
+        AmmoSlider.maxValue = _currentGunScriptable.maxAmmo;
+        AmmoSlider.value = _currentGunScriptable.maxAmmo;
         if (photonView.ViewID != info.photonView.ViewID)
         {
             return;
@@ -484,7 +519,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             {
                 anim.SetBool(_animParams[3].name, false);
             }
-
+            AmmoSlider.maxValue = _currentGunScriptable.maxAmmo;
+            AmmoSlider.value = _currentGunScriptable.maxAmmo;
             _isDead = false;
             
         }else if (eventCode == (byte) EventManager.EventCodes.EndPreRound)

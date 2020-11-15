@@ -131,6 +131,7 @@ namespace VoltageSource
         // End the Game
         private void EndtheGame()
         {
+            Debug.Log("EndtheGame() called");
             if (!PhotonNetwork.IsMasterClient)
                 return;
             StopCoroutine(SpawnGunAfterTime());
@@ -448,10 +449,9 @@ namespace VoltageSource
             StartCoroutine(IEndRound());
             for (int i = 0; i < 10; i++)
                 UIEndofRound[i].SetActive(false);
-
             Animation a;
             // blue UI segments
-            if ((int)data[1] < 5) // This means net change in blueTeamDeaths
+            if ((int)data[1] < 5)
             {
                 for (int i = (int)data[1] + 4; i < 10; i++)
                 {
@@ -459,29 +459,31 @@ namespace VoltageSource
                 }
             }
             // yellow UI segments
-            if ((int)data[3] < 5)// This means net change in yellowTeamDeaths
+            if ((int)data[3] < 5)
             {
                 for (int i = (int)data[3]; i < 5; i++)
                 {
                     UIEndofRound[i].SetActive(true);
                 }
-                if ((int)data[2] != (int)data[3])
-                {
-                    a = UIEndofRound[(int)data[2]].GetComponent<Animation>();
-                    a.Play();
-                    while (a.isPlaying)
-                        UIEndofRound[(int)data[2]].SetActive(true);
-                    UIEndofRound[(int)data[2]].SetActive(false);
-                }
-                if ((int)data[0] != (int)data[1])
-                {
-                    a = UIEndofRound[(int)data[0] + 4].GetComponent<Animation>();
-                    a.Play();
-                    while (a.isPlaying)
-                        UIEndofRound[(int)data[0] + 4].SetActive(true);
-                    UIEndofRound[(int)data[0] + 4].SetActive(false);
-                }
             }
+            if ((int)data[0] != (int)data[1] && (int)data[1] < 5) // blue lost one
+            {
+                UIEndofRound[(int)data[1] + 5].SetActive(true);
+                a = UIEndofRound[(int)data[0] + 5].GetComponent<Animation>();
+                a.Play();
+                //while (a.isPlaying)
+                //     UIEndofRound[(int)data[0] + 4].SetActive(true);
+                //UIEndofRound[(int)data[0] + 4].SetActive(false);
+            }
+            else if ((int)data[2] != (int)data[3] && (int)data[3] < 5) // yellow lost one
+            {
+                UIEndofRound[(int)data[3] + 1].SetActive(true);
+                a = UIEndofRound[(int)data[3] + 1].GetComponent<Animation>();
+                a.Play();
+                //while (a.isPlaying)
+                //    UIEndofRound[(int)data[2]].SetActive(true);
+                //UIEndofRound[(int)data[2]].SetActive(false);
+             }
 
             if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
                 return;
@@ -492,6 +494,15 @@ namespace VoltageSource
         }
         private IEnumerator IEndRound()
         {
+            if (_yW)
+            {
+                Destroy(_yW);
+                Destroy(_bW);
+            }
+            if (_yG)
+                Destroy(_yG);
+            if (_bG)
+                Destroy(_bG);
             yield return new WaitForSeconds(endRoundTimer);
             // Spawn other stuff
             for (int i = 0; i < Mathf.Clamp(yellowTeamDeaths, 0, 5); i++)
@@ -570,7 +581,6 @@ namespace VoltageSource
             if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
                 return;
             EndofRoundEmpty.SetActive(false);
-            //SpawnLocations(BlueSegments);
             GunSpawn();
             Debug.Log("Round started");
         }
@@ -586,7 +596,7 @@ namespace VoltageSource
             blueTeamDeaths++;
             BlueSegments--;
             Debug.Log(BlueSegments);
-            if (blueTeamDeaths <= 0)
+            if (blueTeamDeaths >= 5)
             {
                 EndtheGame();
                 boolGameOver = true;
@@ -599,7 +609,7 @@ namespace VoltageSource
             yellowTeamDeaths++;
             YellowSegments--;
             Debug.Log(YellowSegments);
-            if (yellowTeamDeaths <= 0)
+            if (yellowTeamDeaths >= 5)
             {
                 EndtheGame();
                 boolGameOver = true;

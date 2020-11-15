@@ -813,6 +813,7 @@ MonoBehaviour:
   EndofGameCutiesAnimators:
   - {fileID: 5251427116020194324}
   - {fileID: 6813665208041672107}
+  AmmoSlider: {fileID: 1390290107836925593}
   playerRenderer: {fileID: 6335770071348417015}
   localAudioListener: {fileID: 1791268987700070072}
   pickupMask:
