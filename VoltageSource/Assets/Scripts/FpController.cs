@@ -279,13 +279,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     private void SwitchGun2(GameObject obj)
     {
         SetGun(obj.GetComponent<GunScript>().gunData.gunIndex);
-        int[] data = { -1, -1 };
-        if (PhotonNetwork.IsMasterClient)
-            data[0] = obj.GetComponent<GunScript>().gunData.gunIndex; // if player one switches the gun
-        else
-            data[1] = obj.GetComponent<GunScript>().gunData.gunIndex; // if player two switches the gun
-        photonView.RPC("SetPlayerGunRPC", RpcTarget.AllBuffered, (int[])data);
-
+        int data = obj.GetComponent<GunScript>().gunData.gunIndex;
+        photonView.RPC("SetPlayerGunRPC", RpcTarget.AllBuffered, (int) data);
     }
     public void SetGun(int i)
     {
@@ -348,29 +343,23 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     }
     // Added this to try to change the other player copy of gun
     [PunRPC]
-    private void SetPlayerGunRPC(int[] data)
+    private void SetPlayerGunRPC(int data, PhotonMessageInfo info)
     {
-        if (!photonView.IsMine && photonView.ViewID == 1001) // If This is player 1 and is player 2's character
+        if (info.photonView.ViewID == this.photonView.ViewID) // Player one made the call so update that copy's gun
         {
-            if (data[1] != -1)
-            { // change player 1 copy
-                for (int i = 0; i < 4; i++)
-                {
-                    FPguns[i].SetActive(false);
-                }
-                FPguns[data[1]].SetActive(true);
+            for (int i = 0; i < 4; i++)
+            {
+                FPguns[i].SetActive(false);
             }
+            FPguns[data].SetActive(true);
         }
-        else if (!photonView.IsMine && photonView.ViewID == 2001) // If This is player 2 and is player 1's character
+        else if (info.photonView.ViewID == this.photonView.ViewID) // Player two made the call so update that copy's gun
         {
-            if (data[0] != -1)
-            { // change player 1 copy
-                for (int i = 0; i < 4; i++)
-                {
-                    FPguns[i].SetActive(false);
-                }
-                FPguns[data[0]].SetActive(true);
-            }
+             for (int i = 0; i < 4; i++)
+             {
+                FPguns[i].SetActive(false);
+             }
+             FPguns[data].SetActive(true);
         }
     }
     
@@ -398,7 +387,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         if (Input.GetButtonDown("Jump") && _isGrounded) // Checks if jumps and runs appropriate code
         {
             _velocity.y = Mathf.Sqrt(jumpHeight * -2f * (Physics.gravity.y + gravityConst));
-            anim.SetTrigger(_animParams[1].name);
+            anim.SetTrigger(_animParams[3].name);
         }
     }
     #region Movement/Camera Methods
@@ -480,7 +469,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         {
             return;
         }
-        anim.SetBool(_animParams[3].name, true);
+        anim.SetBool(_animParams[2].name, true);
         _isDead = true;
         Health = _maxHealth;
         currentGun.SetActive(false);
@@ -657,9 +646,12 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     [PunRPC]
     private void RPCEndGameColorChange(int[] data)
     {
+        if (!photonView.IsMine)
+            return;
         var stack = fpsCamera.GetUniversalAdditionalCameraData();
         stack.cameraStack.RemoveAt(1);
         //Debug.Log(fpsCamera.GetUniversalAdditionalCameraData().cameraStack.ToString());
+        EndofGameCuties.SetActive(true);
         if (stack != null)
             stack.cameraStack.Add(EndofGameCuties.GetComponent<Camera>()); 
         
@@ -668,8 +660,11 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         playerRender1.UpdateGIMaterials();
         playerRender2.UpdateGIMaterials();
         // set their dancing and dying animation
-        EndofGameCutiesAnimators[0].SetBool(EndofGameCutiesAnimators[0].parameters[2].name, true);
-        EndofGameCutiesAnimators[1].SetBool(EndofGameCutiesAnimators[1].parameters[3].name, true);
+        Debug.Log(EndofGameCutiesAnimators[0].parameters[0].name);
+        Debug.Log(EndofGameCutiesAnimators[0].parameters[1].name);
+        Debug.Log(EndofGameCutiesAnimators[1].parameters[2].name);
+        EndofGameCutiesAnimators[0].SetBool(EndofGameCutiesAnimators[0].parameters[1].name, true);
+        EndofGameCutiesAnimators[1].SetBool(EndofGameCutiesAnimators[1].parameters[2].name, true);
         EndofGameCuties.SetActive(true);
     }
 
