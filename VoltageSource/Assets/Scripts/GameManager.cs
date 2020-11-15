@@ -451,7 +451,7 @@ namespace VoltageSource
             {
                 return;
             }
-            if (boolGameOver) return;
+            //if (boolGameOver) return;
             object[] content = { Btemp, blueTeamDeaths, Ytemp, yellowTeamDeaths };
             PhotonNetwork.RaiseEvent((byte)EventManager.EventCodes.EndRound, content, raiseEventOptions, SendOptions.SendReliable);
         }
@@ -463,11 +463,11 @@ namespace VoltageSource
             StartCoroutine(IEndRound());
             for (int i = 0; i < 10; i++)
                 UIEndofRound[i].SetActive(false);
-            Animation a;
+            Animator a;
             // blue UI segments
             if ((int)data[1] < 5)
             {
-                for (int i = (int)data[1] + 4; i < 10; i++)
+                for (int i = (int)data[1] + 5; i < 10; i++)
                 {
                     UIEndofRound[i].SetActive(true);
                 }
@@ -483,8 +483,8 @@ namespace VoltageSource
             if ((int)data[0] != (int)data[1] && (int)data[1] < 5) // blue lost one
             {
                 UIEndofRound[(int)data[1] + 5].SetActive(true);
-                a = UIEndofRound[(int)data[0] + 5].GetComponent<Animation>();
-                a.Play();
+                a = UIEndofRound[(int)data[0] + 5].GetComponent<Animator>();
+                a.SetTrigger(0);
                 //while (a.isPlaying)
                 //     UIEndofRound[(int)data[0] + 4].SetActive(true);
                 //UIEndofRound[(int)data[0] + 4].SetActive(false);
@@ -492,8 +492,8 @@ namespace VoltageSource
             else if ((int)data[2] != (int)data[3] && (int)data[3] < 5) // yellow lost one
             {
                 UIEndofRound[(int)data[3] + 1].SetActive(true);
-                a = UIEndofRound[(int)data[3] + 1].GetComponent<Animation>();
-                a.Play();
+                a = UIEndofRound[(int)data[3] + 1].GetComponent<Animator>();
+                a.SetTrigger(0);
                 //while (a.isPlaying)
                 //    UIEndofRound[(int)data[2]].SetActive(true);
                 //UIEndofRound[(int)data[2]].SetActive(false);
@@ -519,14 +519,14 @@ namespace VoltageSource
                 Destroy(_bG);
             yield return new WaitForSeconds(endRoundTimer);
             // Spawn other stuff
-            for (int i = 0; i < Mathf.Clamp(yellowTeamDeaths, 0, 5); i++)
+            for (int i = 0; i < Mathf.Clamp(blueTeamDeaths, 0, 5); i++)
             {
                 foreach (MeshRenderer obj in blueTeamSide[i].GetComponentsInChildren<MeshRenderer>())
                 {
                     obj.material = transparentMaterial;
                 }
             }
-            for (int i = 0; i < Mathf.Clamp(blueTeamDeaths, 0, 5); i++)
+            for (int i = 0; i < Mathf.Clamp(yellowTeamDeaths, 0, 5); i++)
             {
                 foreach (MeshRenderer obj in yellowTeamSide[i].GetComponentsInChildren<MeshRenderer>())
                 {
