@@ -72,6 +72,7 @@ namespace VoltageSource
 
         private void Start()
         {
+            AudioManager.Instance.StopAudio();
             PhotonNetwork.AddCallbackTarget(this);
             Instance = this;
             if (playerPrefab == null)
@@ -292,7 +293,10 @@ namespace VoltageSource
 
         public void LeaveRoom()
         {
+            AudioManager.Instance.StartAudio();
+            Cursor.lockState = CursorLockMode.Confined;
             PhotonNetwork.LeaveRoom();
+            Destroy(this);
         }
 
         public int GetPing()

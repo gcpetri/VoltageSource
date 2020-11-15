@@ -17,7 +17,7 @@ public class AudioManager : MonoBehaviour
             DontDestroyOnLoad(this);
             return;
         }
-        if (Instance == this)
+        if (Instance != null && Instance != this)
             Destroy(this);
     }
 
@@ -31,7 +31,7 @@ public class AudioManager : MonoBehaviour
     public void SetVolume(float val)
     {
         PlayerPrefs.SetFloat(VolumeKey, val);
-        _audio.volume = PlayerPrefs.GetFloat(VolumeKey);
+        _audio.volume = val;
     }
 
 
@@ -40,4 +40,9 @@ public class AudioManager : MonoBehaviour
         _audio.Stop();
     }
     
+    public void StartAudio()
+    {
+        _audio.Play();
+    }
+
 }
