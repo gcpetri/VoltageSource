@@ -39,7 +39,7 @@ namespace VoltageSource
         private int _yellowGunSpawnRange = 20;
 
         private GameObject
-            _yW, _bW, _yG, _bG; // Not very descriptive, not sure what they could be used for from the outset 
+            _yellowWall, _blueWall, _yellowGun, _blueGun; 
 
         public int BlueSegments = 5;
 
@@ -187,15 +187,8 @@ namespace VoltageSource
         #endregion
 
         #region Gun Spawn
-
-        // spawns the guns at random time with Enumerator 
-        private void SpawnRandomLocation()
-        {
-            StartCoroutine(SpawnGunAfterTime());
-        }
-
-        // gun spawn function
-        private void GunSpawn()
+        
+        private void SendGunSpawnEvent()
         {
             StopCoroutine(SpawnGunAfterTime());
             if (PhotonNetwork.IsMasterClient)
@@ -218,19 +211,24 @@ namespace VoltageSource
 
                 Debug.Log("Gun Spawn Called");
             }
-
-            SpawnRandomLocation();
+            
+            StartCoroutine(SpawnGunAfterTime());
         }
 
         // spawns the gun prefabs over time
         IEnumerator SpawnGunAfterTime()
         {
-            float spawnTime = UnityEngine.Random.Range(minGunSpawnTime, maxGunSpawnTime);
+            float spawnTime = 15;
             yield return new WaitForSeconds(spawnTime - 4.0f);
-            if (_yW && _bW)
+            
+            _yellowWall.GetComponent<Flashing>().StartFlashing();
+            
+            _blueWall.GetComponent<Flashing>().StartFlashing();
+            
+            /*if (_yellowWall && _blueWall)
             {
-                Renderer yW_Renderer = _yW.GetComponent<Renderer>();
-                Renderer bW_Renderer = _bW.GetComponent<Renderer>();
+                Renderer yW_Renderer = _yellowWall.GetComponent<Renderer>();
+                Renderer bW_Renderer = _blueWall.GetComponent<Renderer>();
                 yW_Renderer.enabled = false;
                 bW_Renderer.enabled = false;
                 yield return new WaitForSeconds(0.25f);
@@ -283,19 +281,13 @@ namespace VoltageSource
                 ToggleRenderers(yW_Renderer, bW_Renderer);
                 yield return new WaitForSeconds(0.1f); // 4 seconds
                 ToggleRenderers(yW_Renderer, bW_Renderer);
-            }
-
-            GunSpawn();
+            }*/
+            
+            yield return new WaitForSeconds(4f);
+            
+            SendGunSpawnEvent();
         }
-
-        private void ToggleRenderers(Renderer obj1, Renderer obj2)
-        {
-            if (_yW && _bW)
-            {
-                obj1.enabled = !obj1.enabled;
-                obj2.enabled = !obj2.enabled;
-            }
-        }
+        
 
         #endregion
 
@@ -393,32 +385,37 @@ namespace VoltageSource
         {
             if (data == null)
                 return;
-            if (_yW)
+            if (_yellowWall)
             {
-                Destroy(_yW);
-                Destroy(_bW);
+                Destroy(_yellowWall);
+                Destroy(_blueWall);
             }
-            if (_yG)
-                Destroy(_yG);
-            if (_bG)
-                Destroy(_bG);
+            if (_yellowGun)
+                Destroy(_yellowGun);
+            if (_blueGun)
+                Destroy(_blueGun);
             
-            _bW = Instantiate(gunWallPrefab, blueGunSpawns[(int)data[1]]) as GameObject;
-            _yW = Instantiate(gunWallPrefab, yellowGunSpawns[(int)data[3]]) as GameObject;
-            _bG = Instantiate(gunPrefabs[(int)data[0]], _bW.transform) as GameObject;
-            _bG.transform.localPosition += 2.3f * Vector3.up + -1f * Vector3.forward;
+            _blueWall = Instantiate(gunWallPrefab, blueGunSpawns[(int)data[1]]) as GameObject;
+            _yellowWall = Instantiate(gunWallPrefab, yellowGunSpawns[(int)data[3]]) as GameObject;
+            
+            
+            _blueGun = Instantiate(gunPrefabs[(int)data[0]], _blueWall.transform) as GameObject;
+            
+            
+            _blueGun.transform.localPosition += 2.3f * Vector3.up + -1f * Vector3.forward;
             if ((int)data[0] == 0) // rotate the pistol
-                _bG.transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
+                _blueGun.transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
             else if ((int)data[0] == 3) // rotate the sniper
-                _bG.transform.Rotate(new Vector3(90.0f, 90.0f, 90.0f));
+                _blueGun.transform.Rotate(new Vector3(90.0f, 90.0f, 90.0f));
             
-            _yG = Instantiate(gunPrefabs[(int)data[2]], _yW.transform) as GameObject;
-            _yG.transform.localPosition += 2.3f * Vector3.up + -1f* Vector3.forward;
+            _yellowGun = Instantiate(gunPrefabs[(int)data[2]], _yellowWall.transform) as GameObject;
+            _yellowGun.transform.localPosition += 2.3f * Vector3.up + -1f* Vector3.forward;
             
             if ((int)data[2] == 0) // rotate the pistol
-                _yG.transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
+                _yellowGun.transform.Rotate(new Vector3(0.0f, 0.0f, 90.0f));
             else if ((int)data[2] == 3) // rotate the sniper
-                _yG.transform.Rotate(new Vector3(90.0f, 90.0f, 90.0f));
+                _yellowGun.transform.Rotate(new Vector3(90.0f, 90.0f, 90.0f));
+            
         }
 
         private void PlayerDied(object[] data = null)
@@ -497,8 +494,9 @@ namespace VoltageSource
                 //while (a.isPlaying)
                 //    UIEndofRound[(int)data[2]].SetActive(true);
                 //UIEndofRound[(int)data[2]].SetActive(false);
-             }
+            }
 
+            
             if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
                 return;
             StopCoroutine(SpawnGunAfterTime());
@@ -508,16 +506,17 @@ namespace VoltageSource
         }
         private IEnumerator IEndRound()
         {
-            if (_yW)
+            if (_yellowWall)
             {
-                Destroy(_yW);
-                Destroy(_bW);
+                Destroy(_yellowWall);
+                Destroy(_blueWall);
             }
-            if (_yG)
-                Destroy(_yG);
-            if (_bG)
-                Destroy(_bG);
+            if (_yellowGun)
+                Destroy(_yellowGun);
+            if (_blueGun)
+                Destroy(_blueGun);
             yield return new WaitForSeconds(endRoundTimer);
+            
             // Spawn other stuff
             for (int i = 0; i < Mathf.Clamp(yellowTeamDeaths, 0, 5); i++)
             {
@@ -595,7 +594,7 @@ namespace VoltageSource
             if (!PhotonNetwork.IsMasterClient) // So it doesn't run on other clients 
                 return;
             EndofRoundEmpty.SetActive(false);
-            GunSpawn();
+            SendGunSpawnEvent();
             Debug.Log("Round started");
         }
         

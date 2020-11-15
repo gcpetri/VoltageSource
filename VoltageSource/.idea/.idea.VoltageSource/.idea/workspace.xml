@@ -29,18 +29,19 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/CharacterColorChoices.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/EventManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonPlayerNameInputScript.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@8.2.0/Editor/UniversalRenderPipelineCameraEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/NamePlateScript.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/BulletScript.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Flashing.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GunScript.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@8.2.0/Runtime/UniversalRenderPipeline.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/CharacterColorChoices.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonPlayerNameInputScript.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -86,8 +87,9 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
         <option value="$PROJECT_DIR$/Assets/VolumeValueCollector.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/AudioManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FpController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Flashing.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
       </list>
     </option>
   </component>
@@ -194,7 +196,7 @@
       <workItem from="1605238254885" duration="165000" />
       <workItem from="1605300757661" duration="6483000" />
       <workItem from="1605317377091" duration="2084000" />
-      <workItem from="1605471867143" duration="1935000" />
+      <workItem from="1605471867143" duration="7840000" />
     </task>
     <servers />
   </component>
@@ -243,10 +245,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="-6" y="0" width="781" height="830" key="dock-window-4/0.0.1536.824@0.0.1536.824" timestamp="1601195026483" />
-    <state x="425" y="186" width="672" height="677" key="run.anything.popup" timestamp="1604886821653">
+    <state x="425" y="186" width="672" height="677" key="run.anything.popup" timestamp="1605476285038">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="186" width="672" height="677" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1604886821653" />
+    <state x="425" y="186" width="672" height="677" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1605476285038" />
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1604624198488">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
