@@ -299,6 +299,9 @@ namespace VoltageSource
         
         public void OnEvent(EventData photonEvent)
         {
+            if (boolGameOver)
+                return;
+            
             byte eventcode = photonEvent.Code;
             object[] data = null;
             if (photonEvent.CustomData != null)
@@ -555,6 +558,10 @@ namespace VoltageSource
             }
         }
 
+        public bool IsGameOver()
+        {
+            return boolGameOver;
+        }
 
         private void StartPreRound()
         {

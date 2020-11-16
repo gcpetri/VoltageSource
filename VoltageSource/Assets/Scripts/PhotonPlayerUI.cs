@@ -139,6 +139,9 @@ namespace VoltageSource
         {
             byte eventCode = photonEvent.Code;
 
+            if (GameManager.Instance.IsGameOver())
+                                return;
+            
             if (eventCode == (byte) EventManager.EventCodes.PlayerDied)
             {
                 pauseUI.SetActive(false);

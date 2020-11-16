@@ -85,11 +85,11 @@
      <Compile Include="Assets\Scenes\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
      <Compile Include="Assets\VolumeValueCollector.cs" />
      <Compile Include="Assets\Scripts\BulletScript.cs" />
+     <Compile Include="Assets\Scripts\Flashing.cs" />
      <Compile Include="Assets\Scripts\SpawnPointEditorHelp.cs" />
      <Compile Include="Assets\Scripts\UI_Mission.cs" />
      <Compile Include="Assets\Scripts\cutieCamera.cs" />
      <Compile Include="Assets\Scripts\Outdated Scripts\FP_camera_script.cs" />
-     <Compile Include="Assets\Scripts\Flashing.cs" />
      <None Include="Assets\Scenes\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\Scenes\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.xml" />
