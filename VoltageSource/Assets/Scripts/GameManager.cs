@@ -134,6 +134,7 @@ namespace VoltageSource
         {
             boolGameOver = true;
             Debug.Log("EndtheGame() called");
+            Cursor.lockState = CursorLockMode.Confined;
             int[] data = {0, 0};
             if (blueTeamDeaths >= 5) // Yellow Won
             {
@@ -176,6 +177,23 @@ namespace VoltageSource
                 _playerTwo.GetComponent<FpController>().EndtheGame(data);
             
 
+            
+            for (int i = 0; i < Mathf.Clamp(blueTeamDeaths, 0, 5); i++)
+            {
+                foreach (MeshRenderer obj in blueTeamSide[i].GetComponentsInChildren<MeshRenderer>())
+                {
+                    obj.material = transparentMaterial;
+                }
+            }
+            for (int i = 0; i < Mathf.Clamp(yellowTeamDeaths, 0, 5); i++)
+            {
+                foreach (MeshRenderer obj in yellowTeamSide[i].GetComponentsInChildren<MeshRenderer>())
+                {
+                    obj.material = transparentMaterial;
+                }
+            }
+            
+            
             
             StopCoroutine(SpawnGunAfterTime());
 

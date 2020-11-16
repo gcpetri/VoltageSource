@@ -79,7 +79,7 @@ namespace VoltageSource
         /// </summary>
         public void JoinRRoom()
         {
-            if (PhotonNetwork.IsConnected)
+            if (PhotonNetwork.IsConnectedAndReady)
                 PhotonNetwork.JoinRandomRoom();
             else
                 Connect();
@@ -87,7 +87,7 @@ namespace VoltageSource
 
         public void JoinRoom(string value)
         {
-            if (PhotonNetwork.IsConnected)
+            if (PhotonNetwork.IsConnectedAndReady)
                 PhotonNetwork.JoinRoom(value);
             else
                 Connect();

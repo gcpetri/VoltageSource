@@ -647,13 +647,15 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         if (!photonView.IsMine)
             return;
         
-        var stack = fpsCamera.GetUniversalAdditionalCameraData();
+        /*var stack = fpsCamera.GetUniversalAdditionalCameraData();
         stack.cameraStack.RemoveAt(1);
         //Debug.Log(fpsCamera.GetUniversalAdditionalCameraData().cameraStack.ToString());
         EndofGameCuties.SetActive(true);
         if (stack != null)
-            stack.cameraStack.Add(EndofGameCuties.GetComponent<Camera>());
+            stack.cameraStack.Add(EndofGameCuties.GetComponent<Camera>());*/
 
+        EndofGameCuties.SetActive(true);
+        EndofGameCuties.GetComponent<Camera>().enabled = true;
         fpsCamera.enabled = false;
         playerRender1.material.color = CharacterColorChoices.ColorChoices[data[0]];
         playerRender2.material.color = CharacterColorChoices.ColorChoices[data[1]];
