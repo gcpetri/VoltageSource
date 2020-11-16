@@ -233,6 +233,9 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             return;
         }
 
+        if (_isDead)
+            return;
+        
         if (_currentGunInfo)
             _currentGunInfo.isAiming = Input.GetButton("Fire2");
 
@@ -479,6 +482,9 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         _isDead = true;
         Health = _maxHealth;
         currentGun.SetActive(false);
+        currentGun = FPguns[0];
+        _currentGunScriptable = FPguns[0].GetComponent<GunScript>().gunData;
+        _currentGunInfo = FPguns[0].GetComponent<GunScript>();
     }
     
     
@@ -525,22 +531,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     }
 
     #endregion
-
-    #region Custom Callbacks
-
-    // Want an OnGunPickup and an OnGunDrop
-    // Both of these functions will call setting gun owner and appropriate info needed for each gun. 
-    private void OnGunPickup(Action action)
-    {
-        action?.Invoke();
-    }
-
-    private void OnGunDrop(Action action)
-    {
-        action?.Invoke();
-    }
-
-    #endregion
+    
 
     public void IGotShot(object damage)
     {
@@ -553,7 +544,6 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     }
     public void EndtheGame(int[] data)
     {
-        _gameEnded = true;
         photonView.RPC("RPCEndGameColorChange", RpcTarget.All, (int[])data);
     }
     
@@ -653,15 +643,18 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     [PunRPC]
     private void RPCEndGameColorChange(int[] data)
     {
+        _gameEnded = true;
         if (!photonView.IsMine)
             return;
+        
         var stack = fpsCamera.GetUniversalAdditionalCameraData();
         stack.cameraStack.RemoveAt(1);
         //Debug.Log(fpsCamera.GetUniversalAdditionalCameraData().cameraStack.ToString());
         EndofGameCuties.SetActive(true);
         if (stack != null)
-            stack.cameraStack.Add(EndofGameCuties.GetComponent<Camera>()); 
-        
+            stack.cameraStack.Add(EndofGameCuties.GetComponent<Camera>());
+
+        fpsCamera.enabled = false;
         playerRender1.material.color = CharacterColorChoices.ColorChoices[data[0]];
         playerRender2.material.color = CharacterColorChoices.ColorChoices[data[1]];
         playerRender1.UpdateGIMaterials();

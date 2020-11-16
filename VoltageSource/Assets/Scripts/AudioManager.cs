@@ -31,7 +31,11 @@ public class AudioManager : MonoBehaviour
     public void SetVolume(float val)
     {
         PlayerPrefs.SetFloat(VolumeKey, val);
-        _audio.volume = val;
+        if(_audio)
+            _audio.volume = val;
+        
+        if(!_audio)
+            Debug.LogWarning("AudioManager is missing reference to audiosource");
     }
 
 

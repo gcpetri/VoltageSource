@@ -388,6 +388,7 @@
           <e p="CustomizeCharacterMenu.cs" t="Include" />
           <e p="cutieCamera.cs" t="Include" />
           <e p="EventManager.cs" t="Include" />
+          <e p="Flashing.cs" t="Include" />
           <e p="FpController.cs" t="Include" />
           <e p="GameManager.cs" t="Include" />
           <e p="GunScript.cs" t="Include" />

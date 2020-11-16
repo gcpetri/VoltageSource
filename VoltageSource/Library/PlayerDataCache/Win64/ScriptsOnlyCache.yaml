@@ -6,6 +6,7 @@ ScriptsOnlyBuild:
     - FP_camera_script
     - FP_gunScript
     - FP_movement
+    - Flashing
     - FpController
     - GunScript
     - GunsScriptable
@@ -33,8 +34,6 @@ ScriptsOnlyBuild:
     - Photon.Pun.Demo.PunBasics.PlayerUI
     - Photon.Pun.Demo.SlotRacer.PlayerControl
     - Photon.Pun.Demo.SlotRacer.Utils.SplineWalker
-    PhotonUnityNetworking.Editor.dll:
-    - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.dll:
     - Photon.Pun.PhotonAnimatorView
     - Photon.Pun.PhotonRigidbodyView
@@ -108,7 +107,6 @@ ScriptsOnlyBuild:
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -257,6 +255,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 17380}
     - Class: 114
       Script: {instanceID: 17588}
+    - Class: 114
+      Script: {instanceID: 38634}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -533,7 +533,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 17610}
     - Class: 114
-      Script: {instanceID: 26370}
+      Script: {instanceID: 26324}
+    - Class: 114
+      Script: {instanceID: 38634}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -2958,6 +2960,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Flashing
   platform: 19
   scenePathNames:
   - Assets/Scenes/Game Scenes/MainMenu.unity
