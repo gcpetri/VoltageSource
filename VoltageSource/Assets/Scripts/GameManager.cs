@@ -236,7 +236,7 @@ namespace VoltageSource
         // spawns the gun prefabs over time
         IEnumerator SpawnGunAfterTime()
         {
-            float spawnTime = 15;
+            float spawnTime = 30f;
             yield return new WaitForSeconds(spawnTime - 4.0f);
             
             if(_yellowWall)

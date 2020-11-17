@@ -34,6 +34,8 @@ ScriptsOnlyBuild:
     - Photon.Pun.Demo.PunBasics.PlayerUI
     - Photon.Pun.Demo.SlotRacer.PlayerControl
     - Photon.Pun.Demo.SlotRacer.Utils.SplineWalker
+    PhotonUnityNetworking.Editor.dll:
+    - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.dll:
     - Photon.Pun.PhotonAnimatorView
     - Photon.Pun.PhotonRigidbodyView
@@ -94,6 +96,9 @@ ScriptsOnlyBuild:
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.RiderScriptEditorData
     - Packages.Rider.Editor.UnitTesting.CallbackData
+    Unity.ShaderGraph.Editor.dll:
+    - UnityEditor.Graphing.GraphObject
+    - UnityEditor.ShaderGraph.Drawing.MaterialGraphEditWindow
     Unity.TextMeshPro.dll:
     - TMPro.TMP_Dropdown
     - TMPro.TMP_FontAsset
@@ -536,7 +541,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 17612}
     - Class: 114
-      Script: {instanceID: 26398}
+      Script: {instanceID: 33208}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128

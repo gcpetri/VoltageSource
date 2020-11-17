@@ -87,9 +87,9 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Flashing.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/AudioManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FpController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
       </list>
     </option>
   </component>
@@ -199,6 +199,7 @@
       <workItem from="1605471867143" duration="1935000" />
       <workItem from="1605512424425" duration="4056000" />
       <workItem from="1605549991406" duration="3392000" />
+      <workItem from="1605600203314" duration="12000" />
     </task>
     <servers />
   </component>
