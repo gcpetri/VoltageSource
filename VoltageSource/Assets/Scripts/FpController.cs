@@ -134,10 +134,6 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     private LayerMask pickupMask;
     [SerializeField] private float pickupDistance = 5f;
     private RaycastHit _pickUpHit;
-    [SerializeField] private GameObject pistolRef;
-    [SerializeField] private GameObject sniperRef;
-    [SerializeField] private GameObject assualtRef;
-    [SerializeField] private GameObject shotgunRef;
     public Transform GunPosition;
 
     #endregion
@@ -481,10 +477,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         anim.SetBool(_animParams[2].name, true);
         _isDead = true;
         Health = _maxHealth;
+        SetGun(0);
         currentGun.SetActive(false);
-        currentGun = FPguns[0];
-        _currentGunScriptable = FPguns[0].GetComponent<GunScript>().gunData;
-        _currentGunInfo = FPguns[0].GetComponent<GunScript>();
     }
     
     

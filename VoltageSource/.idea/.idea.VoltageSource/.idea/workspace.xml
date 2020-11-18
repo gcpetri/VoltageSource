@@ -82,12 +82,12 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/CharacterColorChoices.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GunScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scenes/Photon/PhotonUnityNetworking/Code/Views/PhotonRigidbodyView.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
         <option value="$PROJECT_DIR$/Assets/VolumeValueCollector.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Flashing.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/AudioManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PhotonPlayerUI.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Networking Scripts/PhotonLauncher.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Main Menu Scripts/MainMenuScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FpController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
       </list>
@@ -200,6 +200,7 @@
       <workItem from="1605512424425" duration="4056000" />
       <workItem from="1605549991406" duration="3392000" />
       <workItem from="1605600203314" duration="12000" />
+      <workItem from="1605654962458" duration="6438000" />
     </task>
     <servers />
   </component>

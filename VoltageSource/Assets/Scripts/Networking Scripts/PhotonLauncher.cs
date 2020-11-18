@@ -85,13 +85,22 @@ namespace VoltageSource
                 Connect();
         }
 
-        public void JoinRoom(string value)
+        public bool JoinRoom(string value)
         {
             if (PhotonNetwork.IsConnectedAndReady)
-                PhotonNetwork.JoinRoom(value);
+            {
+                if (!PhotonNetwork.JoinRoom(value))
+                {
+                    return false;
+                }
+            }
             else
+            {
                 Connect();
-            
+                return false;
+            }
+
+            return true;
         }
 
         public void PrivateStatus(Toggle tm)
@@ -192,7 +201,7 @@ namespace VoltageSource
             // Generate random room name which is a 5 digit code
             System.Random generator = new System.Random();
             String nameCode = generator.Next(0, 99999).ToString("D5");
-            while(PhotonNetwork.CreateRoom(nameCode, new RoomOptions{MaxPlayers =  maxPlayersPerRoom}))
+            while(PhotonNetwork.CreateRoom(nameCode, new RoomOptions{MaxPlayers =  maxPlayersPerRoom, IsVisible = true}))
             {
                 nameCode = generator.Next(0, 99999).ToString("D5");
             }

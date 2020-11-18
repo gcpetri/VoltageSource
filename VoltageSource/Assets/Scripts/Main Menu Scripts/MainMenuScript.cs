@@ -240,19 +240,26 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         {
             if (!PhotonNetwork.IsConnectedAndReady)
                 return;
-            
-            connecting.SetActive(true);
-            background.SetActive(false);
-            mainMenuPanel.SetActive(false);
-            matchMakingPanel.SetActive(false);
-            matchMakingBackground.SetActive(false);
+
             if (string.IsNullOrEmpty(_joinRoomName))
             {
                 Debug.LogError("Room name is null or empty");
                 return;
             }
 
-            PhotonLauncher.Instance.JoinRoom(_joinRoomName);
+            if (!PhotonLauncher.Instance.JoinRoom(_joinRoomName))
+            {
+                return;
+            }
+
+            if (PhotonNetwork.CurrentRoom == null)
+                return;
+            
+            connecting.SetActive(true);
+            background.SetActive(false);
+            mainMenuPanel.SetActive(false);
+            matchMakingPanel.SetActive(false);
+            matchMakingBackground.SetActive(false);
         }
         
         public void CreateRoom()
@@ -260,15 +267,17 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
             if (!PhotonNetwork.IsConnectedAndReady)
                 return;
             
-            connecting.SetActive(true);
-            mainMenuPanel.SetActive(false);
-            matchMakingPanel.SetActive(false);
-            matchMakingBackground.SetActive(false);
             if (string.IsNullOrEmpty(_createRoomName))
             {
                 Debug.LogError("Room name is null or empty");
                 return;
             }
+            
+            connecting.SetActive(true);
+            mainMenuPanel.SetActive(false);
+            matchMakingPanel.SetActive(false);
+            matchMakingBackground.SetActive(false);
+            
             PhotonLauncher.Instance.CreateRoom(_createRoomName);
         }
     #endregion

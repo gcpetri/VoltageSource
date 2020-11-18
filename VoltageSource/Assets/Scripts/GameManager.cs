@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.Rendering.Universal;
+using WebSocketSharp;
 
 
 namespace VoltageSource
@@ -67,7 +68,9 @@ namespace VoltageSource
         private GameObject _playerOne;
         private GameObject _playerTwo;
 
-        bool boolGameOver = false; // the game is over
+        bool boolGameOver = false; // the game is over\
+
+        [SerializeField] private Material floorTex;
 
 
         private void Start()
@@ -184,6 +187,7 @@ namespace VoltageSource
                 {
                     obj.material = transparentMaterial;
                 }
+                blueTeamSide[i].GetComponent<MeshRenderer>().material = floorTex;
             }
             for (int i = 0; i < Mathf.Clamp(yellowTeamDeaths, 0, 5); i++)
             {
@@ -191,6 +195,7 @@ namespace VoltageSource
                 {
                     obj.material = transparentMaterial;
                 }
+                yellowTeamSide[i].GetComponent<MeshRenderer>().material = floorTex;
             }
             
             
@@ -215,12 +220,42 @@ namespace VoltageSource
                     UnityEngine.Random.Range(0, gunPrefabs.Length); // Get random index between what guns exist
                 //var blueRangeHorizontal = UnityEngine.Random.Range(-75.0f, BlueTerrScale);
                 //Vector3 blueSpawnPos = new Vector3(blueRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
-                int blueSpawnPos = UnityEngine.Random.Range(0, _blueGunSpawnRange);
+                int blueSpawnPos;
+
+                switch (blueTeamDeaths)
+                {
+                    case 1: blueSpawnPos = UnityEngine.Random.Range(0, _blueGunSpawnRange - 3);
+                        break;
+                    case 2: blueSpawnPos = UnityEngine.Random.Range(0, _blueGunSpawnRange - 5);
+                        break;
+                    case 3: blueSpawnPos = UnityEngine.Random.Range(0, _blueGunSpawnRange - 9);
+                        break;
+                    case 4: blueSpawnPos = UnityEngine.Random.Range(0, _blueGunSpawnRange - 14);
+                        break;
+                    default: blueSpawnPos = UnityEngine.Random.Range(0, _blueGunSpawnRange);
+                        break;
+                }
+                
 
                 int gunIndexY = UnityEngine.Random.Range(0, 3);
                 //float yellowRangeHorizontal = UnityEngine.Random.Range(BlueTerrScale, 75.0f);
                 //Vector3 YellowSpawnPos = new Vector3(yellowRangeHorizontal, 1.0f, UnityEngine.Random.Range(-70.0f, 70.0f));
-                int yellowSpawnPos = UnityEngine.Random.Range(0, _yellowGunSpawnRange);
+                int yellowSpawnPos;
+                
+                switch (yellowTeamDeaths)
+                {
+                    case 1: yellowSpawnPos = UnityEngine.Random.Range(0, _yellowGunSpawnRange - 3);
+                        break;
+                    case 2: yellowSpawnPos = UnityEngine.Random.Range(0, _yellowGunSpawnRange - 5);
+                        break;
+                    case 3: yellowSpawnPos = UnityEngine.Random.Range(0, _yellowGunSpawnRange - 9);
+                        break;
+                    case 4: yellowSpawnPos = UnityEngine.Random.Range(0, _yellowGunSpawnRange - 14);
+                        break;
+                    default: yellowSpawnPos = UnityEngine.Random.Range(0, _yellowGunSpawnRange);
+                        break;
+                }
+                
 
                 var content = new object[] {gunIndexB, blueSpawnPos, gunIndexY, yellowSpawnPos};
 
@@ -393,7 +428,7 @@ namespace VoltageSource
             int Btemp = blueTeamDeaths;
             int Ytemp = yellowTeamDeaths;
             // 0 photonViewID of the player that died
-            if (PhotonView.Find((int) data[0]).gameObject == _playerOne)
+            if ((int)data[0] == 1001)
             {
                 // This means the host died instead
                 if (TeamManagerScript.Instance.PlayerOneTeam == 0) // Which means blue team
@@ -501,6 +536,8 @@ namespace VoltageSource
                 {
                     obj.material = transparentMaterial;
                 }
+                
+                blueTeamSide[i].GetComponent<MeshRenderer>().material = floorTex;
             }
             for (int i = 0; i < Mathf.Clamp(yellowTeamDeaths, 0, 5); i++)
             {
@@ -508,6 +545,8 @@ namespace VoltageSource
                 {
                     obj.material = transparentMaterial;
                 }
+                
+                yellowTeamSide[i].GetComponent<MeshRenderer>().material = floorTex;
             }
 
             if (boolGameOver)
