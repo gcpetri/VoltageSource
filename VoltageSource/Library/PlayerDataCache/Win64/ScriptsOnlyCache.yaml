@@ -104,6 +104,12 @@ ScriptsOnlyBuild:
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
     - TMPro.TextMeshProUGUI
+    UnityEditor.Graphs.dll:
+    - UnityEditor.Graphs.AnimationBlendTree.Graph
+    - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.Graph
+    - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -536,7 +542,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 17618}
     - Class: 114
-      Script: {instanceID: 26372}
+      Script: {instanceID: 30912}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1751,7 +1757,7 @@ ScriptsOnlyBuild:
     className: CurrentRoomPropertiesListedInLobbyProperty
   - hash:
       serializedVersion: 2
-      Hash: 756eb2e7d440657d336d31fbeaf75f8b
+      Hash: 2fc64d7cedc68694ecd6caf800a07605
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: FpController

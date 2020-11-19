@@ -195,6 +195,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             _currentGunInfo.SetOwner(this);
             _currentGunScriptable = _currentGunInfo.gunData;
             _fireRate = _currentGunInfo.GetFireRate();
+            if (!this.photonView.IsMine)
+                SetLayerRecursively(currentGun, 9);
         }
 
         var stack = fpsCamera.GetUniversalAdditionalCameraData();
