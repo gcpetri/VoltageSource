@@ -422,6 +422,7 @@ namespace VoltageSource
         {
             if (data == null)
                 return;
+            
             if (_yellowWall)
             {
                 Destroy(_yellowWall);
@@ -501,6 +502,19 @@ namespace VoltageSource
             StartCoroutine(IEndRound());
             StopCoroutine(SpawnGunAfterTime());
             
+            if (_yellowWall)
+            {
+                Destroy(_yellowWall);
+            }
+            if(_blueWall)
+                Destroy(_blueWall);
+            
+            if (_yellowGun)
+                Destroy(_yellowGun);
+            if (_blueGun)
+                Destroy(_blueGun);
+            
+            
             if (boolGameOver)
                 return;
             
@@ -525,24 +539,15 @@ namespace VoltageSource
                     UIEndofRound[i].SetActive(true);
                 }
             }
-            if ((int)data[0] != (int)data[1] && (int)data[1] < 5) // blue lost one
+            
+            /*if ((int)data[0] != (int)data[1] && (int)data[1] < 5) // blue lost one
             {
                 UIEndofRound[(int)data[1] + 5].SetActive(true);
-                //a = UIEndofRound[(int)data[0] + 5].GetComponent<Animator>();
-                //a.SetTrigger(0);
-                //while (a.isPlaying)
-                //     UIEndofRound[(int)data[0] + 4].SetActive(true);
-                //UIEndofRound[(int)data[0] + 4].SetActive(false);
             }
             else if ((int)data[2] != (int)data[3] && (int)data[3] < 5) // yellow lost one
             {
                 UIEndofRound[(int)data[3] + 1].SetActive(true);
-                //a = UIEndofRound[(int)data[3] + 1].GetComponent<Animator>();
-                //a.SetTrigger(0);
-                //while (a.isPlaying)
-                //    UIEndofRound[(int)data[2]].SetActive(true);
-                //UIEndofRound[(int)data[2]].SetActive(false);
-            }
+            }*/
             
             // Based on # of segments for each player, apply the appropriate actions to the level
             // Change level's pickups to either enabled or disabled and set appropriate materials to level cover and properties 
