@@ -18,6 +18,7 @@ namespace Photon.Pun
     [AddComponentMenu("Photon Networking/Photon Rigidbody View")]
     public class PhotonRigidbodyView : MonoBehaviourPun, IPunObservable
     {
+        private float m_health; // added
         private float m_Distance;
         private float m_Angle;
 
@@ -73,7 +74,8 @@ namespace Photon.Pun
             }
             else
             {
-                this.m_NetworkPosition = (Vector3) stream.ReceiveNext();
+                this.m_health = (float)stream.ReceiveNext(); // testing to see because the health is streamed first
+                this.m_NetworkPosition = (Vector3) stream.ReceiveNext(); // This is giving an invalid Cast exception error
                 this.m_NetworkRotation = (Quaternion) stream.ReceiveNext();
 
                 if (this.m_TeleportEnabled)

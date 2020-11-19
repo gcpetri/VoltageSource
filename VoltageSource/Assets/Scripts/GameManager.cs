@@ -153,14 +153,14 @@ namespace VoltageSource
                 {
                     blueTeamSide[i].GetComponent<MeshRenderer>().material.color =
                         CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
-                    UIEndofRound[i+4].GetComponent<Image>().color =
+                    UIEndofRound[i+5].GetComponent<Image>().color =
                             CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
                 }
                 else
                 {
                     yellowTeamSide[i].GetComponent<MeshRenderer>().material.color =
                         CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
-                    UIEndofRound[i+4].GetComponent<Image>().color =
+                    UIEndofRound[i+5].GetComponent<Image>().color =
                             CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
                 } 
             }
