@@ -467,6 +467,27 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
         }
     }
 
+    public void ChangeRegion(int value)
+    {
+        switch (value)
+        {
+            case 0: 
+                PhotonNetwork.Disconnect();
+                PhotonLauncher.Instance.ChangeRegion("us");
+                // us
+                break;
+            case 1: 
+                PhotonNetwork.Disconnect();
+                PhotonLauncher.Instance.ChangeRegion("usw");// usw
+                break;
+            case 2: 
+                PhotonNetwork.Disconnect();
+                PhotonLauncher.Instance.ChangeRegion("cae");// cae
+                break;
+        }
+    }
+    
+    
     #region Photon
 
     

@@ -21,16 +21,15 @@ namespace VoltageSource
 
         #region Private Serializable Fields
 
-        [Tooltip("The max num of players per room")]
-        [SerializeField]
+        [Tooltip("The max num of players per room")] [SerializeField]
         private byte maxPlayersPerRoom = 2;
 
         [SerializeField] private int MainMenuIndex;
         [SerializeField] private int TeamSelectIndex;
         [SerializeField] private int GameSceneIndex;
-        
+
         #endregion
-        
+
         private bool _isConnecting;
         private bool _isPrivate = true; // changes based on the toggle
 
@@ -47,11 +46,12 @@ namespace VoltageSource
             {
                 Instance = this;
                 DontDestroyOnLoad(this);
-            }else if (Instance != null && Instance != this)
+            }
+            else if (Instance != null && Instance != this)
             {
                 Destroy(this);
             }
-            
+
             Connect();
         }
 
@@ -67,9 +67,10 @@ namespace VoltageSource
 
         public void CreateRoom(string value)
         {
-            
+
             if (PhotonNetwork.IsConnected)
-                PhotonNetwork.CreateRoom(value, new RoomOptions {MaxPlayers = maxPlayersPerRoom, IsVisible = !_isPrivate});
+                PhotonNetwork.CreateRoom(value,
+                    new RoomOptions {MaxPlayers = maxPlayersPerRoom, IsVisible = !_isPrivate});
             else
                 Connect();
         }
@@ -119,7 +120,7 @@ namespace VoltageSource
             string otherPlayer = "Player Two";
             foreach (Player obj in PhotonNetwork.PlayerList)
             {
-                if(!obj.IsMasterClient)
+                if (!obj.IsMasterClient)
                 {
                     otherPlayer = obj.NickName;
                 }
@@ -132,7 +133,7 @@ namespace VoltageSource
         {
             return PhotonNetwork.CurrentRoom.Name;
         }
-        
+
         /// <summary>
         /// This is only to be used for leaving the team select scene
         /// </summary>
@@ -171,13 +172,14 @@ namespace VoltageSource
             //Debug.LogFormat("Player one color: {0}", playerOneColorIndex);
             return playerOneColorIndex;
         }
+
         public int GetPlayerTwoColor()
         {
             //Debug.LogFormat("Player two color: {0}", playerTwoColorIndex);
             return playerTwoColorIndex;
         }
 
-   
+
         #region MonoBehaviourPunCallBacks CallBacks
 
         public override void OnConnectedToMaster()
@@ -191,21 +193,24 @@ namespace VoltageSource
 
         public override void OnDisconnected(DisconnectCause cause)
         {
-            Debug.LogWarningFormat("PUN Basics Tutorial/Launcher: OnDisconnected() was called by PUN with reason {0}", cause.ToString());
-           
+            Debug.LogWarningFormat("PUN Basics Tutorial/Launcher: OnDisconnected() was called by PUN with reason {0}",
+                cause.ToString());
+
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
-            Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
+            Debug.Log(
+                "PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
             // Generate random room name which is a 5 digit code
             System.Random generator = new System.Random();
             String nameCode = generator.Next(0, 99999).ToString("D5");
-            while(PhotonNetwork.CreateRoom(nameCode, new RoomOptions{MaxPlayers =  maxPlayersPerRoom, IsVisible = true}))
+            while (PhotonNetwork.CreateRoom(nameCode,
+                new RoomOptions {MaxPlayers = maxPlayersPerRoom, IsVisible = true}))
             {
                 nameCode = generator.Next(0, 99999).ToString("D5");
             }
-            
+
         }
 
         public override void OnJoinedRoom()
@@ -228,16 +233,17 @@ namespace VoltageSource
         public override void OnLeftRoom()
         {
             SceneManager.LoadScene(MainMenuIndex);
+            Cursor.lockState = CursorLockMode.Confined;
             base.OnLeftRoom();
         }
 
-      
+
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
             if (stream.IsWriting)
             {
-                stream.SendNext((object)playerOneColorIndex);
-                stream.SendNext((object)playerTwoColorIndex);
+                stream.SendNext((object) playerOneColorIndex);
+                stream.SendNext((object) playerTwoColorIndex);
             }
             else
             {
@@ -247,6 +253,22 @@ namespace VoltageSource
         }
 
         #endregion
+
+
+        
+        public void ChangeRegion(string region)
+        {
+            switch (region)
+            {
+                case "cae":
+                    PhotonNetwork.ConnectToRegion("cae");
+                    break;
+                case "us":  PhotonNetwork.ConnectToRegion("us");
+                    break;
+                case "usw":  PhotonNetwork.ConnectToRegion("usw");
+                    break;
+            }
+        }
         
     }
 }

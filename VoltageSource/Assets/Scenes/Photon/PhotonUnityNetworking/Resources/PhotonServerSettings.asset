@@ -26,7 +26,7 @@ MonoBehaviour:
     EnableProtocolFallback: 1
     AuthMode: 0
     EnableLobbyStatistics: 0
-    NetworkLogging: 2
+    NetworkLogging: 3
   DevRegion: us
   PunLogging: 0
   EnableSupportLogger: 1

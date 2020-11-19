@@ -128,6 +128,38 @@ namespace VoltageSource
                     TeamManagerScript.Instance.PlayerTwoTeam == 0 ? blueTeamSpawn.rotation : yellowTeamSpawn.rotation);
 
             }
+            
+            
+            
+            for (int i = 0; i < 5; i++)
+            {
+                if (PhotonLauncher.Instance.GetPlayerOneColor() == PhotonLauncher.Instance.GetPlayerTwoColor())
+                    return;
+                
+                if (TeamManagerScript.Instance.PlayerOneTeam == 0)
+                {
+                    blueTeamSide[i].GetComponent<MeshRenderer>().material.color =
+                        CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
+                }
+                else
+                {
+                    yellowTeamSide[i].GetComponent<MeshRenderer>().material.color =
+                        CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
+                }
+                
+                if (TeamManagerScript.Instance.PlayerTwoTeam == 0)
+                {
+                    blueTeamSide[i].GetComponent<MeshRenderer>().material.color =
+                        CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+                }
+                else
+                {
+                    yellowTeamSide[i].GetComponent<MeshRenderer>().material.color =
+                        CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+                }
+                
+            }
+
         }
 
         #region Game End
@@ -471,6 +503,37 @@ namespace VoltageSource
                 UIEndofRound[i].SetActive(false);
             
             Animator a;
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (i <= 4)
+                {
+                    if (TeamManagerScript.Instance.PlayerOneTeam == 0) // This means blue side thus 5-9 indexs 
+                    {
+                        UIEndofRound[i].GetComponent<Image>().color =
+                                CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+                    }
+                    else
+                    {
+                        UIEndofRound[i].GetComponent<Image>().color =
+                            CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
+                    }
+                }
+                else
+                {
+                    if (TeamManagerScript.Instance.PlayerOneTeam == 1) // This means yellow side thus 0-4 indexs
+                    {
+                        UIEndofRound[i].GetComponent<Image>().color =
+                            CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+                    }
+                    else
+                    {
+                        UIEndofRound[i].GetComponent<Image>().color =
+                            CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
+                    }
+                }
+            }
+            
             // blue UI segments
             if ((int)data[1] < 5)
             {
