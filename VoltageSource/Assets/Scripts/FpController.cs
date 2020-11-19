@@ -366,6 +366,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
                 FPguns[i].SetActive(false);
             }
             FPguns[data].SetActive(true);
+            SetLayerRecursively(FPguns[data], 9); // changed so hopefully other player's guns don't move with your gun camera
             currentGun = FPguns[data];
         }
     }
@@ -385,7 +386,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             return;
         
         MovePlayer(xAxis, zAxis); // Moves the player
-
+        anim.SetBool(_animParams[1].name, false);
+        anim.SetBool(_animParams[2].name, false);
         if (xAxis != 0 || zAxis != 0)
             anim.SetBool(_animParams[0].name, true); // I'm running
         else

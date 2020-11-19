@@ -16,8 +16,8 @@ namespace VoltageSource
         public string gameVersion = "1";
         public static PhotonLauncher Instance;
 
-        private int playerOneColorIndex;
-        private int playerTwoColorIndex;
+        private int playerOneColorIndex = 0; // need to initialize in case they don't pick
+        private int playerTwoColorIndex = 0;
 
         #region Private Serializable Fields
 
