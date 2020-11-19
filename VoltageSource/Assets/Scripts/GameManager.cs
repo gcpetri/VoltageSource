@@ -249,7 +249,6 @@ namespace VoltageSource
         
         private void SendGunSpawnEvent()
         {
-            StopCoroutine(SpawnGunAfterTime());
             if (PhotonNetwork.IsMasterClient)
             {
                 int gunIndexB =
@@ -301,12 +300,14 @@ namespace VoltageSource
                 //Debug.Log("Gun Spawn Called");
             }
             
-            StartCoroutine(SpawnGunAfterTime());
+            
         }
 
         // spawns the gun prefabs over time
         IEnumerator SpawnGunAfterTime()
         {
+            SendGunSpawnEvent();
+            
             float spawnTime = 30f;
             yield return new WaitForSeconds(spawnTime - 4.0f);
             
@@ -318,7 +319,7 @@ namespace VoltageSource
      
             yield return new WaitForSeconds(4f);
             
-            SendGunSpawnEvent();
+            StartCoroutine(SpawnGunAfterTime());
         }
         
 
@@ -618,7 +619,7 @@ namespace VoltageSource
 
         private void StartRound(object[] data = null)
         {
-            SendGunSpawnEvent();
+            StartCoroutine(SpawnGunAfterTime());
             EndofRoundEmpty.SetActive(false);
         }
         
