@@ -222,7 +222,7 @@ public class MainMenuScript : MonoBehaviourPun, IPunObservable, IOnEventCallback
             if (PhotonNetwork.CountOfPlayers < 2)
             {
                 Debug.LogError("Not enough players in the game");
-                
+                return;
             }
 
             PhotonLauncher.Instance.SetPlayerColors(playerOneColorIndex,playerTwoColorIndex);

@@ -38,6 +38,7 @@ namespace VoltageSource
         
         private bool _isPaused = false;
         private float _currentTime = 10f;
+        private bool _playedOnce = false;
 
         public void SetTarget(FpController targetR)
         {
@@ -157,9 +158,11 @@ namespace VoltageSource
                 gameUI.SetActive(true);
                 infoUI.SetActive(true);
                 timerUI.SetActive(true);
-                missionUI.SetActive(true);
+                if (_playedOnce)
+                    missionUI.SetActive(true);
                 _currentTime = GameManager.Instance.preRoundTimer;
                 infoText.text = "Pre-Round";
+                _playedOnce = true;
             }
             else if (eventCode == (byte) EventManager.EventCodes.StartRound)
             {

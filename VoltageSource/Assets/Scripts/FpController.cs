@@ -162,7 +162,9 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             UiGameObject.SetActive(true);
         }
         SetMyColor();
-        
+        for (int i = 0; i < 4; i++)
+            FPguns[i].GetComponent<Collider>().enabled = false;
+
         UIGamePauseMenuGuns[4].SetActive(false);
         UIGamePauseMenuGuns[0].SetActive(true);
 
@@ -312,6 +314,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         _currentGunScriptable = _currentGunInfo.gunData;
         currentGun = FPguns[i];
         currentGun.SetActive(true);
+        currentGun.GetComponent<Collider>().enabled = false;
         _fireRate = _currentGunInfo.GetFireRate();
         AmmoSlider.maxValue = _currentGunScriptable.maxAmmo;
         AmmoSlider.value = _currentGunScriptable.maxAmmo;
@@ -540,7 +543,6 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             
         }else if (eventCode == (byte) EventManager.EventCodes.EndPreRound)
         {
-            _uimission.SetActive(false);
             _isPreRound = false;
         }
     }
