@@ -30,7 +30,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     #region Character Movement Variables
     // Contains all the variables used from FP_movement 
     [Header("Character Movement Variables")]
-    [SerializeField]private CharacterController _cController; // Reference
+    [SerializeField] private CharacterController _cController; // Reference
     [Tooltip("Controls the speed at which the player moves")]
     [SerializeField] private float playerSpeed = 12f; // Local
     [Tooltip("The height at which the player can jump")]
@@ -100,10 +100,10 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
 
     #region Animator Variables
 
-    [Header("Animator variables")] [SerializeField]
-    private Animator anim; // Reference 
+    //[Header("Animator variables")] [SerializeField]
+    [SerializeField] private Animator anim; // Reference 
 
-    private AnimatorControllerParameter[] _animParams; // Copied 
+    [SerializeField] private AnimatorControllerParameter[] _animParams; // Copied 
 
     #endregion
 
@@ -127,6 +127,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     private Rigidbody _rb;
     [SerializeField] private AudioListener localAudioListener; // Reference
     private Transform teleportLocation;
+    [SerializeField] private GameObject _uimission;
 
     #region GunPickup Variables
 
@@ -359,7 +360,15 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
     [PunRPC]
     private void SetPlayerGunRPC(int data, PhotonMessageInfo info)
     {
-        if (info.photonView.ViewID == this.photonView.ViewID) // Player one made the call so update that copy's gun
+        if (info.photonView.ViewID == this.photonView.ViewID && this.photonView.IsMine) // Player one made the call so update that copy's gun
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                FPguns[i].SetActive(false);
+            }
+            FPguns[data].SetActive(true);
+            currentGun = FPguns[data];
+        } else if (info.photonView.ViewID == this.photonView.ViewID && !this.photonView.IsMine) // Player one made the call so update that copy's gun
         {
             for (int i = 0; i < 4; i++)
             {
@@ -396,6 +405,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         if (Input.GetButtonDown("Jump") && _isGrounded) // Checks if jumps and runs appropriate code
         {
             anim.SetBool(_animParams[0].name, false);
+            anim.SetBool(_animParams[1].name, false);
+            anim.SetBool(_animParams[2].name, false);
             _velocity.y = Mathf.Sqrt(jumpHeight * -2f * (Physics.gravity.y + gravityConst));
             anim.SetTrigger(_animParams[3].name);
         }
@@ -527,6 +538,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             
         }else if (eventCode == (byte) EventManager.EventCodes.EndPreRound)
         {
+            _uimission.SetActive(false);
             _isPreRound = false;
         }
     }

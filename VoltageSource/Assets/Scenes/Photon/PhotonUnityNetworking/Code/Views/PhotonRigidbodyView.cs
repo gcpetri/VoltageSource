@@ -59,6 +59,7 @@ namespace Photon.Pun
         {
             if (stream.IsWriting)
             {
+                stream.SendNext(this.m_health);
                 stream.SendNext(this.m_Body.position);
                 stream.SendNext(this.m_Body.rotation);
 
