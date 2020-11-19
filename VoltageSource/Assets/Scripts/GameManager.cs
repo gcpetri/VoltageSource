@@ -129,8 +129,6 @@ namespace VoltageSource
 
             }
             
-            
-            
             for (int i = 0; i < 5; i++)
             {
                 if (PhotonLauncher.Instance.GetPlayerOneColor() == PhotonLauncher.Instance.GetPlayerTwoColor())
@@ -140,26 +138,32 @@ namespace VoltageSource
                 {
                     blueTeamSide[i].GetComponent<MeshRenderer>().material.color =
                         CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
+                    UIEndofRound[i].GetComponent<Image>().color =
+                                CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
                 }
                 else
                 {
                     yellowTeamSide[i].GetComponent<MeshRenderer>().material.color =
                         CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
+                    UIEndofRound[i].GetComponent<Image>().color =
+                            CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
                 }
                 
                 if (TeamManagerScript.Instance.PlayerTwoTeam == 0)
                 {
                     blueTeamSide[i].GetComponent<MeshRenderer>().material.color =
                         CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
+                    UIEndofRound[i+4].GetComponent<Image>().color =
+                            CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
                 }
                 else
                 {
                     yellowTeamSide[i].GetComponent<MeshRenderer>().material.color =
                         CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
-                }
-                
+                    UIEndofRound[i+4].GetComponent<Image>().color =
+                            CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
+                } 
             }
-
         }
 
         #region Game End
@@ -502,37 +506,7 @@ namespace VoltageSource
             for (int i = 0; i < 10; i++)
                 UIEndofRound[i].SetActive(false);
             
-            Animator a;
-
-            for (int i = 0; i < 10; i++)
-            {
-                if (i <= 4)
-                {
-                    if (TeamManagerScript.Instance.PlayerOneTeam == 0) // This means blue side thus 5-9 indexs 
-                    {
-                        UIEndofRound[i].GetComponent<Image>().color =
-                                CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
-                    }
-                    else
-                    {
-                        UIEndofRound[i].GetComponent<Image>().color =
-                            CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
-                    }
-                }
-                else
-                {
-                    if (TeamManagerScript.Instance.PlayerOneTeam == 1) // This means yellow side thus 0-4 indexs
-                    {
-                        UIEndofRound[i].GetComponent<Image>().color =
-                            CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerTwoColor()];
-                    }
-                    else
-                    {
-                        UIEndofRound[i].GetComponent<Image>().color =
-                            CharacterColorChoices.ColorChoices[PhotonLauncher.Instance.GetPlayerOneColor()];
-                    }
-                }
-            }
+            //Animator a;
             
             // blue UI segments
             if ((int)data[1] < 5)
@@ -553,8 +527,8 @@ namespace VoltageSource
             if ((int)data[0] != (int)data[1] && (int)data[1] < 5) // blue lost one
             {
                 UIEndofRound[(int)data[1] + 5].SetActive(true);
-                a = UIEndofRound[(int)data[0] + 5].GetComponent<Animator>();
-                a.SetTrigger(0);
+                //a = UIEndofRound[(int)data[0] + 5].GetComponent<Animator>();
+                //a.SetTrigger(0);
                 //while (a.isPlaying)
                 //     UIEndofRound[(int)data[0] + 4].SetActive(true);
                 //UIEndofRound[(int)data[0] + 4].SetActive(false);
@@ -562,8 +536,8 @@ namespace VoltageSource
             else if ((int)data[2] != (int)data[3] && (int)data[3] < 5) // yellow lost one
             {
                 UIEndofRound[(int)data[3] + 1].SetActive(true);
-                a = UIEndofRound[(int)data[3] + 1].GetComponent<Animator>();
-                a.SetTrigger(0);
+                //a = UIEndofRound[(int)data[3] + 1].GetComponent<Animator>();
+                //a.SetTrigger(0);
                 //while (a.isPlaying)
                 //    UIEndofRound[(int)data[2]].SetActive(true);
                 //UIEndofRound[(int)data[2]].SetActive(false);

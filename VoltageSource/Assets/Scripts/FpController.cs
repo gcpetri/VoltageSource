@@ -181,6 +181,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         if (anim)
         {
             _animParams = anim.parameters;
+            for (int i = 0; i < 3; i++)
+                anim.SetBool(_animParams[i].name, false);
         }
 
         _groundCheckPosition = transform.position - (new Vector3(0, _cController.height / 2, 0));
@@ -222,9 +224,9 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         {
             if (_rb.velocity != Vector3.zero)
             {
-                anim.SetBool(_animParams[0].name, true);
+                anim.SetBool(_animParams[0].name, true); // running for other player
             }else
-                anim.SetBool(_animParams[0].name, false);
+                anim.SetBool(_animParams[0].name, false); // idle for other player
             
             return;
         }
@@ -385,12 +387,13 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         MovePlayer(xAxis, zAxis); // Moves the player
 
         if (xAxis != 0 || zAxis != 0)
-            anim.SetBool(_animParams[0].name, true);
+            anim.SetBool(_animParams[0].name, true); // I'm running
         else
-            anim.SetBool(_animParams[0].name, false);
+            anim.SetBool(_animParams[0].name, false); // I'm idle
 
         if (Input.GetButtonDown("Jump") && _isGrounded) // Checks if jumps and runs appropriate code
         {
+            anim.SetBool(_animParams[0].name, false);
             _velocity.y = Mathf.Sqrt(jumpHeight * -2f * (Physics.gravity.y + gravityConst));
             anim.SetTrigger(_animParams[3].name);
         }
@@ -474,7 +477,7 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         {
             return;
         }
-        anim.SetBool(_animParams[2].name, true);
+        anim.SetBool(_animParams[2].name, true); // I'm dead
         _isDead = true;
         Health = _maxHealth;
         SetGun(0);
@@ -512,6 +515,8 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
             currentGun.SetActive(true);
             if (anim)
             {
+                anim.SetBool(_animParams[0].name, false);
+                anim.SetBool(_animParams[1].name, false);
                 anim.SetBool(_animParams[2].name, false);
             }
             AmmoSlider.maxValue = _currentGunScriptable.maxAmmo;
@@ -640,14 +645,6 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         _gameEnded = true;
         if (!photonView.IsMine)
             return;
-        
-        /*var stack = fpsCamera.GetUniversalAdditionalCameraData();
-        stack.cameraStack.RemoveAt(1);
-        //Debug.Log(fpsCamera.GetUniversalAdditionalCameraData().cameraStack.ToString());
-        EndofGameCuties.SetActive(true);
-        if (stack != null)
-            stack.cameraStack.Add(EndofGameCuties.GetComponent<Camera>());*/
-
         EndofGameCuties.SetActive(true);
         EndofGameCuties.GetComponent<Camera>().enabled = true;
         fpsCamera.enabled = false;
@@ -656,9 +653,10 @@ public class FpController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventC
         playerRender1.UpdateGIMaterials();
         playerRender2.UpdateGIMaterials();
         // set their dancing and dying animation
-        Debug.Log(EndofGameCutiesAnimators[0].parameters[0].name);
-        Debug.Log(EndofGameCutiesAnimators[0].parameters[1].name);
-        Debug.Log(EndofGameCutiesAnimators[1].parameters[2].name);
+        for (int i = 0; i < 2; i++) 
+            for (int j = 0; j < 3; j++)
+                EndofGameCutiesAnimators[i].SetBool(EndofGameCutiesAnimators[i].parameters[j].name, false);
+
         EndofGameCutiesAnimators[0].SetBool(EndofGameCutiesAnimators[0].parameters[1].name, true);
         EndofGameCutiesAnimators[1].SetBool(EndofGameCutiesAnimators[1].parameters[2].name, true);
         EndofGameCuties.SetActive(true);
